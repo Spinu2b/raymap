@@ -292,6 +292,7 @@ namespace OpenSpace.Visual {
 				/*mesh.uv = new_uvs_spe;*/
 				if (new_boneWeights_spe != null) {
                     mr_spe = gao_spe.AddComponent<SkinnedMeshRenderer>();
+                    gao_spe.AddComponent<R3AnimatedMesh>();
                     s_mr_spe = (SkinnedMeshRenderer)mr_spe;
                     s_mr_spe.bones = mesh.bones.bones;
                     s_mr_spe.rootBone = mesh.bones.bones[0];
@@ -302,6 +303,7 @@ namespace OpenSpace.Visual {
 					bc.size = s_mr_spe.bounds.size;
 				} else {
                     MeshFilter mf = gao_spe.AddComponent<MeshFilter>();
+                    gao_spe.AddComponent<R3AnimatedMesh>();
                     mf.sharedMesh = mesh_spe;
                     mr_spe = gao_spe.AddComponent<MeshRenderer>();
 					MeshCollider mc = gao_spe.AddComponent<MeshCollider>();
