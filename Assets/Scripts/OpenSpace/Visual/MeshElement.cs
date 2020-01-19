@@ -82,15 +82,7 @@ namespace OpenSpace.Visual {
         }
 
         private void CreateUnityMesh() {
-            /*if (mesh.bones != null) {
-                for (int j = 0; j < mesh.bones.num_bones; j++) {
-                    Transform b = mesh.bones.bones[j];
-                    b.transform.SetParent(gao.transform);
-                    mesh.bones.bindPoses[j] = mesh.bones.bones[j].worldToLocalMatrix * gao.transform.localToWorldMatrix;
-                }
-            }*/
             VisualMaterial.Hint materialHints = mesh.lookAtMode != 0 ? VisualMaterial.Hint.Billboard : VisualMaterial.Hint.None;
-            //VisualMaterial.Hint materialHints = VisualMaterial.Hint.None;
             uint num_textures = 0;
             if (visualMaterial != null) {
                 num_textures = visualMaterial.num_textures;
@@ -119,7 +111,6 @@ namespace OpenSpace.Visual {
                     if (new_boneWeights != null) new_boneWeights[j] = mesh.bones.weights[mapping_vertices[j]];
                     for (int um = 0; um < num_textures; um++) {
                         uint uvMap = (uint)visualMaterial.textures[um].uvFunction % num_uvMaps;
-                        //MapLoader.Loader.print(visualMaterial.textures[um].uvFunction + " - " + num_uvMaps);
                         new_uvs[um][j] = uvs[mapping_uvs[uvMap][j]];
                         if (mesh.blendWeights != null && mesh.blendWeights[visualMaterial.textures[um].blendIndex] != null) {
                             if (um == 0) materialHints |= VisualMaterial.Hint.Transparent;
@@ -150,7 +141,6 @@ namespace OpenSpace.Visual {
                 }
                 if (num_connected_vertices < 2) num_connected_vertices = 0;
                 if (num_disconnected_triangles > 0) {
-                    //print("Loading disconnected triangles at " + String.Format("0x{0:X}", fs.Position));
                     for (int j = 0; j < num_disconnected_triangles; j++, triangles_index += triangle_size) {
                         triangles[triangles_index + 0] = disconnected_triangles[(j * 3) + 0];
                         triangles[triangles_index + 2] = disconnected_triangles[(j * 3) + 1];
@@ -214,15 +204,8 @@ namespace OpenSpace.Visual {
 							if (MapLoader.Loader.blockyMode && normals_spe != null) new_uvs_spe[um][j] = uvs[mapping_uvs_spe[uvMap][j - (j % 3)]];
 						}
                         new_uvs_spe[um][j].z = 1;
-                        /*int i0 = reader.ReadInt16(), m0 = (j * 3) + 0; // Old index, mapped index
-                        int i1 = reader.ReadInt16(), m1 = (j * 3) + 1;
-                        int i2 = reader.ReadInt16(), m2 = (j * 3) + 2;
-                        new_uvs_spe[um][m0] = uvs[i0];
-                        new_uvs_spe[um][m1] = uvs[i1];
-                        new_uvs_spe[um][m2] = uvs[i2];*/
                     }
                 }
-                //print("Loading disconnected triangles at " + String.Format("0x{0:X}", fs.Position));
                 for (int j = 0; j < num_disconnected_triangles_spe; j++, triangles_index += triangle_size) {
                     int i0 = disconnected_triangles_spe[(j * 3) + 0], m0 = (j * 3) + 0; // Old index, mapped index
                     int i1 = disconnected_triangles_spe[(j * 3) + 1], m1 = (j * 3) + 1;
@@ -266,7 +249,6 @@ namespace OpenSpace.Visual {
                         triangles_spe[triangles_index + 5] = triangles_spe[triangles_index + 1];
                     }
                 }
-                //if (mr_main == null) {
                 GameObject gao_spe = (mr_main == null ? gao : new GameObject("[SPE] " + name));
                 if (gao_spe != gao) {
                     gao_spe.transform.SetParent(gao.transform);
@@ -288,8 +270,6 @@ namespace OpenSpace.Visual {
 				} else {
 					mesh_spe = CopyMesh(mesh_spe);
 				}
-				//mesh.SetUVs(0, new_uvs_spe.ToList());
-				/*mesh.uv = new_uvs_spe;*/
 				if (new_boneWeights_spe != null) {
                     mr_spe = gao_spe.AddComponent<SkinnedMeshRenderer>();
                     gao_spe.AddComponent<R3AnimatedMesh>();
@@ -313,51 +293,27 @@ namespace OpenSpace.Visual {
                 //}
             }
             if (visualMaterial != null) {
-                //gao.name += " " + visualMaterial.offset + " - " + (visualMaterial.textures.Count > 0 ? visualMaterial.textures[0].offset.ToString() : "NULL" );
                 Material unityMat = visualMaterial.GetMaterial(materialHints);
 				if (vertexColors != null & unityMat != null) unityMat.SetVector("_Tex2Params", new Vector4(60, 0, 0, 0));
                 bool receiveShadows = (visualMaterial.properties & VisualMaterial.property_receiveShadows) != 0;
                 bool scroll = visualMaterial.ScrollingEnabled;
-                /*if (num_uvMaps > 1) {
-                    unityMat.SetFloat("_UVSec", 1f);
-                } else if (scroll) {
-                    for (int i = num_uvMaps; i < visualMaterial.textures.Count; i++) {
-                        if (visualMaterial.textures[i].ScrollingEnabled) {
-                            unityMat.SetFloat("_UVSec", 1f);
-                            break;
-                        }
-                    }
-                }*/
-                //if (r3mat.Material.GetColor("_EmissionColor") != Color.black) print("Mesh with emission: " + name);
                 if (mr_main != null) {
                     mr_main.sharedMaterial = unityMat;
-                    //mr_main.UpdateGIMaterials();
                     if (!receiveShadows) mr_main.receiveShadows = false;
                     if (visualMaterial.animTextures.Count > 0) {
                         MultiTextureMaterial mtmat = mr_main.gameObject.AddComponent<MultiTextureMaterial>();
                         mtmat.visMat = visualMaterial;
                         mtmat.mat = mr_main.sharedMaterial;
                     }
-                    /*if (scroll) {
-                        ScrollingTexture scrollComponent = mr_main.gameObject.AddComponent<ScrollingTexture>();
-                        scrollComponent.visMat = visualMaterial;
-                        scrollComponent.mat = mr_main.material;
-                    }*/
                 }
                 if (mr_spe != null) {
                     mr_spe.sharedMaterial = unityMat;
-                    //mr_spe.UpdateGIMaterials();
                     if (!receiveShadows) mr_spe.receiveShadows = false;
                     if (visualMaterial.animTextures.Count > 0) {
                         MultiTextureMaterial mtmat = mr_spe.gameObject.AddComponent<MultiTextureMaterial>();
                         mtmat.visMat = visualMaterial;
                         mtmat.mat = mr_spe.sharedMaterial;
                     }
-                    /*if (scroll) {
-                        ScrollingTexture scrollComponent = mr_spe.gameObject.AddComponent<ScrollingTexture>();
-                        scrollComponent.visMat = visualMaterial;
-                        scrollComponent.mat = mr_spe.material;
-                    }*/
                 }
             }
         }
