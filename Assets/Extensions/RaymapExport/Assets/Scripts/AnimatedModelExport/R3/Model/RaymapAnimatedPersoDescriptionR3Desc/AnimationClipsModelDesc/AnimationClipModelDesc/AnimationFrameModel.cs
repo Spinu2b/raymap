@@ -10,5 +10,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.M
     public class AnimationFrameModel : Tree<AnimationFrameModelNode, string>
     {
         public int index;
+
+        public AnimationFrameModel(int index = 0)
+        {
+            this.index = index;
+        }
     }
 }

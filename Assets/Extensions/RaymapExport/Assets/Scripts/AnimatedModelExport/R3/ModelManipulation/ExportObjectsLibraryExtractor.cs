@@ -10,7 +10,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.M
 {
     public class ExportObjectsLibraryExtractor
     {
-        internal ExportObjectsLibraryModel DeriveFor(GameObject persoR3GameObject)
+        public ExportObjectsLibraryModel DeriveFor(GameObject persoR3GameObject)
         {
             throw new NotImplementedException();
         }
