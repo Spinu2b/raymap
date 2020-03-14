@@ -10,11 +10,11 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.M
 {
     public class AnimTreeWithChannelsDataHierarchyFactory
     {
-        public AnimTreeWithChannelsDataHierarchy ConstructFromGiven(AnimA3DGeneralDataManipulationInterface animA3DGeneralDataManipulator,
+        public AnimTreeWithChannelsDataHierarchy ConstructFromGiven(AnimA3DGeneralAnimationDataManipulationInterface animA3DGeneralAnimationDataManipulator,
             int animationFrameNumber)
         {
             var animTreeWithChannelsDataHierarchyBuilder = new AnimTreeWithChannelsDataHierarchyBuilder();
-            foreach (var animHierarchyWithChannelInfo in animA3DGeneralDataManipulator.IterateAnimHierarchiesWithChannelInfosForGivenFrame(animationFrameNumber))
+            foreach (var animHierarchyWithChannelInfo in animA3DGeneralAnimationDataManipulator.IterateAnimHierarchiesWithChannelInfosForGivenFrame(animationFrameNumber))
             {
                 animTreeWithChannelsDataHierarchyBuilder.AddAnimHierarchyWithChannelInfo(animHierarchyWithChannelInfo);
             }

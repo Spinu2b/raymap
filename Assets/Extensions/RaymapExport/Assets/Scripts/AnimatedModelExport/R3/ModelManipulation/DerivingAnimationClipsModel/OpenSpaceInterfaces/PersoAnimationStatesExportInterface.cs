@@ -41,7 +41,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.M
         public object DeriveAnimTreeWithChannelsDataHierarchyForGivenFrame(int animationFrameNumber)
         {
             var animTreeWithChannelsDataHierarchyFactory = new AnimTreeWithChannelsDataHierarchyFactory();
-            return animTreeWithChannelsDataHierarchyFactory.ConstructFromGiven(new AnimA3DGeneralDataManipulationInterface(
+            return animTreeWithChannelsDataHierarchyFactory.ConstructFromGiven(new AnimA3DGeneralAnimationDataManipulationInterface(
                 familyAnimationStatesHelper.GetAnimA3DGeneralForCurrentPersoAnimationState()), animationFrameNumber);
         }
 

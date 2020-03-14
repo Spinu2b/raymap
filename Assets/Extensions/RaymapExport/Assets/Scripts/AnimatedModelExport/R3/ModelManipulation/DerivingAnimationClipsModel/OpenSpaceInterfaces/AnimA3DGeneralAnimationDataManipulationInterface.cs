@@ -9,11 +9,11 @@ using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.ModelManipulation.DerivingAnimationClipsModel.OpenSpaceInterfaces
 {
-    public class AnimA3DGeneralDataManipulationInterface
+    public class AnimA3DGeneralAnimationDataManipulationInterface
     {
         private AnimA3DGeneral animA3DGeneral;
 
-        public AnimA3DGeneralDataManipulationInterface(AnimA3DGeneral animA3DGeneral)
+        public AnimA3DGeneralAnimationDataManipulationInterface(AnimA3DGeneral animA3DGeneral)
         {
             this.animA3DGeneral = animA3DGeneral;
         }
