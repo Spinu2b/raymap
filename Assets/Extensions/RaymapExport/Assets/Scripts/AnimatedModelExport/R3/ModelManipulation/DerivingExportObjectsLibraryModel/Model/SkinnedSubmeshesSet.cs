@@ -18,5 +18,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.M
         {
             throw new NotImplementedException();
         }
+
+        public void Add(SkinnedSubmeshObjectModel skinnedSubmeshObject)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

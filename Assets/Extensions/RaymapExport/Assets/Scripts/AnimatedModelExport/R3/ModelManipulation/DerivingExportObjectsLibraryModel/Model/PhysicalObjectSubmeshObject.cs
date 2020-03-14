@@ -9,7 +9,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.M
 {
     public class PhysicalObjectSubmeshObject
     {
-        private GameObject submeshGameObject;
+        public GameObject submeshGameObject { get; private set; };
 
         public PhysicalObjectSubmeshObject(GameObject submeshGameObject)
         {

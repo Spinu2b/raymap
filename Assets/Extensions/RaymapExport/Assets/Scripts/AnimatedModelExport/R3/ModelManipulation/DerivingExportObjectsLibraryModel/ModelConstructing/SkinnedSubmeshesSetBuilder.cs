@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.Model.RaymapAnimatedPersoDescriptionR3Desc.ExportObjectsLibraryModelDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.ModelManipulation.DerivingExportObjectsLibraryModel.Model;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.ModelManipulation.DerivingExportObjectsLibraryModel.ModelConstructing
@@ -18,7 +19,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.M
 
         public void AddSubmeshObject(PhysicalObjectSubmeshObject physicalObjectSubmeshObject)
         {
-            throw new NotImplementedException();
+            result.Add(ConvertPhysicalObjectSubmeshObjectToSkinnedSubmeshObjectModel(physicalObjectSubmeshObject));
+        }
+
+        private SkinnedSubmeshObjectModel ConvertPhysicalObjectSubmeshObjectToSkinnedSubmeshObjectModel(PhysicalObjectSubmeshObject physicalObjectSubmeshObject)
+        {
+            return PhysicalObjectSubmeshObjectToSkinnedSubmeshObjectModelConverter.Convert(physicalObjectSubmeshObject);
         }
     }
 }
