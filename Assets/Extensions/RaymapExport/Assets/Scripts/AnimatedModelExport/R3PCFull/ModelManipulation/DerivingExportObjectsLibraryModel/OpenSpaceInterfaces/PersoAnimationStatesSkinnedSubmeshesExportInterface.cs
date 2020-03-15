@@ -4,30 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingAnimationClipsModel.OpenSpaceInterfaces;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingData.OpenSpaceInterfaces;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingExportObjectsLibraryModel.Model;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingExportObjectsLibraryModel.ModelConstructing;
+using OpenSpace.Object.Properties;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingExportObjectsLibraryModel.OpenSpaceInterfaces
 {
-    public class PersoAnimationStatesSkinnedSubmeshesExportInterface
+    public class PersoAnimationStatesSkinnedSubmeshesExportInterface : PersoAnimationStatesTraverser
     {
-        private FamilyAnimationStatesHelper familyAnimationStatesHelper;
-        private int currentFrameNumber = 0;
-
-        public void ResetToInitialAnimationState()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool AreAnimationStatesLeft()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool AreAnimationFramesLeft()
-        {
-            throw new NotImplementedException();
-        }
+        public PersoAnimationStatesSkinnedSubmeshesExportInterface(Family family) : base(family) {}
 
         public SkinnedSubmeshesSet DeriveSubmeshesSetForGivenFrame(int animationFrameNumber)
         {
@@ -35,21 +21,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
             return skinnedSubmeshesSetFactory.ConstructFromGiven(
                 new AnimA3DGeneralSubmeshesDataManipulatorInterface(
                     familyAnimationStatesHelper.GetAnimA3DGeneralForCurrentPersoAnimationState()), animationFrameNumber);
-        }
-
-        public int GetCurrentFrameNumberForExport()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void NextAnimationFrame()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void NextAnimationState()
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.Model.RaymapAnimatedPersoDescriptionR3Desc.AnimationClipsModelDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.Model.RaymapAnimatedPersoDescriptionR3Desc.AnimationClipsModelDesc.AnimationClipModelDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingAnimationClipsModel.OpenSpaceInterfaces;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingData;
 using OpenSpace.Object.Properties;
 using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingAnimationClipsModel
 {
-    public class PersoAnimationStatesDataManipulator
+    public class PersoAnimationStatesDataManipulator : PersoDataManipulator
     {
         public IEnumerable<AnimationClipModel> IterateAnimationClips(GameObject persoR3GameObject)
         {
             var persoAnimationStatesExportInterface = new PersoAnimationStatesExportInterface(GetFamilyForPerso(persoR3GameObject));
             persoAnimationStatesExportInterface.ResetToInitialAnimationState();
-            while (persoAnimationStatesExportInterface.AreAnimationClipsLeft())
+            while (persoAnimationStatesExportInterface.AreAnimationStatesLeft())
             {
                 var animationClip = new AnimationClipModel(persoAnimationStatesExportInterface.GetCurrentAnimationClipName());
                 while (persoAnimationStatesExportInterface.AreAnimationFramesLeft())
@@ -27,16 +28,11 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 
                     var animationFrame = new AnimationFrameModel(persoAnimationStatesExportInterface.GetCurrentFrameNumberForExport());
                     animationClip.AddKeyframe(animationFrame.index, animationFrame);
-                    persoAnimationStatesExportInterface.NextKeyframe();
+                    persoAnimationStatesExportInterface.NextFrame();
                 }
                 yield return animationClip;
-                persoAnimationStatesExportInterface.NextAnimationClip();
+                persoAnimationStatesExportInterface.NextAnimationState();
             }
-        }
-
-        private Family GetFamilyForPerso(GameObject persoR3GameObject)
-        {
-            throw new NotImplementedException();
         }
     }
 }

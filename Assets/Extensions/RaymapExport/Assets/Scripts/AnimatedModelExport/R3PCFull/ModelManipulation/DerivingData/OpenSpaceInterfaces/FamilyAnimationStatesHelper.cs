@@ -7,7 +7,7 @@ using OpenSpace;
 using OpenSpace.Animation.Component;
 using OpenSpace.Object.Properties;
 
-namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingAnimationClipsModel.OpenSpaceInterfaces
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingData.OpenSpaceInterfaces
 {
     public class FamilyAnimationStatesHelper
     {

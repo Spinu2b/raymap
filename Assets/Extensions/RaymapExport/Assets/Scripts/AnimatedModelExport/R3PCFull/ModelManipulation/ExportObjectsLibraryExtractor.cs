@@ -17,7 +17,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
             var result = new ExportObjectsLibraryModel();
 
             foreach (var skinnedSubmeshObjectModel in 
-                persoAnimationStatesSubmeshesDataManipulator.IterateConsolidatedSubmeshObjectListFromAllPersoAnimationStates())
+                persoAnimationStatesSubmeshesDataManipulator.IterateConsolidatedSubmeshObjectListFromAllPersoAnimationStates(persoR3GameObject))
             {
                 result.skinnedSubmeshObjects.Add(skinnedSubmeshObjectModel.name, skinnedSubmeshObjectModel);
             }
