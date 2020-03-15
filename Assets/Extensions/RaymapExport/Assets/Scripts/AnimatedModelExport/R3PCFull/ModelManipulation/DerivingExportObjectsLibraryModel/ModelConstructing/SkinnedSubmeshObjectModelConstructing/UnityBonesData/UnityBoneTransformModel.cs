@@ -14,12 +14,15 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
         public Vector3d position;
         public MathDescription.Quaternion rotation;
         public Vector3d scale;
-        
-        private Transform channelTransform;
 
-        public UnityBoneTransformModel(Transform unityTransform)
+        public UnityBoneTransformModel(Transform channelTransform)
         {
-            this.channelTransform = channelTransform;
+            throw new NotImplementedException();
+        }
+
+        public static UnityBoneTransformModel HomeTransform(string name)
+        {
+            throw new NotImplementedException();
         }
     }
 }

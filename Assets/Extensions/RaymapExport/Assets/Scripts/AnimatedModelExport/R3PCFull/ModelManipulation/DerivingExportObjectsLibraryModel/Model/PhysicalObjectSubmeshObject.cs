@@ -42,7 +42,41 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 
         public UnityBoneTransformModel[] GetUnityMappedBonesBindPoses()
         {
-            throw new NotImplementedException();
+            if (submeshGameObject.GetComponent<SkinnedMeshRenderer>() != null)
+            {
+                int bonesListLength = submeshGameObject.GetComponent<SkinnedMeshRenderer>().bones.Length;
+                var result = new UnityBoneTransformModel[bonesListLength];
+                var bindPoses = submeshGameObject.GetComponent<SkinnedMeshRenderer>().sharedMesh.bindposes;
+                var bones = submeshGameObject.GetComponent<SkinnedMeshRenderer>().bones;
+                for (int boneIndex = 0; boneIndex < bonesListLength; boneIndex++)
+                {
+                    var boneName = GetParentChannelTransformForActualBoneTransform(bones[boneIndex]).gameObject.name;
+                    var boneBindPoseMatrix = bindPoses[boneIndex];
+                    result[boneIndex] = GetBindPoseBoneTransformModelForBindPoseMatrix(boneName, boneBindPoseMatrix);
+                }
+                return result;
+            }
+            else
+            {
+                return new UnityBoneTransformModel[] { UnityBoneTransformModel.HomeTransform(
+                    GetParentChannelTransformForSubmesh(submeshGameObject).gameObject.name) };
+            } 
+        }
+
+        private UnityBoneTransformModel GetBindPoseBoneTransformModelForBindPoseMatrix(string boneName, Matrix4x4 boneBindPoseMatrix)
+        {
+            GameObject boneWorkingDuplicate = new GameObject(boneName);
+            boneWorkingDuplicate.transform.SetParent(null);
+
+            Matrix4x4 localMatrix = boneBindPoseMatrix.inverse;
+            boneWorkingDuplicate.transform.localPosition = localMatrix.MultiplyPoint(Vector3.zero);
+            boneWorkingDuplicate.transform.localRotation = UnityEngine.Quaternion.LookRotation(localMatrix.GetColumn(2), localMatrix.GetColumn(1));
+            boneWorkingDuplicate.transform.localScale =
+                new Vector3(localMatrix.GetColumn(0).magnitude, localMatrix.GetColumn(1).magnitude, localMatrix.GetColumn(2).magnitude);
+
+            var result = new UnityBoneTransformModel(boneWorkingDuplicate.transform);
+            UnityEngine.Object.Destroy(boneWorkingDuplicate);
+            return result;
         }
 
         private Transform GetParentChannelTransformForSubmesh(GameObject submeshGameObject)
