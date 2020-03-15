@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.Model.RaymapAnimatedPersoDescriptionR3Desc.ExportObjectsLibraryModelDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.Model.RaymapAnimatedPersoDescriptionR3Desc.ExportObjectsLibraryModelDesc.SkinnedSubmeshObjectModelDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.ModelManipulation.DerivingExportObjectsLibraryModel.Model;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.ModelManipulation.DerivingExportObjectsLibraryModel.ModelConstructing.ConstructingSkinnedSubmeshObjectModel;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.ModelManipulation.DerivingExportObjectsLibraryModel.ModelConstructing.SkinnedSubmeshObjectModelConstructing.MeshGeometryConstr;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.ModelManipulation.DerivingExportObjectsLibraryModel.ModelConstructing
 {
@@ -24,30 +26,26 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.M
 
         private static List<Material> DeriveMaterials(PhysicalObjectSubmeshObject physicalObjectSubmeshObject)
         {
-            var result = new List<Material>();
-
-            return result;
+            var materialsModelFactory = new MaterialsModelFactory();
+            return materialsModelFactory.ConstructFor(physicalObjectSubmeshObject);
         }
 
         private static MeshGeometry DeriveMeshGeometry(PhysicalObjectSubmeshObject physicalObjectSubmeshObject)
         {
-            var result = new MeshGeometry();
-
-            return result;
+            var skinnedMeshGeometryFactory = new SkinnedMeshGeometryFactory();
+            return skinnedMeshGeometryFactory.ConstructFor(physicalObjectSubmeshObject);
         }
 
         private static TransformModel DeriveTransformModel(PhysicalObjectSubmeshObject physicalObjectSubmeshObject)
         {
-            var result = new TransformModel();
-
-            return result;
+            var transformModelFactory = new TransformModelFactory();
+            return transformModelFactory.ConstructFor(physicalObjectSubmeshObject);
         }
 
         private static Dictionary<string, BoneBindPose> DeriveBindBonePoses(PhysicalObjectSubmeshObject physicalObjectSubmeshObject)
         {
-            var result = new Dictionary<string, BoneBindPose>();
-
-            return result;
+            var bindBonePosesFactory = new BindBonePosesFactory();
+            return bindBonePosesFactory.ConstructFor(physicalObjectSubmeshObject);
         }
 
         private static string GetName(PhysicalObjectSubmeshObject physicalObjectSubmeshObject)
