@@ -30,6 +30,11 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.M
             return result;
         }
 
+        private UnityBoneWeightModel[] GetUnityMappedBoneWeights(PhysicalObjectSubmeshObject physicalObjectSubmeshObject)
+        {
+            throw new NotImplementedException();
+        }
+
         private Dictionary<string, Dictionary<int, float>> GetBonesWeights(UnityBoneWeightModel[] boneWeights, UnityBoneTransformModel[] bones)
         {
             var result = new Dictionary<string, Dictionary<int, float>>();

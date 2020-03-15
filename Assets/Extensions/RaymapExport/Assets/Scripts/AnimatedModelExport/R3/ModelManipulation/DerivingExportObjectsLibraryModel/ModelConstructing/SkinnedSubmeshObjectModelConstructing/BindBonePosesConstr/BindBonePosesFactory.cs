@@ -25,18 +25,21 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.M
                 var correspondingChannelName = BoneChannelMappingHelper.GetCorrespondingChannelNameForActualBoneAssociation(unityBoneTransformModel);
                 result.Add(
                     correspondingChannelName,
-                    new TransformModel(
+                    new BoneBindPose(
+                        correspondingChannelName,
                         bindPoses[i].position,
                         bindPoses[i].rotation,
-                        bindPoses[i].scale,
-                        new Vector3d(0.0f, 0.0f, 0.0f),
-                        new MathDescription.Quaternion(1.0f, 0.0f, 0.0f, 0.0f),
-                        new Vector3d(1.0f, 1.0f, 1.0f)
+                        bindPoses[i].scale
                         )
                     );
             }
 
             return result;
+        }
+
+        private UnityBoneTransformModel[] GetUnityMappedBonesBindPoses(PhysicalObjectSubmeshObject physicalObjectSubmeshObject)
+        {
+            throw new NotImplementedException();
         }
     }
 }

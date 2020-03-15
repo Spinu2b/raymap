@@ -13,10 +13,5 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3.M
         {
             throw new NotImplementedException();
         }
-
-        protected UnityBoneTransformModel[] GetUnityMappedBonesBindPoses(PhysicalObjectSubmeshObject physicalObjectSubmeshObject)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
