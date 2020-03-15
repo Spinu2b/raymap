@@ -16,8 +16,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
             List<BoneWeightsInfo> BoneWeightsInfos = GetBoneWeightsInfos(bones);
             foreach (var BoneWeightsInfo in BoneWeightsInfos)
             {
-                yield return GetBoneWeightsFor(BoneWeightsInfo.BoneName, BoneWeightsInfo.ChannelName,
-                    BoneWeightsInfo.BoneIndex, boneWeights);
+                yield return GetBoneWeightsFor(BoneWeightsInfo.BoneName, BoneWeightsInfo.BoneIndex, boneWeights);
             }
         }
 
@@ -26,16 +25,15 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
             var result = new List<BoneWeightsInfo>();
             for (int i = 0; i < bones.Length; i++)
             {
-                var channelName = BoneChannelMappingHelper.GetCorrespondingChannelNameForActualBoneAssociation(bones[i]);
-                result.Add(new BoneWeightsInfo(bones[i].name, channelName, i));
+                result.Add(new BoneWeightsInfo(bones[i].name, i));
             }
             return result;
         }
 
-        private BoneWeights GetBoneWeightsFor(string BoneName, string ChannelName, int BoneIndex, UnityBoneWeightModel[] boneWeights)
+        private BoneWeights GetBoneWeightsFor(string BoneName, int BoneIndex, UnityBoneWeightModel[] boneWeights)
         {
             var result = new BoneWeights();
-            result.BoneName = ChannelName;
+            result.BoneName = BoneName;
             for (int vertexIndex = 0; vertexIndex < boneWeights.Length; vertexIndex++)
             {
                 var weight = boneWeights[vertexIndex];

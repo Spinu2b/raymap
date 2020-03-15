@@ -22,7 +22,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
             for (int i = 0; i < bones.Length; i++)
             {
                 var unityBoneTransformModel = bones[i];
-                var correspondingChannelName = BoneChannelMappingHelper.GetCorrespondingChannelNameForActualBoneAssociation(unityBoneTransformModel);
+                var correspondingChannelName = bones[i].name;
                 result.Add(
                     correspondingChannelName,
                     new BoneBindPose(

@@ -12,10 +12,16 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
     {
         public TransformModel ConstructFor(PhysicalObjectSubmeshObject physicalObjectSubmeshObject)
         {
-            throw new NotImplementedException();
-            //var result = new TransformModel();
-            //
-            //return result;
+            var unityTransform = physicalObjectSubmeshObject.submeshGameObject.transform;
+            var result = new TransformModel();
+            result.position = new MathDescription.Vector3d(unityTransform.position.x, unityTransform.position.y, unityTransform.position.z);
+            result.rotation = new MathDescription.Quaternion(unityTransform.rotation.w, unityTransform.rotation.x, unityTransform.rotation.y, unityTransform.rotation.z);
+            result.scale = new MathDescription.Vector3d(unityTransform.lossyScale.x, unityTransform.lossyScale.y, unityTransform.lossyScale.z);
+
+            result.localPosition = new MathDescription.Vector3d(unityTransform.localPosition.x, unityTransform.localPosition.y, unityTransform.localPosition.z);
+            result.localRotation = new MathDescription.Quaternion(unityTransform.localRotation.w, unityTransform.localRotation.x, unityTransform.localRotation.y, unityTransform.localRotation.z);
+            result.localScale = new MathDescription.Vector3d(unityTransform.localScale.x, unityTransform.localScale.y, unityTransform.localScale.z);
+            return result;
         }
     }
 }

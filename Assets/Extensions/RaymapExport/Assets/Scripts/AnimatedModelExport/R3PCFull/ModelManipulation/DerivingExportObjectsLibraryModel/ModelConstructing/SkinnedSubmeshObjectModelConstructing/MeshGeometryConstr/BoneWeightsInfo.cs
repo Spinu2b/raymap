@@ -9,13 +9,11 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
     public class BoneWeightsInfo
     {
         public string BoneName;
-        public string ChannelName;
         public int BoneIndex;
 
-        public BoneWeightsInfo(string BoneName, string ChannelName, int BoneIndex)
+        public BoneWeightsInfo(string BoneName, int BoneIndex)
         {
             this.BoneName = BoneName;
-            this.ChannelName = ChannelName;
             this.BoneIndex = BoneIndex;
         }
     }

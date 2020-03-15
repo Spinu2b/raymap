@@ -45,6 +45,16 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
             throw new NotImplementedException();
         }
 
+        private Transform GetParentChannelTransformForSubmesh(GameObject submeshGameObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        private Transform GetParentChannelTransformForActualBoneTransform(Transform boneTransform)
+        {
+            throw new NotImplementedException();
+        }
+
         public UnityBoneWeightModel[] GetUnityMappedBoneWeights()
         {
             throw new NotImplementedException();
@@ -52,7 +62,16 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 
         public UnityBoneTransformModel[] GetUnityMappedBones()
         {
-            throw new NotImplementedException();
+            if (submeshGameObject.GetComponent<SkinnedMeshRenderer>() != null)
+            {
+                return submeshGameObject.GetComponent<SkinnedMeshRenderer>().bones.Select(
+                    boneTransform => new UnityBoneTransformModel(
+                        GetParentChannelTransformForActualBoneTransform(boneTransform))).ToArray();
+            }
+            else
+            {
+                return new UnityBoneTransformModel[] { new UnityBoneTransformModel(GetParentChannelTransformForSubmesh(submeshGameObject)) };
+            }
         }
     }
 }
