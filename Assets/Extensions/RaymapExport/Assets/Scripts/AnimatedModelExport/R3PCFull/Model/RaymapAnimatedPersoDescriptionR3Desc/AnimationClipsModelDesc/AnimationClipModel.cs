@@ -22,7 +22,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
             throw new NotImplementedException();
         }
 
-        internal void AddKeyframe(int index, AnimationFrameModel animationFrame)
+        public void AddKeyframe(int index, AnimationFrameModel animationFrame)
         {
             throw new NotImplementedException();
         }

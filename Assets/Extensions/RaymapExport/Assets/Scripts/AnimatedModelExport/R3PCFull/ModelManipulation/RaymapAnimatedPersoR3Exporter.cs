@@ -28,7 +28,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 
         private string GetPersoName(GameObject persoR3GameObject)
         {
-            throw new NotImplementedException();
+            return persoR3GameObject.name;
         }
 
         private AnimationClipsModel GetAnimationClipsModel(GameObject persoR3GameObject)

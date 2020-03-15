@@ -12,7 +12,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
     {
         protected Family GetFamilyForPerso(GameObject persoR3GameObject)
         {
-            throw new NotImplementedException();
+            return persoR3GameObject.GetComponent<PersoBehaviour>().perso.p3dData.family;
         }
     }
 }

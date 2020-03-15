@@ -24,12 +24,21 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 
         public static List<Vector3d> GetNormals(Vector3[] normals)
         {
-            throw new NotImplementedException();
+            return normals.Select(x => new Vector3d(x.x, x.y, x.z)).ToList();
         }
 
         public static List<List<Vector2d>> GetUvMaps(Mesh mesh)
         {
-            throw new NotImplementedException();
+            var result = new List<List<Vector2d>>();
+            result.Add(mesh.uv.Select(x => new Vector2d(x.x, x.y)).ToList());
+            result.Add(mesh.uv2.Select(x => new Vector2d(x.x, x.y)).ToList());
+            result.Add(mesh.uv3.Select(x => new Vector2d(x.x, x.y)).ToList());
+            result.Add(mesh.uv4.Select(x => new Vector2d(x.x, x.y)).ToList());
+            result.Add(mesh.uv5.Select(x => new Vector2d(x.x, x.y)).ToList());
+            result.Add(mesh.uv6.Select(x => new Vector2d(x.x, x.y)).ToList());
+            result.Add(mesh.uv7.Select(x => new Vector2d(x.x, x.y)).ToList());
+            result.Add(mesh.uv8.Select(x => new Vector2d(x.x, x.y)).ToList());
+            return result;
         }
     }
 }
