@@ -46,7 +46,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
             {
                 int bonesListLength = submeshGameObject.GetComponent<SkinnedMeshRenderer>().bones.Length;
                 var result = new UnityBoneTransformModel[bonesListLength];
-                var bindPoses = submeshGameObject.GetComponent<SkinnedMeshRenderer>().sharedMesh.bindposes;
+                var bindPoses = GetMesh().bindposes;
                 var bones = submeshGameObject.GetComponent<SkinnedMeshRenderer>().bones;
                 for (int boneIndex = 0; boneIndex < bonesListLength; boneIndex++)
                 {
@@ -74,24 +74,60 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
             boneWorkingDuplicate.transform.localScale =
                 new Vector3(localMatrix.GetColumn(0).magnitude, localMatrix.GetColumn(1).magnitude, localMatrix.GetColumn(2).magnitude);
 
-            var result = new UnityBoneTransformModel(boneWorkingDuplicate.transform);
+            var result = UnityBoneTransformModel.FromUnityTransform(boneWorkingDuplicate.transform);
             UnityEngine.Object.Destroy(boneWorkingDuplicate);
             return result;
         }
 
         private Transform GetParentChannelTransformForSubmesh(GameObject submeshGameObject)
         {
-            throw new NotImplementedException();
+            return GetParentChannelTransformForTransform(submeshGameObject.transform);
         }
 
         private Transform GetParentChannelTransformForActualBoneTransform(Transform boneTransform)
         {
-            throw new NotImplementedException();
+            return GetParentChannelTransformForTransform(boneTransform);
+        }
+
+        private Transform GetParentChannelTransformForTransform(Transform transform)
+        {
+            var currentTransform = transform;
+            while (currentTransform != null && !currentTransform.gameObject.name.Contains("Channel"))
+            {
+                currentTransform = currentTransform.parent;
+            }
+            if (currentTransform == null)
+            {
+                throw new InvalidOperationException("Could not find parent channel for given transform in the hierarchy!");
+            }
+            else
+            {
+                return currentTransform;
+            }
         }
 
         public UnityBoneWeightModel[] GetUnityMappedBoneWeights()
         {
-            throw new NotImplementedException();
+            if (submeshGameObject.GetComponent<SkinnedMeshRenderer>() != null)
+            {
+                int verticesLength = GetMesh().vertices.Length;
+                var result = new UnityBoneWeightModel[verticesLength];
+                var boneWeights = GetMesh().boneWeights;
+                for (int vertexIndex = 0; vertexIndex < verticesLength; vertexIndex++)
+                {
+                    result[vertexIndex] = UnityBoneWeightModel.FromActualUnityBoneWeight(boneWeights[vertexIndex]);
+                }
+                return result;
+            }
+            else if (submeshGameObject.GetComponent<MeshRenderer>() != null)
+            {
+                var vertices = GetMesh().vertices;
+                return vertices.Select(vertex => UnityBoneWeightModel.WithParameters(boneIndex: 0, boneWeight: 1.0f)).ToArray();
+            } 
+            else
+            {
+                throw new InvalidOperationException("This physical object is neither channel-parented nor skinned one!");
+            }
         }
 
         public UnityBoneTransformModel[] GetUnityMappedBones()
@@ -99,12 +135,16 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
             if (submeshGameObject.GetComponent<SkinnedMeshRenderer>() != null)
             {
                 return submeshGameObject.GetComponent<SkinnedMeshRenderer>().bones.Select(
-                    boneTransform => new UnityBoneTransformModel(
+                    boneTransform => UnityBoneTransformModel.FromUnityTransform(
                         GetParentChannelTransformForActualBoneTransform(boneTransform))).ToArray();
             }
+            else if (submeshGameObject.GetComponent<MeshRenderer>() != null)
+            {
+                return new UnityBoneTransformModel[] { UnityBoneTransformModel.FromUnityTransform(GetParentChannelTransformForSubmesh(submeshGameObject)) };
+            } 
             else
             {
-                return new UnityBoneTransformModel[] { new UnityBoneTransformModel(GetParentChannelTransformForSubmesh(submeshGameObject)) };
+                throw new InvalidOperationException("This physical object is neither channel-parented nor skinned one!");
             }
         }
     }
