@@ -21,6 +21,17 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 
         public void Consolidate(SkinnedSubmeshesSet other)
         {
+            foreach (var submeshToConsider in other.IterateSubmeshes())
+            {
+                if (!FoundCompliantSubmesh(submeshToConsider))
+                {
+                    Add(submeshToConsider);
+                }
+            }
+        }
+
+        private bool FoundCompliantSubmesh(SkinnedSubmeshObjectModel submeshToConsider)
+        {
             throw new NotImplementedException();
         }
 
