@@ -11,7 +11,23 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.Utils
     {
         public static IEnumerable<Transform> IterateAllGameObjectChildrenAndSubchildrenRecursively(GameObject gao)
         {
-            throw new NotImplementedException();
+            var transformSubChildrenList = new List<Transform>();
+
+            TraverseRecursively(gao, transformSubChildrenList);
+
+            foreach (var transform in transformSubChildrenList)
+            {
+                yield return transform;
+            }
+        }
+
+        private static void TraverseRecursively(GameObject gao, List<Transform> transformSubChildrenList)
+        {
+            foreach (Transform child in gao.transform)
+            {
+                transformSubChildrenList.Add(child);
+                TraverseRecursively(child.gameObject, transformSubChildrenList);
+            }
         }
     }
 }
