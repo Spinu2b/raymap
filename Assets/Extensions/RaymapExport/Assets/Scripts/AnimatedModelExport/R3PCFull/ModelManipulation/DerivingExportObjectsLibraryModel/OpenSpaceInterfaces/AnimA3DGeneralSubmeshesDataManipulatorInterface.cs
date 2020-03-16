@@ -82,11 +82,24 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
         private void DeinitSubobjectsCollectionForManipulation()
         {
             DeleteGameObjectsParentedToPersoAssociatedWithRaymapExport();
+            subObjects = null;
+            channelObjects = null;
+            currentActivePO = null;
         }
 
         private void DeleteGameObjectsParentedToPersoAssociatedWithRaymapExport()
         {
-            throw new NotImplementedException();
+            foreach (var physicalObjectArray in subObjects)
+            {
+                foreach (var physicalObject in physicalObjectArray)
+                {
+                    UnityEngine.Object.Destroy(physicalObject.Gao);
+                }
+            }
+            foreach (var channelObject in channelObjects)
+            {
+                UnityEngine.Object.Destroy(channelObject);
+            }
         }
 
         public IEnumerable<PhysicalObjectWithChannelParentingInfo> IteratePhysicalObjectsWithChannelParentingInfosForGivenFrame(int animationFrameNumber)
