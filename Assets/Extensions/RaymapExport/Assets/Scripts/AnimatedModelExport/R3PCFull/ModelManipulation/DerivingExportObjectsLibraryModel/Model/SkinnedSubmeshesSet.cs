@@ -9,9 +9,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 {
     public class SkinnedSubmeshesSet
     {
+        private HashSet<SkinnedSubmeshObjectModel> submeshesSet = new HashSet<SkinnedSubmeshObjectModel>();
+
         public IEnumerable<SkinnedSubmeshObjectModel> IterateSubmeshes()
         {
-            throw new NotImplementedException();
+            foreach (var submesh in submeshesSet)
+            {
+                yield return submesh;
+            }
         }
 
         public void Consolidate(SkinnedSubmeshesSet other)
@@ -21,7 +26,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 
         public void Add(SkinnedSubmeshObjectModel skinnedSubmeshObject)
         {
-            throw new NotImplementedException();
+            submeshesSet.Add(skinnedSubmeshObject);
         }
     }
 }
