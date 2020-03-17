@@ -24,7 +24,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
                 while (persoAnimationStatesSkinnedSubmeshesExportInterface.AreAnimationFramesLeft())
                 {
                     resultSubmeshesSet.Consolidate(persoAnimationStatesSkinnedSubmeshesExportInterface.DeriveSubmeshesSetForGivenFrame(
-                        persoAnimationStatesSkinnedSubmeshesExportInterface.GetCurrentFrameNumberForExport()));
+                        GetActualPerso(persoR3GameObject), persoAnimationStatesSkinnedSubmeshesExportInterface.GetCurrentFrameNumberForExport()));
                     persoAnimationStatesSkinnedSubmeshesExportInterface.NextFrame();
                 }
                 persoAnimationStatesSkinnedSubmeshesExportInterface.NextAnimationState();

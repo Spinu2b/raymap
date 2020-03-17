@@ -19,9 +19,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
         private GameObject[] channelObjects;
         private int[] currentActivePO;
 
-        public AnimA3DGeneralSubmeshesDataManipulatorInterface(AnimA3DGeneral animA3DGeneral)
+        public AnimA3DGeneralSubmeshesDataManipulatorInterface(AnimA3DGeneral animA3DGeneral, Perso perso)
         {
             this.animA3DGeneral = animA3DGeneral;
+            this.perso = perso;
         }
 
         private void InitSubobjectsCollectionForManipulation()

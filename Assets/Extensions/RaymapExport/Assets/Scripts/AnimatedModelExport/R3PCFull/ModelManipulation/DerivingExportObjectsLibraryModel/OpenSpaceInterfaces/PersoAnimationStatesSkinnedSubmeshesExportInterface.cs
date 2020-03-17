@@ -7,6 +7,7 @@ using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingData.OpenSpaceInterfaces;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingExportObjectsLibraryModel.Model;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingExportObjectsLibraryModel.ModelConstructing;
+using OpenSpace.Object;
 using OpenSpace.Object.Properties;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingExportObjectsLibraryModel.OpenSpaceInterfaces
@@ -15,12 +16,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
     {
         public PersoAnimationStatesSkinnedSubmeshesExportInterface(Family family) : base(family) {}
 
-        public SkinnedSubmeshesSet DeriveSubmeshesSetForGivenFrame(int animationFrameNumber)
+        public SkinnedSubmeshesSet DeriveSubmeshesSetForGivenFrame(Perso perso, int animationFrameNumber)
         {
             var skinnedSubmeshesSetFactory = new SkinnedSubmeshesSetFactory();
             return skinnedSubmeshesSetFactory.ConstructFromGiven(
                 new AnimA3DGeneralSubmeshesDataManipulatorInterface(
-                    familyAnimationStatesHelper.GetAnimA3DGeneralForCurrentPersoAnimationState()), animationFrameNumber);
+                    familyAnimationStatesHelper.GetAnimA3DGeneralForCurrentPersoAnimationState(), perso), animationFrameNumber);
         }
     }
 }
