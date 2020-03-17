@@ -32,7 +32,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 
         public AnimationFrameModel GetFirstAnimationFrame()
         {
-            throw new NotImplementedException();
+            return keyframes.OrderBy(x => x.Key).First().Value;
         }
     }
 }
