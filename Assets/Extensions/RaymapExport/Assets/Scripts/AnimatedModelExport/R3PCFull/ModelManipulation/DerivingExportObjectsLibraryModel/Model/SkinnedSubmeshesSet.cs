@@ -16,8 +16,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 
         public static bool MeshGeometryAndBindPosesCompliant(SkinnedSubmeshObjectModel submeshA, SkinnedSubmeshObjectModel submeshB)
         {
-            return (submeshA.meshGeometry.GetHashCode() ^ submeshA.bindBonePoses.GetHashCode()).
-                Equals(submeshB.meshGeometry.GetHashCode() ^ submeshB.bindBonePoses.GetHashCode());
+            return submeshA.CompliantToWithMeshGeometryAndBindPoses(submeshB);
         }
 
         public static bool MaterialsCompliant(SkinnedSubmeshObjectModel submeshA, SkinnedSubmeshObjectModel submeshB)
@@ -80,8 +79,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 
                 if (submeshSkinningBonesSet.Count != 0)
                 {
-                    throw new InvalidOperationException("Submeshes aren't fully compliant in geometry-description terms," +
-                        " but they share some common skinning bones which is not supported now!");
+                    // Let's try actually supporting this since it seems inevitable
+                    // There will be needed some tweaks related to positioning submeshes later when importing to Blender
+                    // due to the matters related to miscellaneous bind poses of same bones for different submeshes
+                    // Skinning, vertex groups itd should not matter, because its just matter of mapping weights to vertices of respective submesh and thats it
+                    //throw new InvalidOperationException("Submeshes aren't fully compliant in geometry-description terms," +
+                    //    " but they share some common skinning bones which is not supported now!");
                 }                
             }
             return false;

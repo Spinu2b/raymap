@@ -19,5 +19,15 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
         {
             return new HashSet<string>(bindBonePoses.Select(x => x.Key).ToList());
         }
+
+        public bool CompliantToWithMeshGeometryAndBindPoses(SkinnedSubmeshObjectModel other)
+        {
+            return meshGeometry.CompliantTo(other.meshGeometry) && CompliantWithBindPoses(other.bindBonePoses);
+        }
+
+        private bool CompliantWithBindPoses(Dictionary<string, BoneBindPose> otherBindBonePoses)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

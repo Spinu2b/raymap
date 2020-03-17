@@ -15,5 +15,33 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
         public Dictionary<string, Dictionary<int, float>> bonesWeights;
 
         public List<List<Vector2d>> uvMaps;
+
+        public bool CompliantTo(MeshGeometry otherMeshGeometry)
+        {
+            return CompliantWithVertices(otherMeshGeometry.vertices) &&
+                CompliantWithNormals(otherMeshGeometry.normals) &&
+                CompliantWithTriangles(otherMeshGeometry.triangles) &&
+                CompliantWithBonesWeights(otherMeshGeometry.bonesWeights);
+        }
+
+        private bool CompliantWithBonesWeights(Dictionary<string, Dictionary<int, float>> otherBonesWeights)
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool CompliantWithTriangles(List<Tuple<int, int, int>> otherTriangles)
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool CompliantWithNormals(List<Vector3d> otherNormals)
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool CompliantWithVertices(List<Vector3d> otherVertices)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
