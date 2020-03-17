@@ -107,7 +107,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
             {
                 foreach (var physicalObject in physicalObjectArray)
                 {
-                    UnityEngine.Object.Destroy(physicalObject.Gao);
+                    if (physicalObject != null && physicalObject.Gao != null)
+                    {
+                        UnityEngine.Object.Destroy(physicalObject.Gao);
+                    }
                 }
             }
             foreach (var channelObject in channelObjects)

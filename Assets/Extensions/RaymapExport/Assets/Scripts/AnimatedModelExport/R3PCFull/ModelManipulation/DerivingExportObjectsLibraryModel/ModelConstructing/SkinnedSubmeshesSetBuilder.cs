@@ -10,7 +10,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 {
     public class SkinnedSubmeshesSetBuilder
     {
-        private SkinnedSubmeshesSet result;
+        private SkinnedSubmeshesSet result = new SkinnedSubmeshesSet();
 
         public SkinnedSubmeshesSet Build()
         {
