@@ -19,10 +19,18 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 
         public IEnumerable<AnimationFrameModel> IterateKeyframes()
         {
-            throw new NotImplementedException();
+            foreach (var keyframeInfo in keyframes)
+            {
+                yield return keyframeInfo.Value;
+            }
         }
 
         public void AddKeyframe(int index, AnimationFrameModel animationFrame)
+        {
+            keyframes.Add(index, animationFrame);
+        }
+
+        public AnimationFrameModel GetFirstAnimationFrame()
         {
             throw new NotImplementedException();
         }

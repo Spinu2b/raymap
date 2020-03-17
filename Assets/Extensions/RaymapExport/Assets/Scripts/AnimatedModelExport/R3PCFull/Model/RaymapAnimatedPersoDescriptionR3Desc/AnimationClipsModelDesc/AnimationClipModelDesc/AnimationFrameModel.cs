@@ -15,5 +15,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
         {
             this.index = index;
         }
+
+        public ArmatureHierarchyModel ToArmatureHierarchyModel()
+        {
+            return MapTree<ArmatureHierarchyModel, ArmatureHierarchyModelNode>(treeNode => new ArmatureHierarchyModelNode(treeNode.name));
+        }
     }
 }

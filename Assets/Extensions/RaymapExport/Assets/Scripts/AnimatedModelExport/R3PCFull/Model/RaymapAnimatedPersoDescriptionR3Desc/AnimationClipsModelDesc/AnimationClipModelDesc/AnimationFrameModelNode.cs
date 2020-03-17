@@ -9,14 +9,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 {
     public class AnimationFrameModelNode
     {
-        private string name;
-        private bool isKeyframe;
-        private Vector3d position;
-        private Vector3d localPosition;
-        private Quaternion rotation;
-        private Quaternion localRotation;
-        private Vector3d scale;
-        private Vector3d localScale;
+        public string name;
+        public bool isKeyframe;
+        public Vector3d position;
+        public Vector3d localPosition;
+        public Quaternion rotation;
+        public Quaternion localRotation;
+        public Vector3d scale;
+        public Vector3d localScale;
 
         public AnimationFrameModelNode(
             string name,

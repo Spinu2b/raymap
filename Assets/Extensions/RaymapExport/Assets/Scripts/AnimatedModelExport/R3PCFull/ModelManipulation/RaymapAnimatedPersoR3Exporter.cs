@@ -23,7 +23,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 
         private ArmatureHierarchyModel DeriveArmatureHierarchy(GameObject persoR3GameObject, AnimationClipsModel animationClipsModel)
         {
-            throw new NotImplementedException();
+            var consolidatedArmatureHierarchyBuilder = new ConsolidatedArmatureHierarchyBuilder();
+            foreach (var animationClip in animationClipsModel.IterateAnimationClips())
+            {
+                consolidatedArmatureHierarchyBuilder.Consolidate(animationClip.GetFirstAnimationFrame());
+            }
+            return consolidatedArmatureHierarchyBuilder.Build();
         }
 
         private string GetPersoName(GameObject persoR3GameObject)

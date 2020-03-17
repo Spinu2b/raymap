@@ -192,6 +192,20 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.Utils
             }
         }
 
+        public IEnumerable<ParentChildPair<T, KeyType>> IterateParentChildPairsWithRoot()
+        {
+            List<ParentChildPair<T, KeyType>> pairs = new List<ParentChildPair<T, KeyType>>();
+            if (Root != null)
+            {
+                pairs.Add(new ParentChildPair<T, KeyType>(default(T), Root.Node, default(KeyType), Root.Id));
+                Root.TraverseChildParentPairsAndCollectAll(pairs);
+            }
+            foreach (var pair in pairs)
+            {
+                yield return pair;
+            }
+        }
+
         public bool Contains(KeyType Id)
         {
             foreach (var node in IterateNodes())
@@ -257,6 +271,17 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.Utils
                 resultList.Add(new TreeBuildingNodeInfo<T, KeyType>(parentChildPair.ParentId, parentChildPair.ChildId, parentChildPair.Child));
             }
             return new TreeBuildingNodesSet<T, KeyType>(resultList);
+        }
+
+        public TargetTreeType MapTree<TargetTreeType, TargetTreeNodeType>(Func<T, TargetTreeNodeType> mappingDelegate) where TargetTreeType : Tree<TargetTreeNodeType, KeyType>
+        {
+            var result = new Tree<TargetTreeNodeType, KeyType>();
+            foreach (var childParentPair in IterateParentChildPairsWithRoot())
+            {
+                result.AddNode(parentIdentifier: childParentPair.ParentId, nodeIdentifier: childParentPair.ChildId,
+                    node: mappingDelegate(childParentPair.Child));
+            }
+            return (TargetTreeType)result;
         }
     }
 }

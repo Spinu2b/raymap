@@ -10,5 +10,13 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
     public class AnimationClipsModel
     {
         public Dictionary<string, AnimationClipModel> animationClips = new Dictionary<string, AnimationClipModel>();
+
+        public IEnumerable<AnimationClipModel> IterateAnimationClips()
+        {
+            foreach (var animationClipInfo in animationClips)
+            {
+                yield return animationClipInfo.Value;
+            }
+        }
     }
 }
