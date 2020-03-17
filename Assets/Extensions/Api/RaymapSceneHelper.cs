@@ -11,7 +11,10 @@ namespace Assets.Extensions.Api
     {
         public static IEnumerable<GameObject> IteratePersoGameObjects()
         {
-            throw new NotImplementedException();
+            foreach (PersoBehaviour persoBehaviour in UnityEngine.Object.FindObjectsOfType(typeof(PersoBehaviour)))
+            {
+                yield return persoBehaviour.gameObject;
+            }
         }
     }
 }

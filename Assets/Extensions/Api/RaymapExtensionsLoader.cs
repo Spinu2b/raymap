@@ -7,9 +7,10 @@ using UnityEngine;
 
 namespace Assets.Extensions.Api
 {
-    public abstract class ExtensionInjectComponent : MonoBehaviour
+    public class RaymapExtensionsLoader : MonoBehaviour
     {
-        private bool IsInjected = false;
+        public RaymapExtensionComponent[] extensionsList;
+
         private bool MapFinallyLoaded = false;
         private bool IsMapLoaded()
         {
@@ -21,14 +22,15 @@ namespace Assets.Extensions.Api
             if (!IsMapLoaded())
             {
                 return;
-            } 
+            }
             else if (!MapFinallyLoaded)
             {
-                OnMapLoaded();
+                foreach (var raymapExtension in extensionsList)
+                {
+                    raymapExtension.OnMapLoaded();
+                }
                 MapFinallyLoaded = true;
             }
         }
-
-        protected abstract void OnMapLoaded();
     }
 }

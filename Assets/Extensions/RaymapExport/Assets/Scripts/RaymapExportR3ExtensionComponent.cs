@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts
 {
-    public class RaymapExportR3InjectComponent : RaymapExportInjectComponent
+    public class RaymapExportR3ExtensionComponent : RaymapExportExtensionComponent
     {
         protected override void OnPersoInject(GameObject persoGameObject)
         {

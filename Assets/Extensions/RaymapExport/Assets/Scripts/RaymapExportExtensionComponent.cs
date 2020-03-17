@@ -8,9 +8,9 @@ using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts
 {
-    public abstract class RaymapExportInjectComponent : ExtensionInjectComponent
+    public abstract class RaymapExportExtensionComponent : RaymapExtensionComponent
     {
-        protected override void OnMapLoaded()
+        public override void OnMapLoaded()
         {
             InjectIntoPersos();
         }
