@@ -7,9 +7,29 @@ using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingExportObjectsLibraryModel.Model
 {
+    public class SkinnedSubmeshComparator
+    {
+        public static bool NameCompliant(SkinnedSubmeshObjectModel submeshA, SkinnedSubmeshObjectModel submeshB)
+        {
+            return submeshA.name.Equals(submeshB.name);
+        }
+
+        public static bool MeshGeometryAndBindPosesCompliant(SkinnedSubmeshObjectModel submeshA, SkinnedSubmeshObjectModel submeshB)
+        {
+            return (submeshA.meshGeometry.GetHashCode() ^ submeshA.bindBonePoses.GetHashCode()).
+                Equals(submeshB.meshGeometry.GetHashCode() ^ submeshB.bindBonePoses.GetHashCode());
+        }
+
+        public static bool MaterialsCompliant(SkinnedSubmeshObjectModel submeshA, SkinnedSubmeshObjectModel submeshB)
+        {
+            return submeshA.materials.GetHashCode().Equals(submeshB.materials.GetHashCode());
+        }
+    }
+
     public class SkinnedSubmeshesSet
     {
         private HashSet<SkinnedSubmeshObjectModel> submeshesSet = new HashSet<SkinnedSubmeshObjectModel>();
+        private HashSet<string> bonesSoFarUsedInSkinning = new HashSet<string>();
 
         public IEnumerable<SkinnedSubmeshObjectModel> IterateSubmeshes()
         {
@@ -32,12 +52,45 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 
         private bool FoundCompliantSubmesh(SkinnedSubmeshObjectModel submeshToConsider)
         {
-            throw new NotImplementedException();
+            foreach (var submesh in submeshesSet)
+            {
+                bool nameCompliant = SkinnedSubmeshComparator.NameCompliant(submesh, submeshToConsider);
+                bool meshGeometryAndBindPosesCompliant = SkinnedSubmeshComparator.MeshGeometryAndBindPosesCompliant(submesh, submeshToConsider);
+                bool materialsCompliant = SkinnedSubmeshComparator.MaterialsCompliant(submesh, submeshToConsider);
+
+                // don't care about materials, it is effectively matter of changing texture in this case, overall appearance, not that important
+                // as geometry itself
+                if (!nameCompliant && meshGeometryAndBindPosesCompliant)
+                {
+                    throw new InvalidOperationException("Submeshes have effectively same geometry and skinning info, yet they have different names!");
+                } 
+                else if (nameCompliant && !meshGeometryAndBindPosesCompliant)
+                {
+                    throw new InvalidOperationException("Submeshes have the same name yet they are not the same in terms of general geometry model description!");
+                }
+                else if (nameCompliant && meshGeometryAndBindPosesCompliant)
+                {
+                    return true;
+                }
+
+                var submeshSkinningBonesSet = submesh.GetBonesNamesUsedForSkinningSet();
+                var submeshToConsiderSkinningBonesSet = submesh.GetBonesNamesUsedForSkinningSet();
+
+                submeshSkinningBonesSet.IntersectWith(submeshToConsiderSkinningBonesSet);
+
+                if (submeshSkinningBonesSet.Count != 0)
+                {
+                    throw new InvalidOperationException("Submeshes aren't fully compliant in geometry-description terms," +
+                        " but they share some common skinning bones which is not supported now!");
+                }                
+            }
+            return false;
         }
 
         public void Add(SkinnedSubmeshObjectModel skinnedSubmeshObject)
         {
             submeshesSet.Add(skinnedSubmeshObject);
+            bonesSoFarUsedInSkinning.UnionWith(skinnedSubmeshObject.GetBonesNamesUsedForSkinningSet());
         }
     }
 }

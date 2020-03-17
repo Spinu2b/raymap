@@ -14,5 +14,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
         public MeshGeometry meshGeometry;
         public Dictionary<string, BoneBindPose> bindBonePoses;
         public List<Material> materials;
+
+        public HashSet<string> GetBonesNamesUsedForSkinningSet()
+        {
+            return new HashSet<string>(bindBonePoses.Select(x => x.Key).ToList());
+        }
     }
 }
