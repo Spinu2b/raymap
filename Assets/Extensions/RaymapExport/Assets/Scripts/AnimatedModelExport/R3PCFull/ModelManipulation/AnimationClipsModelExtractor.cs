@@ -19,10 +19,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
             foreach (var animationClip in persoAnimationStatesDataManipulator.IterateAnimationClips(persoR3GameObject))
             {
                 result.animationClips.Add(animationClip.name, animationClip);
-                foreach (var animationKeyframe in animationClip.IterateKeyframes())
-                {
-                    result.animationClips[animationClip.name].keyframes.Add(animationKeyframe.index, animationKeyframe);
-                }
             }
             return result;
         }
