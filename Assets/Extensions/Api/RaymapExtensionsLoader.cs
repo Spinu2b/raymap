@@ -10,11 +10,17 @@ namespace Assets.Extensions.Api
     public class RaymapExtensionsLoader : MonoBehaviour
     {
         public RaymapExtensionComponent[] extensionsList;
+        private Controller raymapController;
 
         private bool MapFinallyLoaded = false;
         private bool IsMapLoaded()
         {
-            throw new NotImplementedException();
+            return raymapController.LoadState == Controller.State.Finished;
+        }
+
+        private void Awake()
+        {
+            raymapController = (Controller)FindObjectOfType(typeof(Controller));
         }
 
         private void Update()
