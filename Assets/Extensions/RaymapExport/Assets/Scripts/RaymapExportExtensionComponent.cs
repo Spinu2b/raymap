@@ -10,7 +10,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts
 {
     public abstract class RaymapExportExtensionComponent : RaymapExtensionComponent
     {
-        public override void OnMapLoaded()
+        protected override void OnMapLoaded()
         {
             InjectIntoPersos();
         }
