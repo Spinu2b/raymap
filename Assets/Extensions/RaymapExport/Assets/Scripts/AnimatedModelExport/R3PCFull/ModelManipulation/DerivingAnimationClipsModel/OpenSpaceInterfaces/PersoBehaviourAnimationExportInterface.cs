@@ -15,6 +15,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
         public IEnumerable<AnimHierarchyWithChannelInfo> IterateAnimHierarchiesWithChannelInfosForGivenFrame(int animationFrameNumber)
         {
             throw new NotImplementedException();
+            foreach (var persoHierarchyGameObject in IterateGameObjectsInPersoHierarchy(animationFrameNumber))
+            {
+
+            }
         }
     }
 }
