@@ -9,6 +9,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Comm
     public class PersoBehaviourAnimationStatesHelper
     {
         public PersoBehaviourInterface persoBehaviourInterface { get; private set; }
+        private int currentPersoAnimationStateIndex = 0;
 
         public PersoBehaviourAnimationStatesHelper(PersoBehaviourInterface persoBehaviourInterface)
         {
@@ -17,37 +18,66 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Comm
 
         public void SwitchToFirstAnimationState()
         {
-            throw new NotImplementedException();
+            SwitchContextToAnimationStateOfIndex(GetFirstPersoStateIndex());
+            currentPersoAnimationStateIndex = GetFirstPersoStateIndex();
+        }
+
+        private int GetFirstPersoStateIndex()
+        {
+            return 0;
+        }
+
+        private void SwitchContextToAnimationStateOfIndex(int stateIndex)
+        {
+            persoBehaviourInterface.SetState(stateIndex);
+            currentPersoAnimationStateIndex = stateIndex;
         }
 
         public bool AreValidPersoAnimationStatesLeftIncludingCurrentOne()
         {
-            throw new NotImplementedException();
+            return currentPersoAnimationStateIndex < persoBehaviourInterface.statesCount;
         }
 
         public bool AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(int currentFrameNumber)
         {
-            throw new NotImplementedException();
+            return currentFrameNumber < persoBehaviourInterface.currentAnimationStateFramesCount;
         }
 
         public int GetStateAnimationNextFrameNumberAfter(int currentFrameNumber)
         {
-            throw new NotImplementedException();
+            return currentFrameNumber + 1;
         }
 
         public int GetCurrentPersoStateIndex()
         {
-            throw new NotImplementedException();
+            return currentPersoAnimationStateIndex;
         }
 
         public void AcquireNextValidPersoAnimationState()
         {
-            throw new NotImplementedException();
+            int currentStateIndex = currentPersoAnimationStateIndex;
+            currentStateIndex++;
+
+            while (!IsValidPersoAnimationState(currentStateIndex))
+            {
+                currentStateIndex++;
+                if (currentStateIndex >= persoBehaviourInterface.statesCount)
+                {
+                    currentPersoAnimationStateIndex = currentStateIndex;
+                    return;
+                }
+            }
+            SwitchContextToAnimationStateOfIndex(currentStateIndex);
+        }
+
+        private bool IsValidPersoAnimationState(int animationStateIndex)
+        {
+            return persoBehaviourInterface.IsValidAnimationState(animationStateIndex);
         }
 
         public int GetFirstValidStateAnimationKeyframeFrameNumber()
         {
-            throw new NotImplementedException();
+            return 1;
         }
     }
 }

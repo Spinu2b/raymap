@@ -11,6 +11,27 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Comm
         private PersoBehaviour persoBehaviour;
         private ROMPersoBehaviour romPersoBehaviour;
 
+        public int statesCount {
+            get {
+                if (persoBehaviour != null) {
+                    return persoBehaviour.perso.p3dData.family.states.Count;
+                } else {
+                    throw new NotSupportedException("States count not supported for ROM Perso Behaviour!");
+                }
+            }
+        }
+
+        public int currentAnimationStateFramesCount { 
+            get
+            {
+                if (persoBehaviour != null) {
+                    return persoBehaviour.a3d.num_onlyFrames;
+                } else {
+                    throw new NotSupportedException("Animation state frames count not supported for ROM Perso Behaviour!");
+                }
+            }
+        }
+
         public PersoBehaviourInterface(PersoBehaviour persoBehaviour)
         {
             this.persoBehaviour = persoBehaviour;
@@ -19,6 +40,22 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Comm
         public PersoBehaviourInterface(ROMPersoBehaviour romPersoBehaviour)
         {
             this.romPersoBehaviour = romPersoBehaviour;
+        }
+
+        public void SetState(int stateIndex)
+        {
+            if (persoBehaviour != null)
+            {
+                persoBehaviour.SetState(stateIndex);
+            } else
+            {
+                romPersoBehaviour.SetState(stateIndex);
+            }
+        }
+
+        public bool IsValidAnimationState(int animationStateIndex)
+        {
+            throw new NotImplementedException();
         }
     }
 }
