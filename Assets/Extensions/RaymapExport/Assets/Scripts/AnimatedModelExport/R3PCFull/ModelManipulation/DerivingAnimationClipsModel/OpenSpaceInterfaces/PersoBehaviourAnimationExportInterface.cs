@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
                 {
                     var parentChannelGameObject = GetParentChannelGameObject(persoHierarchyGameObject);
                     var isKeyframedChannel = GetChannelCurrentKeyframeStatus(persoHierarchyGameObject);
-                    yield return new AnimHierarchyWithChannelInfo(parentChannelGameObject.name, persoHierarchyGameObject.name,
+                    yield return new AnimHierarchyWithChannelInfo(parentChannelGameObject?.name, persoHierarchyGameObject.name,
                         persoHierarchyGameObject.transform.localPosition, persoHierarchyGameObject.transform.localRotation,
                         persoHierarchyGameObject.transform.localScale, isKeyframedChannel);
                 }
@@ -30,17 +31,36 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 
         private bool GetChannelCurrentKeyframeStatus(GameObject persoHierarchyGameObject)
         {
-            throw new NotImplementedException();
+            return persoBehaviourInterface.GetChannelOfIndexKeyframeState(GetChannelIndex(persoHierarchyGameObject));
+        }
+
+        private int GetChannelIndex(GameObject channelGameObject)
+        {
+            return int.Parse(Regex.Match(channelGameObject.name, "[0-9]+").Value);
         }
 
         private GameObject GetParentChannelGameObject(GameObject persoHierarchyGameObject)
         {
-            throw new NotImplementedException();
+            var parent = persoHierarchyGameObject.transform.parent.gameObject;
+            while (!IsRootPersoHierarchyGameObject(parent) && !IsChannelObject(parent))
+            {
+                parent = parent.transform.parent.gameObject;
+            }
+            if (IsRootPersoHierarchyGameObject(parent))
+            {
+                return null;
+            } else if (IsChannelObject(parent))
+            {
+                return parent;
+            } else
+            {
+                throw new InvalidOperationException("Something strange happened during search for channel parent in Perso hierarchy.");
+            }
         }
 
         private bool IsChannelObject(GameObject persoHierarchyGameObject)
         {
-            throw new NotImplementedException();
+            return persoHierarchyGameObject.name.Contains("Channel");
         }
     }
 }

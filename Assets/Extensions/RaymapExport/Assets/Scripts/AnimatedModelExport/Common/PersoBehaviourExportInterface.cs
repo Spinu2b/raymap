@@ -17,14 +17,24 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Comm
             this.persoBehaviourInterface = persoBehaviourInterface;
         }
 
+        protected bool IsRootPersoHierarchyGameObject(GameObject gameObject)
+        {
+            return gameObject.name.Equals(persoBehaviourInterface.gameObject.name);
+        }
+
         protected IEnumerable<GameObject> IterateGameObjectsInPersoHierarchy(int animationFrameNumber)
         {
-            // TODO: First set Perso hierarchy to actually reflect that animation frame!!!
-            throw new NotImplementedException();
+            MakePersoHierarchyReflectAnimationFrame(animationFrameNumber);
             foreach (var gameObjectTransform in UnityHierarchyHelper.IterateAllGameObjectChildrenAndSubchildrenRecursively(persoBehaviourInterface.gameObject))
             {
                 yield return gameObjectTransform.gameObject;
             }
+        }
+
+        private void MakePersoHierarchyReflectAnimationFrame(int animationFrameNumber)
+        {
+            persoBehaviourInterface.currentAnimationFrame = animationFrameNumber;
+            persoBehaviourInterface.UpdateAnimation();
         }
     }
 }

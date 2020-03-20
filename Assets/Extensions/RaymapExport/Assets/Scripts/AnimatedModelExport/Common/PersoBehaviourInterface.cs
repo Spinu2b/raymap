@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -22,6 +23,17 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Comm
             }
         }
 
+        public int currentAnimationFrame {
+            set {
+                if (persoBehaviour != null) {
+                    persoBehaviour.currentFrame = (uint)value;
+                }
+                else {
+                    throw new NotSupportedException("Setting current animation frame number not supported for ROM Perso Behaviour!");
+                }
+            }
+        }
+
         public int statesCount {
             get {
                 if (persoBehaviour != null) {
@@ -30,6 +42,22 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Comm
                     throw new NotSupportedException("States count currently not supported for ROM Perso Behaviour!");
                 }
             }
+        }
+
+        public void UpdateAnimation()
+        {
+            if (persoBehaviour != null)
+            {
+                persoBehaviour.UpdateAnimation();
+            } else
+            {
+                romPersoBehaviour.UpdateAnimation();
+            }
+        }
+
+        public bool GetChannelOfIndexKeyframeState(int channelIndex)
+        {
+            throw new NotImplementedException();
         }
 
         public int currentAnimationStateFramesCount { 
