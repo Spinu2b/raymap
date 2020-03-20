@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingAnimationClipsModel.OpenSpaceInterfaces;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Common;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingData.OpenSpaceInterfaces;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingExportObjectsLibraryModel.Model;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingExportObjectsLibraryModel.ModelConstructing;
@@ -14,14 +14,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 {
     public class PersoAnimationStatesSkinnedSubmeshesExportInterface : PersoAnimationStatesTraverser
     {
-        public PersoAnimationStatesSkinnedSubmeshesExportInterface(Family family) : base(family) {}
+        public PersoAnimationStatesSkinnedSubmeshesExportInterface(PersoBehaviourInterface persoBehaviourInterface) : base(persoBehaviourInterface) {}
 
-        public SkinnedSubmeshesSet DeriveSubmeshesSetForGivenFrame(Perso perso, int animationFrameNumber)
+        public SkinnedSubmeshesSet DeriveSubmeshesSetForGivenFrame(int animationFrameNumber)
         {
             var skinnedSubmeshesSetFactory = new SkinnedSubmeshesSetFactory();
             return skinnedSubmeshesSetFactory.ConstructFromGiven(
-                new AnimA3DGeneralSubmeshesDataManipulatorInterface(
-                    familyAnimationStatesHelper.GetAnimA3DGeneralForCurrentPersoAnimationState(), perso), animationFrameNumber);
+                new PersoBehaviourSubmeshesExportInterface(
+                        persoBehaviourAnimationStatesHelper.persoBehaviourInterface), animationFrameNumber);
         }
     }
 }

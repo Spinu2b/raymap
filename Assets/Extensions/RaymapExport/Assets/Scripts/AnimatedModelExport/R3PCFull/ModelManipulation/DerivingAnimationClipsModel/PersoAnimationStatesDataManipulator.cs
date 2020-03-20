@@ -16,7 +16,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
     {
         public IEnumerable<AnimationClipModel> IterateAnimationClips(GameObject persoR3GameObject)
         {
-            var persoAnimationStatesExportInterface = new PersoAnimationStatesExportInterface(GetFamilyForPerso(persoR3GameObject));
+            var persoAnimationStatesExportInterface = new PersoAnimationStatesExportInterface(GetPersoBehaviourFor(persoR3GameObject));
             persoAnimationStatesExportInterface.ResetToInitialAnimationState();
             while (persoAnimationStatesExportInterface.AreAnimationStatesLeft())
             {

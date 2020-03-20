@@ -10,10 +10,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 {
     public class SkinnedSubmeshesSetFactory
     {
-        public SkinnedSubmeshesSet ConstructFromGiven(AnimA3DGeneralSubmeshesDataManipulatorInterface animA3DSubmeshesDataManipulator, int animationFrameNumber)
+        public SkinnedSubmeshesSet ConstructFromGiven(PersoBehaviourSubmeshesExportInterface persoBehaviourSubmeshesExportInterface, int animationFrameNumber)
         {
             var skinnedSubmeshesSetBuilder = new SkinnedSubmeshesSetBuilder();
-            foreach (var physicalObjectWithChannelParentingInfo in animA3DSubmeshesDataManipulator.IteratePhysicalObjectsWithChannelParentingInfosForGivenFrame(animationFrameNumber))
+            foreach (var physicalObjectWithChannelParentingInfo in persoBehaviourSubmeshesExportInterface.IteratePhysicalObjectsWithChannelParentingInfosForGivenFrame(animationFrameNumber))
             {
                 if (physicalObjectWithChannelParentingInfo.IsVisiblePhysicalObject)
                 {

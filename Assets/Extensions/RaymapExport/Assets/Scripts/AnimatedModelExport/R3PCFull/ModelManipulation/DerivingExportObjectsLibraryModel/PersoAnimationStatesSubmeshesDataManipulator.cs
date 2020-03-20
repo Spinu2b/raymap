@@ -15,7 +15,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
     {
         public IEnumerable<SkinnedSubmeshObjectModel> IterateConsolidatedSubmeshObjectListFromAllPersoAnimationStates(GameObject persoR3GameObject)
         {
-            var persoAnimationStatesSkinnedSubmeshesExportInterface = new PersoAnimationStatesSkinnedSubmeshesExportInterface(GetFamilyForPerso(persoR3GameObject));
+            var persoAnimationStatesSkinnedSubmeshesExportInterface = new PersoAnimationStatesSkinnedSubmeshesExportInterface(GetPersoBehaviourFor(persoR3GameObject));
             persoAnimationStatesSkinnedSubmeshesExportInterface.ResetToInitialAnimationState();
 
             var resultSubmeshesSet = new SkinnedSubmeshesSet();
@@ -24,7 +24,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
                 while (persoAnimationStatesSkinnedSubmeshesExportInterface.AreAnimationFramesLeft())
                 {
                     resultSubmeshesSet.Consolidate(persoAnimationStatesSkinnedSubmeshesExportInterface.DeriveSubmeshesSetForGivenFrame(
-                        GetActualPerso(persoR3GameObject), persoAnimationStatesSkinnedSubmeshesExportInterface.GetCurrentFrameNumberForExport()));
+                        persoAnimationStatesSkinnedSubmeshesExportInterface.GetCurrentFrameNumberForExport()));
                     persoAnimationStatesSkinnedSubmeshesExportInterface.NextFrame();
                 }
                 persoAnimationStatesSkinnedSubmeshesExportInterface.NextAnimationState();

@@ -3,33 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Common;
 using OpenSpace.Object.Properties;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PCFull.ModelManipulation.DerivingData.OpenSpaceInterfaces
 {
     public abstract class PersoAnimationStatesTraverser
     {
-        protected FamilyAnimationStatesHelper familyAnimationStatesHelper;
+        protected PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper;
         protected int currentFrameNumber = 0;
 
-        public PersoAnimationStatesTraverser(Family family)
+        public PersoAnimationStatesTraverser(PersoBehaviourInterface persoBehaviourInterface)
         {
-            this.familyAnimationStatesHelper = new FamilyAnimationStatesHelper(family);
+            this.persoBehaviourAnimationStatesHelper = new PersoBehaviourAnimationStatesHelper(persoBehaviourInterface);
         }
 
         public void ResetToInitialAnimationState()
         {
-            familyAnimationStatesHelper.SwitchToFirstAnimationState();
+            persoBehaviourAnimationStatesHelper.SwitchToFirstAnimationState();
         }
 
         public bool AreAnimationStatesLeft()
         {
-            return familyAnimationStatesHelper.AreValidPersoAnimationStatesLeftIncludingCurrentOne();
+            return persoBehaviourAnimationStatesHelper.AreValidPersoAnimationStatesLeftIncludingCurrentOne();
         }
 
         public bool AreAnimationFramesLeft()
         {
-            return familyAnimationStatesHelper.AreKeyframesLeftForCurrentAnimationStateStartingWithFrameNumber(currentFrameNumber);
+            return persoBehaviourAnimationStatesHelper.AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(currentFrameNumber);
         }
 
         public int GetCurrentFrameNumberForExport()
@@ -39,13 +40,13 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 
         public void NextFrame()
         {
-            currentFrameNumber = familyAnimationStatesHelper.GetStateAnimationNextFrameNumberAfter(currentFrameNumber);
+            currentFrameNumber = persoBehaviourAnimationStatesHelper.GetStateAnimationNextFrameNumberAfter(currentFrameNumber);
         }
 
         public void NextAnimationState()
         {
-            familyAnimationStatesHelper.AcquireNextValidPersoAnimationState();
-            currentFrameNumber = familyAnimationStatesHelper.GetFirstValidStateAnimationKeyframeFrameNumber();
+            persoBehaviourAnimationStatesHelper.AcquireNextValidPersoAnimationState();
+            currentFrameNumber = persoBehaviourAnimationStatesHelper.GetFirstValidStateAnimationKeyframeFrameNumber();
         }
     }
 }

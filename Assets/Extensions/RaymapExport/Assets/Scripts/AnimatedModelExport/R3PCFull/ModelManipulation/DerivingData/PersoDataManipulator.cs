@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Common;
 using OpenSpace.Object;
 using OpenSpace.Object.Properties;
 using UnityEngine;
@@ -11,14 +12,20 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.R3PC
 {
     public abstract class PersoDataManipulator
     {
-        protected Family GetFamilyForPerso(GameObject persoR3GameObject)
+        protected PersoBehaviourInterface GetPersoBehaviourFor(GameObject persoR3GameObject)
         {
-            return persoR3GameObject.GetComponent<PersoBehaviour>().perso.p3dData.family;
-        }
-
-        protected Perso GetActualPerso(GameObject persoR3GameObject)
-        {
-            return persoR3GameObject.GetComponent<PersoBehaviour>().perso;
+            if (persoR3GameObject.GetComponent<PersoBehaviour>() != null)
+            {
+                return new PersoBehaviourInterface(persoR3GameObject.GetComponent<PersoBehaviour>());
+            } 
+            else if (persoR3GameObject.GetComponent<ROMPersoBehaviour>() != null)
+            {
+                return new PersoBehaviourInterface(persoR3GameObject.GetComponent<ROMPersoBehaviour>());
+            } 
+            else
+            {
+                throw new InvalidOperationException("This game object does not have any Perso Behaviour component!");
+            }
         }
     }
 }
