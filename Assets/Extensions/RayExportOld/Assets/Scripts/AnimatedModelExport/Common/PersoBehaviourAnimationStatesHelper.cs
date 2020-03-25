@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Common
+namespace Assets.Extensions.RaymapExportOld.Assets.Scripts.AnimatedModelExport.Common
 {
     public class PersoBehaviourAnimationStatesHelper
     {

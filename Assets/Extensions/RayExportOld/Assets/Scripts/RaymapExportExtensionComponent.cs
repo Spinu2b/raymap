@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Assets.Extensions.Api;
 using UnityEngine;
 
-namespace Assets.Extensions.RaymapExport.Assets.Scripts
+namespace Assets.Extensions.RaymapExportOld.Assets.Scripts
 {
     public abstract class RaymapExportExtensionComponent : RaymapExtensionComponent
     {
