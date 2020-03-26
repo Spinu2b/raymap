@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class RaymapAnimatedPersoDescription
     {
+        public string name;
+        public SubmeshesLibraryModel submeshesLibrary;
+        public ArmatureHierarchyModel armatureHierarchy;
+        public AnimationClipsModel animationClipsModel;
     }
 }
