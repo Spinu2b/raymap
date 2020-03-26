@@ -24,11 +24,8 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             foreach (var animationStateGeneralInfo in persoAnimationStatesDataManipulator.IterateAnimationStatesGeneralDataForExport(persoGameObject))
             {
                 animationClipsModel.animationClips.Add(animationStateGeneralInfo.animationClipName, animationStateGeneralInfo.GetAnimationClipObj());
-                foreach (var animationFrameGeneralInfo in animationStateGeneralInfo.IterateAnimationFramesGeneralDataForExport())
-                {
-                    submeshesLibraryBuilder.Consolidate(animationFrameGeneralInfo.GetSubmeshesDescriptionSetForThisFrame());
-                    consolidatedArmatureHierarchyBuilder.Consolidate(animationFrameGeneralInfo.GetArmatureHierarchyParentingInfoForThisFrame());
-                }
+                submeshesLibraryBuilder.Consolidate(animationStateGeneralInfo.GetSubmeshesDescriptionSet());
+                consolidatedArmatureHierarchyBuilder.Consolidate(animationStateGeneralInfo.GetArmatureHierarchyParentingInfo());
             }
             return new Tuple<AnimationClipsModel, SubmeshesLibraryModel, ArmatureHierarchyModel>(
                 animationClipsModel, submeshesLibraryBuilder.Build(), consolidatedArmatureHierarchyBuilder.Build());

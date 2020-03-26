@@ -1,4 +1,6 @@
-﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubmeshesLibraryModelDesc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +18,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             throw new NotImplementedException();
         }
 
-        public IEnumerable<AnimationFrameGeneralInfo> IterateAnimationFramesGeneralDataForExport()
+        public Dictionary<string, SubmeshObjectModel> GetSubmeshesDescriptionSet()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ArmatureHierarchyModel GetArmatureHierarchyParentingInfo()
         {
             throw new NotImplementedException();
         }
