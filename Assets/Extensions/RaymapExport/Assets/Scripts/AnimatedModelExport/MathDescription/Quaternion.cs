@@ -8,10 +8,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Math
 {
     public class Quaternion
     {
-        public object w;
-        public object x;
-        public object y;
-        public object z;
+        public float w;
+        public float x;
+        public float y;
+        public float z;
 
         public Quaternion(float w, float x, float y, float z)
         {
