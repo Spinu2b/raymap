@@ -13,28 +13,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public IEnumerable<AnimationStateGeneralInfo> IterateAnimationStatesGeneralDataForExport(GameObject persoGameObject)
         {
-            throw new NotImplementedException();
-
             var persoBehaviourAnimationStatesHelper = new PersoBehaviourAnimationStatesHelper(GetPersoBehaviourFor(persoGameObject));
             persoBehaviourAnimationStatesHelper.SwitchToFirstAnimationState();
             while (persoBehaviourAnimationStatesHelper.AreValidPersoAnimationStatesLeftIncludingCurrentOne())
             {
-                
-                /* * /
-                var animationClip = new AnimationClipModel(persoBehaviourAnimationStatesHelper.GetCurrentAnimationClipName());
-                while (persoBehaviourAnimationStatesHelper.AreAnimationFramesLeft())
-                {
-                    var animTreeWithChannelsDataHierarchy = persoBehaviourAnimationStatesHelper.DeriveAnimTreeWithChannelsDataHierarchyForGivenFrame(
-                    persoBehaviourAnimationStatesHelper.GetCurrentFrameNumberForExport());
-
-                    var animationFrame = new AnimationFrameModel(persoBehaviourAnimationStatesHelper.GetCurrentFrameNumberForExport());
-                    animationClip.AddKeyframe(animationFrame.index, animationFrame);
-                    persoBehaviourAnimationStatesHelper.NextFrame();
-                }
-                yield return animationClip;
-                /* */
-                persoBehaviourAnimationStatesHelper.AcquireNextValidPersoAnimationState();
-                
+                var result = new AnimationStateGeneralInfo(persoBehaviourAnimationStatesHelper,
+                    persoBehaviourAnimationStatesHelper.GetCurrentPersoStateIndex());
+                result.BuildData();
+                yield return result;
             }
         }
 
