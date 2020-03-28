@@ -1,4 +1,6 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Normal;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Rom;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         private PersoBehaviour persoBehaviour;
         private ROMPersoBehaviour romPersoBehaviour;
 
+        private NormalPersoBehaviourAnimationKeyframesFetchingHelper normalPersoBehaviourAnimationKeyframesFetchingHelper;
+        private RomPersoBehaviourAnimationKeyframesFetchingHelper romPersoBehaviourAnimationKeyframesFetchingHelper;
+
+        private NormalPersoBehaviourAnimationSubmeshExistenceFetchingHelper normalPersoBehaviourAnimationSubmeshExistenceFetchingHelper;
+        private RomPersoBehaviourAnimationSubmeshExistenceFetchingHelper romPersoBehaviourAnimationSubmeshExistenceFetchingHelper;
+
         public GameObject gameObject
         {
             get
@@ -24,21 +32,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 else
                 {
                     return romPersoBehaviour.gameObject;
-                }
-            }
-        }
-
-        public int currentAnimationFrame
-        {
-            set
-            {
-                if (persoBehaviour != null)
-                {
-                    persoBehaviour.currentFrame = (uint)value;
-                }
-                else
-                {
-                    throw new NotSupportedException("Setting current animation frame number not supported for ROM Perso Behaviour!");
                 }
             }
         }
@@ -56,23 +49,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                     throw new NotSupportedException("States count currently not supported for ROM Perso Behaviour!");
                 }
             }
-        }
-
-        public void UpdateAnimation()
-        {
-            if (persoBehaviour != null)
-            {
-                persoBehaviour.UpdateAnimation();
-            }
-            else
-            {
-                romPersoBehaviour.UpdateAnimation();
-            }
-        }
-
-        public bool GetChannelOfIndexKeyframeState(int channelIndex)
-        {
-            throw new NotImplementedException();
         }
 
         public int currentAnimationStateFramesCount
@@ -93,11 +69,15 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         public PersoBehaviourInterface(PersoBehaviour persoBehaviour)
         {
             this.persoBehaviour = persoBehaviour;
+            this.normalPersoBehaviourAnimationKeyframesFetchingHelper = new NormalPersoBehaviourAnimationKeyframesFetchingHelper(persoBehaviour);
+            this.normalPersoBehaviourAnimationSubmeshExistenceFetchingHelper = new NormalPersoBehaviourAnimationSubmeshExistenceFetchingHelper(persoBehaviour);
         }
 
         public PersoBehaviourInterface(ROMPersoBehaviour romPersoBehaviour)
         {
             this.romPersoBehaviour = romPersoBehaviour;
+            this.romPersoBehaviourAnimationKeyframesFetchingHelper = new RomPersoBehaviourAnimationKeyframesFetchingHelper(romPersoBehaviour);
+            this.romPersoBehaviourAnimationSubmeshExistenceFetchingHelper = new RomPersoBehaviourAnimationSubmeshExistenceFetchingHelper(romPersoBehaviour);
         }
 
         public void SetState(int stateIndex)
@@ -114,7 +94,26 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public Dictionary<string, ChannelTransformModel> GetChannelsKeyframeDataForAnimationFrame(int frameNumber)
         {
-            throw new NotImplementedException();
+            if (persoBehaviour != null)
+            {
+                return normalPersoBehaviourAnimationKeyframesFetchingHelper.GetPersoBehaviourChannelsKeyframeDataForFrame(frameNumber);
+            }
+            else
+            {
+                return romPersoBehaviourAnimationKeyframesFetchingHelper.GetPersoBehaviourChannelsKeyframeDataForFrame(frameNumber);
+            }
+        }
+
+        public List<string> GetSubmeshExistenceDataForAnimationFrame(int frameNumber)
+        {
+            if (persoBehaviour != null)
+            {
+                return normalPersoBehaviourAnimationSubmeshExistenceFetchingHelper.GetPersoBehaviourSubmeshExistenceDataForFrame(frameNumber);
+            }
+            else
+            {
+                return romPersoBehaviourAnimationSubmeshExistenceFetchingHelper.GetPersoBehaviourSubmeshExistenceDataForFrame(frameNumber);
+            }
         }
 
         public bool IsValidAnimationState(int animationStateIndex)

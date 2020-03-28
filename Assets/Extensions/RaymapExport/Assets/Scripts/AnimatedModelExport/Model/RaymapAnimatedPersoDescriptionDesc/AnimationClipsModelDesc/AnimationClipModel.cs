@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc
 {
@@ -29,8 +30,13 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     public struct ChannelTransformModel
     {
         public Vector3d position;
-        public Quaternion rotation;
+        public MathDescription.Quaternion rotation;
         public Vector3d scale;
+
+        public static ChannelTransformModel FromUnityAbsoluteTransform(Transform transform)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class AnimationClipModel

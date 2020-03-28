@@ -82,6 +82,17 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }      
         }
 
+        public IEnumerable<Tuple<int, List<string>>> IterateSubmeshExistenceDataForThisAnimationState()
+        {
+            int frameNumber = GetFirstValidStateAnimationKeyframeFrameNumber();
+            while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
+            {
+                yield return new Tuple<int, List<string>>(
+                    frameNumber, persoBehaviourInterface.GetSubmeshExistenceDataForAnimationFrame(frameNumber));
+                frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
+            }
+        }
+
         private bool IsValidPersoAnimationState(int animationStateIndex)
         {
             return persoBehaviourInterface.IsValidAnimationState(animationStateIndex);

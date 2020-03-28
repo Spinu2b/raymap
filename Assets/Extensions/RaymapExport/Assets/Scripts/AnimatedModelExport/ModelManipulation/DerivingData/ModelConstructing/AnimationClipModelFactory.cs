@@ -27,7 +27,17 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         private Dictionary<string, List<SubmeshUsedAssociationInfo>> GetSubmeshExistenceData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
         {
-            throw new NotImplementedException();
+            var submeshUsedAssociationInfosBuilder = new SubmeshUsedAssociationInfosBuilder();
+            foreach (Tuple<int, List<string>> submeshExistenceIndicatorsForFrame in 
+                persoBehaviourAnimationStatesHelper.IterateSubmeshExistenceDataForThisAnimationState())
+            {
+                int currentFrame = submeshExistenceIndicatorsForFrame.Item1;
+                foreach (var submeshName in submeshExistenceIndicatorsForFrame.Item2)
+                {
+                    submeshUsedAssociationInfosBuilder.ConsiderAssociation(submeshName: submeshName, frameNumber: currentFrame);
+                }
+            }
+            return submeshUsedAssociationInfosBuilder.Build();
         }
 
         private Dictionary<string, Dictionary<int, ChannelTransformModel>> GetChannelKeyframesData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
