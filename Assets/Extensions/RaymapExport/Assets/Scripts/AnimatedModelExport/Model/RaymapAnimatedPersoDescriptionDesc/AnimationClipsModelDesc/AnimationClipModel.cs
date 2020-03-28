@@ -14,7 +14,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         MORPH_ANIMATION_CLIP
     }
 
-    public class SubmeshUsedAssociationInfo
+    public class SubobjectUsedAssociationInfo
     {
         public int frameBegin;
         public int frameEnd;
@@ -44,7 +44,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         public AnimationClipType type;
         public string name;
         public Dictionary<string, Dictionary<int, ChannelTransformModel>> channelKeyframes;
-        public Dictionary<string, List<SubmeshUsedAssociationInfo>> submeshesExistenceData;
+        public Dictionary<string, List<SubobjectUsedAssociationInfo>> subobjectsExistenceData;
         public Dictionary<string, List<SubmeshUsedMorphAssociationInfo>> morphs;
     }
 }

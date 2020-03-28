@@ -10,7 +10,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public RomPersoBehaviourAnimationSubmeshExistenceFetchingHelper(ROMPersoBehaviour romPersoBehaviour) : base(romPersoBehaviour) {}
 
-        public List<string> GetPersoBehaviourSubmeshExistenceDataForFrame(int frameNumber)
+        public List<string> GetPersoBehaviourSubobjectExistenceDataForFrame(int frameNumber)
         {
             throw new NotImplementedException();
         }

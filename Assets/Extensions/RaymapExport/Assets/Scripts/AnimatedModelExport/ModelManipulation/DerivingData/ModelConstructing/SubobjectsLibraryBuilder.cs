@@ -1,5 +1,5 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
-using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubmeshesLibraryModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing
 {
-    public class SubmeshesLibraryBuilder
+    public class SubobjectsLibraryBuilder
     {
-        public void Consolidate(Dictionary<string, SubmeshObjectModel> submeshes)
+        public void Consolidate(Dictionary<string, SubobjectModel> subobjects)
         {
             throw new NotImplementedException();
         }
 
-        public SubmeshesLibraryModel Build()
+        public SubobjectsLibraryModel Build()
         {
             throw new NotImplementedException();
         }

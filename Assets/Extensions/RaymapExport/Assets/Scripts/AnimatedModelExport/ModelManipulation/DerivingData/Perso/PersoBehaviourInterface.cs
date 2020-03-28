@@ -18,8 +18,8 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         private NormalPersoBehaviourAnimationKeyframesFetchingHelper normalPersoBehaviourAnimationKeyframesFetchingHelper;
         private RomPersoBehaviourAnimationKeyframesFetchingHelper romPersoBehaviourAnimationKeyframesFetchingHelper;
 
-        private NormalPersoBehaviourAnimationSubmeshExistenceFetchingHelper normalPersoBehaviourAnimationSubmeshExistenceFetchingHelper;
-        private RomPersoBehaviourAnimationSubmeshExistenceFetchingHelper romPersoBehaviourAnimationSubmeshExistenceFetchingHelper;
+        private NormalPersoBehaviourAnimationSubobjectExistenceFetchingHelper normalPersoBehaviourAnimationSubobjectExistenceFetchingHelper;
+        private RomPersoBehaviourAnimationSubmeshExistenceFetchingHelper romPersoBehaviourAnimationSubobjectExistenceFetchingHelper;
 
         public GameObject gameObject
         {
@@ -70,14 +70,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         {
             this.persoBehaviour = persoBehaviour;
             this.normalPersoBehaviourAnimationKeyframesFetchingHelper = new NormalPersoBehaviourAnimationKeyframesFetchingHelper(persoBehaviour);
-            this.normalPersoBehaviourAnimationSubmeshExistenceFetchingHelper = new NormalPersoBehaviourAnimationSubmeshExistenceFetchingHelper(persoBehaviour);
+            this.normalPersoBehaviourAnimationSubobjectExistenceFetchingHelper = new NormalPersoBehaviourAnimationSubobjectExistenceFetchingHelper(persoBehaviour);
         }
 
         public PersoBehaviourInterface(ROMPersoBehaviour romPersoBehaviour)
         {
             this.romPersoBehaviour = romPersoBehaviour;
             this.romPersoBehaviourAnimationKeyframesFetchingHelper = new RomPersoBehaviourAnimationKeyframesFetchingHelper(romPersoBehaviour);
-            this.romPersoBehaviourAnimationSubmeshExistenceFetchingHelper = new RomPersoBehaviourAnimationSubmeshExistenceFetchingHelper(romPersoBehaviour);
+            this.romPersoBehaviourAnimationSubobjectExistenceFetchingHelper = new RomPersoBehaviourAnimationSubmeshExistenceFetchingHelper(romPersoBehaviour);
         }
 
         public void SetState(int stateIndex)
@@ -104,15 +104,15 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        public List<string> GetSubmeshExistenceDataForAnimationFrame(int frameNumber)
+        public List<string> GetSubobjectExistenceDataForAnimationFrame(int frameNumber)
         {
             if (persoBehaviour != null)
             {
-                return normalPersoBehaviourAnimationSubmeshExistenceFetchingHelper.GetPersoBehaviourSubmeshExistenceDataForFrame(frameNumber);
+                return normalPersoBehaviourAnimationSubobjectExistenceFetchingHelper.GetPersoBehaviourSubobjectExistenceDataForFrame(frameNumber);
             }
             else
             {
-                return romPersoBehaviourAnimationSubmeshExistenceFetchingHelper.GetPersoBehaviourSubmeshExistenceDataForFrame(frameNumber);
+                return romPersoBehaviourAnimationSubobjectExistenceFetchingHelper.GetPersoBehaviourSubobjectExistenceDataForFrame(frameNumber);
             }
         }
 

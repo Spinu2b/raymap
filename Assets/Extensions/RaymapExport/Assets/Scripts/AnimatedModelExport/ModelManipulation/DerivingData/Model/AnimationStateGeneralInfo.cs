@@ -1,6 +1,6 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
-using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubmeshesLibraryModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso;
 using System;
@@ -17,7 +17,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         private PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper;
 
         private AnimationClipModel animationClipModel;
-        private Dictionary<string, SubmeshObjectModel> submeshesDescriptionSet;
+        private Dictionary<string, SubobjectModel> submeshesDescriptionSet;
         private ArmatureHierarchyModel armatureHierarchyParentingInfo;
 
         public AnimationStateGeneralInfo(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
@@ -36,7 +36,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             return animationClipModel;
         }
 
-        public Dictionary<string, SubmeshObjectModel> GetSubmeshesDescriptionSet()
+        public Dictionary<string, SubobjectModel> GetSubmeshesDescriptionSet()
         {
             return submeshesDescriptionSet;
         }

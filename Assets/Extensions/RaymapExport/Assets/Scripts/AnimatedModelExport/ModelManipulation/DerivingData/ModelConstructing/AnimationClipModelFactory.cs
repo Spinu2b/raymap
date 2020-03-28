@@ -15,7 +15,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             var result = new AnimationClipModel();
             result.type = GetAnimationClipType(persoBehaviourAnimationStatesHelper);
             result.channelKeyframes = GetChannelKeyframesData(persoBehaviourAnimationStatesHelper);
-            result.submeshesExistenceData = GetSubmeshExistenceData(persoBehaviourAnimationStatesHelper);
+            result.subobjectsExistenceData = GetSubobjectExistenceData(persoBehaviourAnimationStatesHelper);
             result.morphs = GetMorphsData(persoBehaviourAnimationStatesHelper);
             return result;
         }
@@ -25,19 +25,19 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             throw new NotImplementedException();
         }
 
-        private Dictionary<string, List<SubmeshUsedAssociationInfo>> GetSubmeshExistenceData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
+        private Dictionary<string, List<SubobjectUsedAssociationInfo>> GetSubobjectExistenceData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
         {
-            var submeshUsedAssociationInfosBuilder = new SubmeshUsedAssociationInfosBuilder();
-            foreach (Tuple<int, List<string>> submeshExistenceIndicatorsForFrame in 
-                persoBehaviourAnimationStatesHelper.IterateSubmeshExistenceDataForThisAnimationState())
+            var subobjectUsedAssociationInfosBuilder = new SubobjectUsedAssociationInfosBuilder();
+            foreach (Tuple<int, List<string>> subobjectExistenceIndicatorsForFrame in 
+                persoBehaviourAnimationStatesHelper.IterateSubobjectExistenceDataForThisAnimationState())
             {
-                int currentFrame = submeshExistenceIndicatorsForFrame.Item1;
-                foreach (var submeshName in submeshExistenceIndicatorsForFrame.Item2)
+                int currentFrame = subobjectExistenceIndicatorsForFrame.Item1;
+                foreach (var subobjectName in subobjectExistenceIndicatorsForFrame.Item2)
                 {
-                    submeshUsedAssociationInfosBuilder.ConsiderAssociation(submeshName: submeshName, frameNumber: currentFrame);
+                    subobjectUsedAssociationInfosBuilder.ConsiderAssociation(subobjectName: subobjectName, frameNumber: currentFrame);
                 }
             }
-            return submeshUsedAssociationInfosBuilder.Build();
+            return subobjectUsedAssociationInfosBuilder.Build();
         }
 
         private Dictionary<string, Dictionary<int, ChannelTransformModel>> GetChannelKeyframesData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)

@@ -12,12 +12,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class AnimationClipsGeneralDataExtractor
     {
-        public Tuple<AnimationClipsModel, SubmeshesLibraryModel, ArmatureHierarchyModel> DeriveFor(GameObject persoGameObject)
+        public Tuple<AnimationClipsModel, SubobjectsLibraryModel, ArmatureHierarchyModel> DeriveFor(GameObject persoGameObject)
         {
             var persoAnimationStatesDataManipulator = new PersoAnimationStatesGeneralDataManipulator();
 
             var consolidatedArmatureHierarchyBuilder = new ConsolidatedArmatureHierarchyBuilder();
-            var submeshesLibraryBuilder = new SubmeshesLibraryBuilder();
+            var submeshesLibraryBuilder = new SubobjectsLibraryBuilder();
 
             var animationClipsModel = new AnimationClipsModel();
             
@@ -27,7 +27,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 submeshesLibraryBuilder.Consolidate(animationStateGeneralInfo.GetSubmeshesDescriptionSet());
                 consolidatedArmatureHierarchyBuilder.Consolidate(animationStateGeneralInfo.GetArmatureHierarchyParentingInfo());
             }
-            return new Tuple<AnimationClipsModel, SubmeshesLibraryModel, ArmatureHierarchyModel>(
+            return new Tuple<AnimationClipsModel, SubobjectsLibraryModel, ArmatureHierarchyModel>(
                 animationClipsModel, submeshesLibraryBuilder.Build(), consolidatedArmatureHierarchyBuilder.Build());
         }
     }

@@ -10,7 +10,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     public class RaymapAnimatedPersoDescription
     {
         public string name;
-        public SubmeshesLibraryModel submeshesLibrary;
+        public SubobjectsLibraryModel submeshesLibrary;
         public ArmatureHierarchyModel armatureHierarchy;
         public AnimationClipsModel animationClipsModel;
     }
