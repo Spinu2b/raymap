@@ -17,30 +17,30 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             UpdateAnimation(frameNumber);
             if (IsNormalAnimation())
             {
-                return GetChannelsKeyframeDataForNormalAnimation(frameNumber);
+                return GetChannelsKeyframeDataForNormalAnimation();
             } else if (IsMontrealAnimation())
             {
-                return GetChannelsKeyframeDataForMontrealAnimation(frameNumber);
+                return GetChannelsKeyframeDataForMontrealAnimation();
             } else if (IsLargoAnimation())
             {
-                return GetChannelsKeyframeDataForLargoAnimation(frameNumber);
+                return GetChannelsKeyframeDataForLargoAnimation();
             } else
             {
                 throw new InvalidOperationException("This perso behaviour does not have neither normal, montreal nor largo animation frames in this state!");
             }
         }
 
-        private Dictionary<string, ChannelTransformModel> GetChannelsKeyframeDataForLargoAnimation(int frameNumber)
+        private Dictionary<string, ChannelTransformModel> GetChannelsKeyframeDataForLargoAnimation()
         {
             throw new NotImplementedException();
         }
 
-        private Dictionary<string, ChannelTransformModel> GetChannelsKeyframeDataForMontrealAnimation(int frameNumber)
+        private Dictionary<string, ChannelTransformModel> GetChannelsKeyframeDataForMontrealAnimation()
         {
             throw new NotImplementedException();
         }
 
-        private Dictionary<string, ChannelTransformModel> GetChannelsKeyframeDataForNormalAnimation(int frameNumber)
+        private Dictionary<string, ChannelTransformModel> GetChannelsKeyframeDataForNormalAnimation()
         {
             Func<int, ChannelTransformModel> GetChannelAbsoluteTransform = (int channelIndex) =>
             {

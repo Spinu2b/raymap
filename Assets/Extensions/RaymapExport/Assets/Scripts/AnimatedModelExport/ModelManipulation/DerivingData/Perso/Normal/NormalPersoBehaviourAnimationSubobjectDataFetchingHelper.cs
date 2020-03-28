@@ -1,4 +1,6 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
+using OpenSpace.Animation.Component;
+using OpenSpace.Object;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,25 +9,36 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Normal
 {
-    public class NormalPersoBehaviourAnimationSubobjectDataFetchingHelper : NormalPersoBehaviourAnimationDataFetchingHelper
+    public abstract class NormalPersoBehaviourAnimationSubobjectDataFetchingHelper : NormalPersoBehaviourAnimationDataFetchingHelper
     {
-        private Dictionary<int, Dictionary<int, List<string>>> subobjectsAnimationFramesPersoStatesAssociationsCache
-            = new Dictionary<int, Dictionary<int, List<string>>>();
-        private Dictionary<string, SubobjectModel> subobjectsCache = new Dictionary<string, SubobjectModel>();
+        private SubobjectsCache subobjectsCache = new SubobjectsCache();
 
         public NormalPersoBehaviourAnimationSubobjectDataFetchingHelper(PersoBehaviour persoBehaviour) : base(persoBehaviour) {}
 
-        public IEnumerable<SubobjectModel> IterateActualPhysicalSubobjectsForNormalFrame(int frameNumber)
+        protected IEnumerable<SubobjectModel> IterateActualPhysicalSubobjectsForNormalFrame()
+        {
+            AnimOnlyFrame of = persoBehaviour.a3d.onlyFrames[persoBehaviour.a3d.start_onlyFrames + persoBehaviour.currentFrame];
+            for (int i = 0; i < persoBehaviour.a3d.num_channels; i++)
+            {
+                AnimChannel ch = persoBehaviour.a3d.channels[persoBehaviour.a3d.start_channels + i];
+                AnimNumOfNTTO numOfNTTO = persoBehaviour.a3d.numOfNTTO[ch.numOfNTTO + of.numOfNTTO];
+                int poNum = numOfNTTO.numOfNTTO - persoBehaviour.a3d.start_NTTO;
+                PhysicalObject physicalObject = persoBehaviour.subObjects[i][poNum];
+
+                if (!subobjectsCache.ContainsPhysicalObject(physicalObject))
+                {
+                    subobjectsCache.AddPhysicalObject(physicalObject);
+                }
+                yield return subobjectsCache.GetPhysicalObjectCachedModelFor(physicalObject);
+            }
+        }
+
+        protected IEnumerable<SubobjectModel> IterateActualPhysicalSubobjectsForLargoFrame()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<SubobjectModel> IterateActualPhysicalSubobjectsForLargoFrame(int frameNumber)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<SubobjectModel> IterateActualPhysicalSubobjectsForMontrealFrame(int frameNumber)
+        protected IEnumerable<SubobjectModel> IterateActualPhysicalSubobjectsForMontrealFrame()
         {
             throw new NotImplementedException();
         }

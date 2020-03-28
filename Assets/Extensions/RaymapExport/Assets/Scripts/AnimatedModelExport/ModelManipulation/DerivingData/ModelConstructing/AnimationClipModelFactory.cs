@@ -20,7 +20,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             return result;
         }
 
-        private Dictionary<string, List<SubmeshUsedMorphAssociationInfo>> GetMorphsData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
+        private Dictionary<string, List<SubobjectUsedMorphAssociationInfo>> GetMorphsData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
         {
             throw new NotImplementedException();
         }

@@ -20,10 +20,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         public int frameEnd;
     }
 
-    public class SubmeshUsedMorphAssociationInfo
+    public class SubobjectUsedMorphAssociationInfo
     {
-        public string morphSubmeshStart;
-        public string morphSubmeshEnd;
+        public string morphSubobjectStart;
+        public string morphSubobjectEnd;
         public Dictionary<int, float> morphProgressKeyframes;
     }
 
@@ -45,6 +45,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         public string name;
         public Dictionary<string, Dictionary<int, ChannelTransformModel>> channelKeyframes;
         public Dictionary<string, List<SubobjectUsedAssociationInfo>> subobjectsExistenceData;
-        public Dictionary<string, List<SubmeshUsedMorphAssociationInfo>> morphs;
+        public Dictionary<string, List<SubobjectUsedMorphAssociationInfo>> morphs;
     }
 }

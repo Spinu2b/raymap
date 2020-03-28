@@ -16,15 +16,15 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             UpdateAnimation(frameNumber);
             if (IsNormalAnimation())
             {
-                return GetSubobjectExistenceDataForNormalAnimation(frameNumber);
+                return GetSubobjectExistenceDataForNormalAnimation();
             }
             else if (IsMontrealAnimation())
             {
-                return GetSubobjectExistenceDataForMontrealAnimation(frameNumber);
+                return GetSubobjectExistenceDataForMontrealAnimation();
             }
             else if (IsLargoAnimation())
             {
-                return GetSubobjectExistenceDataForLargoAnimation(frameNumber);
+                return GetSubobjectExistenceDataForLargoAnimation();
             }
             else
             {
@@ -32,30 +32,30 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        private List<string> GetSubobjectExistenceDataForLargoAnimation(int frameNumber)
+        private List<string> GetSubobjectExistenceDataForLargoAnimation()
         {
             var result = new List<string>();
-            foreach (SubobjectModel subobject in IterateActualPhysicalSubobjectsForLargoFrame(frameNumber))
+            foreach (SubobjectModel subobject in IterateActualPhysicalSubobjectsForLargoFrame())
             {
                 result.Add(subobject.name);
             }
             return result;
         }
 
-        private List<string> GetSubobjectExistenceDataForMontrealAnimation(int frameNumber)
+        private List<string> GetSubobjectExistenceDataForMontrealAnimation()
         {
             var result = new List<string>();
-            foreach (SubobjectModel subobject in IterateActualPhysicalSubobjectsForMontrealFrame(frameNumber))
+            foreach (SubobjectModel subobject in IterateActualPhysicalSubobjectsForMontrealFrame())
             {
                 result.Add(subobject.name);
             }
             return result;
         }
 
-        private List<string> GetSubobjectExistenceDataForNormalAnimation(int frameNumber)
+        private List<string> GetSubobjectExistenceDataForNormalAnimation()
         {
             var result = new List<string>();
-            foreach (SubobjectModel subobject in IterateActualPhysicalSubobjectsForNormalFrame(frameNumber))
+            foreach (SubobjectModel subobject in IterateActualPhysicalSubobjectsForNormalFrame())
             {
                 result.Add(subobject.name);
             }
