@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts
 {
-    public abstract class RaymapExportExtensionComponent : RaymapExtensionComponent
+    public class RaymapExportExtensionComponent : RaymapExtensionComponent
     {
         protected override void OnMapLoaded()
         {

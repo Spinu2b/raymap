@@ -11,7 +11,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public SubmeshObjectType submeshObjectType;
         public string name;
-        public List<Material> materials;
-        public SurfaceInfo surfaceInfo;
+        public Dictionary<string, SubmeshGeometricObject> geometricObjects;
     }
 }
