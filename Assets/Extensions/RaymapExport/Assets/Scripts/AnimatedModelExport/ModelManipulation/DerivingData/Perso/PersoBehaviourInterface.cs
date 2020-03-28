@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -109,6 +110,11 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             {
                 romPersoBehaviour.SetState(stateIndex);
             }
+        }
+
+        public Dictionary<string, ChannelTransformModel> GetChannelsKeyframeDataForAnimationFrame(int frameNumber)
+        {
+            throw new NotImplementedException();
         }
 
         public bool IsValidAnimationState(int animationStateIndex)

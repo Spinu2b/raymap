@@ -17,8 +17,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             persoBehaviourAnimationStatesHelper.SwitchToFirstAnimationState();
             while (persoBehaviourAnimationStatesHelper.AreValidPersoAnimationStatesLeftIncludingCurrentOne())
             {
-                var result = new AnimationStateGeneralInfo(persoBehaviourAnimationStatesHelper,
-                    persoBehaviourAnimationStatesHelper.GetCurrentPersoStateIndex());
+                var result = new AnimationStateGeneralInfo(persoBehaviourAnimationStatesHelper);
                 result.BuildData();
                 yield return result;
             }

@@ -26,7 +26,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         public Dictionary<int, float> morphProgressKeyframes;
     }
 
-    public class ChannelTransformModel
+    public struct ChannelTransformModel
     {
         public Vector3d position;
         public Quaternion rotation;
@@ -39,10 +39,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         public string name;
         public Dictionary<string, Dictionary<int, ChannelTransformModel>> channelKeyframes;
         public Dictionary<string, List<SubmeshUsedAssociationInfo>> submeshesExistenceData;
-    }
-
-    public class MorphAnimationClipModel : AnimationClipModel
-    {
         public Dictionary<string, List<SubmeshUsedMorphAssociationInfo>> morphs;
     }
 }

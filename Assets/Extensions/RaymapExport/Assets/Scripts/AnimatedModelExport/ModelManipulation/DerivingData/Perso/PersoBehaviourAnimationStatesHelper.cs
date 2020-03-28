@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -68,6 +69,17 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 }
             }
             SwitchContextToAnimationStateOfIndex(currentStateIndex);
+        }
+
+        public IEnumerable<Tuple<int, Dictionary<string, ChannelTransformModel>>> IterateKeyframeDataForThisAnimationState()
+        {
+            int frameNumber = GetFirstValidStateAnimationKeyframeFrameNumber();
+            while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
+            {
+                yield return new Tuple<int, Dictionary<string, ChannelTransformModel>>(
+                    frameNumber, persoBehaviourInterface.GetChannelsKeyframeDataForAnimationFrame(frameNumber));
+                frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
+            }      
         }
 
         private bool IsValidPersoAnimationState(int animationStateIndex)

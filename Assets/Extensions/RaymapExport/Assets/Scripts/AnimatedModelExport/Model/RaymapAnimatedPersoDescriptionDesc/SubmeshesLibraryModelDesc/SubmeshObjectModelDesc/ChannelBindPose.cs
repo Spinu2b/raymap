@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubmeshesLibraryModelDesc.SubmeshObjectModelDesc
 {
-    public class ChannelBindPose
+    public struct ChannelBindPose
     {
         public Vector3d position;
         public Quaternion rotation;

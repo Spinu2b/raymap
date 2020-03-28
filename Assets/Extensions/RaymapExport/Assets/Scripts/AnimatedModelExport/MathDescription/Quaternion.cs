@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.MathDescription
 {
-    public class Quaternion
+    public struct Quaternion
     {
         public float w;
         public float x;
