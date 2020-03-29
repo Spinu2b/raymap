@@ -8,12 +8,6 @@ using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc
 {
-    public enum AnimationClipType
-    {
-        SKINNED_ANIMATION_CLIP,
-        MORPH_ANIMATION_CLIP
-    }
-
     public class SubobjectUsedAssociationInfo
     {
         public int frameBegin;
@@ -41,7 +35,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
     public class AnimationClipModel
     {
-        public AnimationClipType type;
         public string name;
         public Dictionary<string, Dictionary<int, ChannelTransformModel>> channelKeyframes;
         public Dictionary<string, List<SubobjectUsedAssociationInfo>> subobjectsExistenceData;

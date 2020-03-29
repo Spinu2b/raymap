@@ -25,11 +25,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 int poNum = numOfNTTO.numOfNTTO - persoBehaviour.a3d.start_NTTO;
                 PhysicalObject physicalObject = persoBehaviour.subObjects[i][poNum];
 
-                if (!subobjectsCache.ContainsPhysicalObject(physicalObject))
-                {
-                    subobjectsCache.AddPhysicalObject(physicalObject);
-                }
-                yield return subobjectsCache.GetPhysicalObjectCachedModelFor(physicalObject);
+                subobjectsCache.ConsiderPhysicalObject(
+                    physicalObject, persoBehaviour.currentState, (int)persoBehaviour.currentFrame, ch.id, poNum);
+                yield return subobjectsCache.GetPhysicalObjectCachedModelFor(poNum);
             }
         }
 

@@ -11,7 +11,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public NormalPersoBehaviourAnimationSubobjectExistenceFetchingHelper(PersoBehaviour persoBehaviour) : base(persoBehaviour) {}
 
-        public List<string> GetPersoBehaviourSubobjectExistenceDataForFrame(int frameNumber)
+        public List<int> GetPersoBehaviourSubobjectExistenceDataForFrame(int frameNumber)
         {
             UpdateAnimation(frameNumber);
             if (IsNormalAnimation())
@@ -32,32 +32,32 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        private List<string> GetSubobjectExistenceDataForLargoAnimation()
+        private List<int> GetSubobjectExistenceDataForLargoAnimation()
         {
-            var result = new List<string>();
+            var result = new List<int>();
             foreach (SubobjectModel subobject in IterateActualPhysicalSubobjectsForLargoFrame())
             {
-                result.Add(subobject.name);
+                result.Add(subobject.objectNumber);
             }
             return result;
         }
 
-        private List<string> GetSubobjectExistenceDataForMontrealAnimation()
+        private List<int> GetSubobjectExistenceDataForMontrealAnimation()
         {
-            var result = new List<string>();
+            var result = new List<int>();
             foreach (SubobjectModel subobject in IterateActualPhysicalSubobjectsForMontrealFrame())
             {
-                result.Add(subobject.name);
+                result.Add(subobject.objectNumber);
             }
             return result;
         }
 
-        private List<string> GetSubobjectExistenceDataForNormalAnimation()
+        private List<int> GetSubobjectExistenceDataForNormalAnimation()
         {
-            var result = new List<string>();
+            var result = new List<int>();
             foreach (SubobjectModel subobject in IterateActualPhysicalSubobjectsForNormalFrame())
             {
-                result.Add(subobject.name);
+                result.Add(subobject.objectNumber);
             }
             return result;
         }

@@ -1,4 +1,6 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing;
 using OpenSpace.Object;
 using System;
 using System.Collections.Generic;
@@ -10,21 +12,36 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class SubobjectsCache
     {
-        private Dictionary<int, Dictionary<int, List<string>>> subobjectsAnimationFramesPersoStatesAssociationsCache
-             = new Dictionary<int, Dictionary<int, List<string>>>();
-        private Dictionary<string, SubobjectModel> subobjectsCache = new Dictionary<string, SubobjectModel>();
+        private Dictionary<int, Dictionary<int, List<int>>> subobjectsAnimationFramesPersoStatesAssociationsCache
+             = new Dictionary<int, Dictionary<int, List<int>>>();
+        private Dictionary<int, SubobjectModel> subobjectsCache = new Dictionary<int, SubobjectModel>();
 
-        public bool ContainsPhysicalObject(PhysicalObject physicalObject)
+        private PhysicalObjectToSubobjectModelConverter physicalObjectToSubobjectModelConverter = new PhysicalObjectToSubobjectModelConverter();
+
+        public void ConsiderPhysicalObject(PhysicalObject physicalObject, int stateIndex, int animationFrame, int channelId, int physicalObjectNumber)
         {
-            throw new NotImplementedException();
+            var physicalObjectWrapper = new PhysicalObjectWrapper(physicalObject);
+            ConsiderPhysicalObject(physicalObjectWrapper, stateIndex, animationFrame, channelId, physicalObjectNumber);
         }
 
-        public void AddPhysicalObject(PhysicalObject physicalObject)
+        private void ConsiderPhysicalObject(PhysicalObjectWrapper physicalObject, int stateIndex, int animationFrame, int channelId, int physicalObjectNumber)
         {
-            throw new NotImplementedException();
+            if (!subobjectsCache.ContainsKey(physicalObjectNumber))
+            {
+                subobjectsCache[physicalObjectNumber] = GetSubobjectModel(physicalObject, physicalObjectNumber, channelId);
+            }
+            if (!subobjectsAnimationFramesPersoStatesAssociationsCache[stateIndex][animationFrame].Contains(physicalObjectNumber))
+            {
+                subobjectsAnimationFramesPersoStatesAssociationsCache[stateIndex][animationFrame].Add(physicalObjectNumber);
+            }            
         }
 
-        public SubobjectModel GetPhysicalObjectCachedModelFor(PhysicalObject physicalObject)
+        private SubobjectModel GetSubobjectModel(PhysicalObjectWrapper physicalObject, int physicalObjectNumber, int channelId)
+        {
+            return physicalObjectToSubobjectModelConverter.Convert(physicalObject, physicalObjectNumber, channelId);
+        }
+
+        public SubobjectModel GetPhysicalObjectCachedModelFor(int physicalObjectNumber)
         {
             throw new NotImplementedException();
         }

@@ -12,6 +12,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         public Dictionary<string, Material> materials;
         public Dictionary<string, Texture> textures;
         public Dictionary<string, Image> images;
-        public Dictionary<string, SubobjectModel> subobjects;
+        public Dictionary<int, SubobjectModel> subobjects;
     }
 }

@@ -10,14 +10,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class SubmeshGeometricObject
     {
-        public string name;
-        public List<Vector3d> vertices;
-        public List<Vector3d> normals;
-        public List<Tuple<int, int, int>> triangles;
-        public List<List<Vector2d>> uvMaps;
-        public List<string> materials;
-
-        public Dictionary<string, ChannelBindPose> bindChannelPoses;
-        public Dictionary<string, Dictionary<int, float>> channelWeights;
+        public int id;
+        public Dictionary<int, SubmeshGeometricObjectElement> elements;
     }
 }
