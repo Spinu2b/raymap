@@ -21,6 +21,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         private NormalPersoBehaviourAnimationSubobjectExistenceFetchingHelper normalPersoBehaviourAnimationSubobjectExistenceFetchingHelper;
         private RomPersoBehaviourAnimationSubmeshExistenceFetchingHelper romPersoBehaviourAnimationSubobjectExistenceFetchingHelper;
 
+        private NormalPersoBehaviourMorphFetchingHelper normalPersoBehaviourMorphFetchingHelper;
+        private RomPersoBehaviourMorphFetchingHelper romPersoBehaviourMorphFetchingHelper;
+
         public GameObject gameObject
         {
             get
@@ -71,6 +74,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             this.persoBehaviour = persoBehaviour;
             this.normalPersoBehaviourAnimationKeyframesFetchingHelper = new NormalPersoBehaviourAnimationKeyframesFetchingHelper(persoBehaviour);
             this.normalPersoBehaviourAnimationSubobjectExistenceFetchingHelper = new NormalPersoBehaviourAnimationSubobjectExistenceFetchingHelper(persoBehaviour);
+            this.normalPersoBehaviourMorphFetchingHelper = new NormalPersoBehaviourMorphFetchingHelper(persoBehaviour);
         }
 
         public PersoBehaviourInterface(ROMPersoBehaviour romPersoBehaviour)
@@ -78,6 +82,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             this.romPersoBehaviour = romPersoBehaviour;
             this.romPersoBehaviourAnimationKeyframesFetchingHelper = new RomPersoBehaviourAnimationKeyframesFetchingHelper(romPersoBehaviour);
             this.romPersoBehaviourAnimationSubobjectExistenceFetchingHelper = new RomPersoBehaviourAnimationSubmeshExistenceFetchingHelper(romPersoBehaviour);
+            this.romPersoBehaviourMorphFetchingHelper = new RomPersoBehaviourMorphFetchingHelper(romPersoBehaviour);
         }
 
         public void SetState(int stateIndex)
@@ -101,6 +106,18 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             else
             {
                 return romPersoBehaviourAnimationKeyframesFetchingHelper.GetPersoBehaviourChannelsKeyframeDataForFrame(frameNumber);
+            }
+        }
+
+        public List<Tuple<int, int, int>> GetMorphDataForAnimationFrame(int frameNumber)
+        {
+            if (persoBehaviour != null)
+            {
+                return normalPersoBehaviourMorphFetchingHelper.GetPersoBehaviourMorphDataForFrame(frameNumber);
+            } 
+            else
+            {
+                return romPersoBehaviourMorphFetchingHelper.GetPersoBehaviourMorphDataForFrame(frameNumber);
             }
         }
 

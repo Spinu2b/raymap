@@ -1,4 +1,5 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,6 +81,18 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                     frameNumber, persoBehaviourInterface.GetChannelsKeyframeDataForAnimationFrame(frameNumber));
                 frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
             }      
+        }
+
+        public List<SubobjectUsedMorphAssociationInfo> GetMorphDataForThisAnimationState()
+        {
+            int frameNumber = GetFirstValidStateAnimationKeyframeFrameNumber();
+            var subobjectUsedMorphAssociationInfoListBuilder = new SubobjectUsedMorphAssociationInfoListBuilder();
+            while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
+            {
+                subobjectUsedMorphAssociationInfoListBuilder.Consider(persoBehaviourInterface.GetMorphDataForAnimationFrame(frameNumber));
+                frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
+            }
+            return subobjectUsedMorphAssociationInfoListBuilder.Build();
         }
 
         public IEnumerable<Tuple<int, List<int>>> IterateSubobjectExistenceDataForThisAnimationState()
