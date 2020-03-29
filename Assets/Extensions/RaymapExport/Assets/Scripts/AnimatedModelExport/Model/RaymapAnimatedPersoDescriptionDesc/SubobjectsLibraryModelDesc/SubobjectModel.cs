@@ -10,6 +10,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     public class SubobjectModel
     {
         public int objectNumber;
-        public Dictionary<int, SubmeshGeometricObject> geometricObjects;
+        public Dictionary<int, SubmeshGeometricObject> geometricObjects = new Dictionary<int, SubmeshGeometricObject>();
     }
 }

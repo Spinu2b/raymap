@@ -11,7 +11,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public RomPersoBehaviourAnimationKeyframesFetchingHelper(ROMPersoBehaviour romPersoBehaviour) : base(romPersoBehaviour) {}
 
-        public Dictionary<string, ChannelTransformModel> GetPersoBehaviourChannelsKeyframeDataForFrame(int frameNumber)
+        public Dictionary<int, ChannelTransformModel> GetPersoBehaviourChannelsKeyframeDataForFrame(int frameNumber)
         {
             throw new NotImplementedException();
         }

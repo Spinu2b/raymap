@@ -92,7 +92,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        public Dictionary<string, ChannelTransformModel> GetChannelsKeyframeDataForAnimationFrame(int frameNumber)
+        public Dictionary<int, ChannelTransformModel> GetChannelsKeyframeDataForAnimationFrame(int frameNumber)
         {
             if (persoBehaviour != null)
             {
@@ -104,7 +104,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        public List<string> GetSubobjectExistenceDataForAnimationFrame(int frameNumber)
+        public List<int> GetSubobjectExistenceDataForAnimationFrame(int frameNumber)
         {
             if (persoBehaviour != null)
             {

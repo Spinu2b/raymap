@@ -71,23 +71,23 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             SwitchContextToAnimationStateOfIndex(currentStateIndex);
         }
 
-        public IEnumerable<Tuple<int, Dictionary<string, ChannelTransformModel>>> IterateKeyframeDataForThisAnimationState()
+        public IEnumerable<Tuple<int, Dictionary<int, ChannelTransformModel>>> IterateKeyframeDataForThisAnimationState()
         {
             int frameNumber = GetFirstValidStateAnimationKeyframeFrameNumber();
             while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
             {
-                yield return new Tuple<int, Dictionary<string, ChannelTransformModel>>(
+                yield return new Tuple<int, Dictionary<int, ChannelTransformModel>>(
                     frameNumber, persoBehaviourInterface.GetChannelsKeyframeDataForAnimationFrame(frameNumber));
                 frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
             }      
         }
 
-        public IEnumerable<Tuple<int, List<string>>> IterateSubobjectExistenceDataForThisAnimationState()
+        public IEnumerable<Tuple<int, List<int>>> IterateSubobjectExistenceDataForThisAnimationState()
         {
             int frameNumber = GetFirstValidStateAnimationKeyframeFrameNumber();
             while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
             {
-                yield return new Tuple<int, List<string>>(
+                yield return new Tuple<int, List<int>>(
                     frameNumber, persoBehaviourInterface.GetSubobjectExistenceDataForAnimationFrame(frameNumber));
                 frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
             }
@@ -100,7 +100,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public int GetFirstValidStateAnimationKeyframeFrameNumber()
         {
-            return 1;
+            return 0;
         }
     }
 }

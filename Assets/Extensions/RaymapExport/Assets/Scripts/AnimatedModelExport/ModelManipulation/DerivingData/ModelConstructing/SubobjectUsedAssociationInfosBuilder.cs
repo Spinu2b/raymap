@@ -9,14 +9,33 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class SubobjectUsedAssociationInfosBuilder
     {
-        public void ConsiderAssociation(string subobjectName, int frameNumber)
+        private Dictionary<int, List<int>> temporaryBuildingAnimationFrames = new Dictionary<int, List<int>>();
+
+        public void ConsiderAssociation(int subobjectNumber, int frameNumber)
         {
-            throw new NotImplementedException();
+            if (!temporaryBuildingAnimationFrames.ContainsKey(subobjectNumber))
+            {
+                temporaryBuildingAnimationFrames.Add(subobjectNumber, new List<int());
+            }
+            temporaryBuildingAnimationFrames[subobjectNumber].Add(frameNumber);
         }
 
-        public Dictionary<string, List<SubobjectUsedAssociationInfo>> Build()
+        public Dictionary<int, List<SubobjectUsedAssociationInfo>> Build()
         {
-            throw new NotImplementedException();
+            var result = new Dictionary<int, List<SubobjectUsedAssociationInfo>>();
+            foreach (var buildingExistenceFramesForSubobjects in temporaryBuildingAnimationFrames)
+            {
+                buildingExistenceFramesForSubobjects.Value.Sort();
+                var existenceListForSubobject = new List<SubobjectUsedAssociationInfo>();
+                for (int i = 0; i < buildingExistenceFramesForSubobjects.Value.Count - 1; i++)
+                {
+                    if (buildingExistenceFramesForSubobjects.Value[i+1] != buildingExistenceFramesForSubobjects.Value[i] + 1)
+                    {
+
+                    }
+                }
+            }
+            return result;
         }
     }
 }

@@ -11,6 +11,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     public class SubmeshGeometricObject
     {
         public int id;
-        public Dictionary<int, SubmeshGeometricObjectElement> elements;
+        public Dictionary<int, SubmeshGeometricObjectElement> elements = new Dictionary<int, SubmeshGeometricObjectElement>();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.MathDescription
 {
@@ -13,6 +14,11 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Math
         {
             this.x = x;
             this.y = y;
+        }
+
+        public static Vector2d FromUnityVector2(Vector2 vector)
+        {
+            return new Vector2d(vector.x, vector.y);
         }
     }
 }

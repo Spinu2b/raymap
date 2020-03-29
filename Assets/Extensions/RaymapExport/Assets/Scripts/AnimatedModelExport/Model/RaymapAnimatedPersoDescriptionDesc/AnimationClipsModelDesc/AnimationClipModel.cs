@@ -16,9 +16,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
     public class SubobjectUsedMorphAssociationInfo
     {
-        public string morphSubobjectStart;
-        public string morphSubobjectEnd;
-        public Dictionary<int, float> morphProgressKeyframes;
+        public int morphSubobjectStart;
+        public int morphSubobjectEnd;
+        public Dictionary<int, float> morphProgressKeyframes = new Dictionary<int, float>();
     }
 
     public struct ChannelTransformModel
@@ -29,15 +29,19 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public static ChannelTransformModel FromUnityAbsoluteTransform(Transform transform)
         {
-            throw new NotImplementedException();
+            var result = new ChannelTransformModel();
+            result.position = Vector3d.FromUnityVector3(transform.position);
+            result.rotation = MathDescription.Quaternion.FromUnityQuaternion(transform.rotation);
+            result.scale = Vector3d.FromUnityVector3(transform.lossyScale);
+            return result;
         }
     }
 
     public class AnimationClipModel
     {
         public string name;
-        public Dictionary<string, Dictionary<int, ChannelTransformModel>> channelKeyframes;
-        public Dictionary<string, List<SubobjectUsedAssociationInfo>> subobjectsExistenceData;
-        public Dictionary<string, List<SubobjectUsedMorphAssociationInfo>> morphs;
+        public Dictionary<int, Dictionary<int, ChannelTransformModel>> channelKeyframes = new Dictionary<int, Dictionary<int, ChannelTransformModel>>();
+        public Dictionary<int, List<SubobjectUsedAssociationInfo>> subobjectsExistenceData = new Dictionary<int, List<SubobjectUsedAssociationInfo>>();
+        public List<SubobjectUsedMorphAssociationInfo> morphs = new List<SubobjectUsedMorphAssociationInfo>();
     }
 }

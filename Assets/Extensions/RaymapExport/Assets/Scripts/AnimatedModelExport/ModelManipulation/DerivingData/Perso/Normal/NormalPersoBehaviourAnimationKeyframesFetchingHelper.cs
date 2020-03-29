@@ -1,9 +1,11 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using OpenSpace.Animation.Component;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Normal
@@ -12,7 +14,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public NormalPersoBehaviourAnimationKeyframesFetchingHelper(PersoBehaviour persoBehaviour) : base(persoBehaviour) {}
 
-        public Dictionary<string, ChannelTransformModel> GetPersoBehaviourChannelsKeyframeDataForFrame(int frameNumber)
+        public Dictionary<int, ChannelTransformModel> GetPersoBehaviourChannelsKeyframeDataForFrame(int frameNumber)
         {
             UpdateAnimation(frameNumber);
             if (IsNormalAnimation())
@@ -30,17 +32,17 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        private Dictionary<string, ChannelTransformModel> GetChannelsKeyframeDataForLargoAnimation()
+        private Dictionary<int, ChannelTransformModel> GetChannelsKeyframeDataForLargoAnimation()
         {
             throw new NotImplementedException();
         }
 
-        private Dictionary<string, ChannelTransformModel> GetChannelsKeyframeDataForMontrealAnimation()
+        private Dictionary<int, ChannelTransformModel> GetChannelsKeyframeDataForMontrealAnimation()
         {
             throw new NotImplementedException();
         }
 
-        private Dictionary<string, ChannelTransformModel> GetChannelsKeyframeDataForNormalAnimation()
+        private Dictionary<int, ChannelTransformModel> GetChannelsKeyframeDataForNormalAnimation()
         {
             Func<int, ChannelTransformModel> GetChannelAbsoluteTransform = (int channelIndex) =>
             {
@@ -48,7 +50,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                     persoBehaviour.channelObjects[channelIndex].transform);
             };
 
-            var result = new Dictionary<string, ChannelTransformModel>();
+            var result = new Dictionary<int, ChannelTransformModel>();
 
             for (int i = 0; i < persoBehaviour.a3d.num_channels; i++)
             {
@@ -58,10 +60,15 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 int framesSinceKF = (int)persoBehaviour.currentFrame - (int)kf.frame;
                 if (framesSinceKF == 0)
                 {
-                    result.Add(persoBehaviour.channelObjects[i].name, GetChannelAbsoluteTransform(i));
+                    result.Add(GetChannelId(persoBehaviour.channelObjects[i].name), GetChannelAbsoluteTransform(i));
                 }
             }
             return result;
+        }
+
+        private int GetChannelId(string channelName)
+        {
+            return ChannelHelper.GetChannelId(channelName);
         }
     }
 }

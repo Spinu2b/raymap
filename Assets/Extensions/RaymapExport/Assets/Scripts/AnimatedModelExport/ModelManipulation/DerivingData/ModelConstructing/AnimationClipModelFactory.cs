@@ -13,55 +13,49 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         public AnimationClipModel DeriveFor(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
         {
             var result = new AnimationClipModel();
-            result.type = GetAnimationClipType(persoBehaviourAnimationStatesHelper);
             result.channelKeyframes = GetChannelKeyframesData(persoBehaviourAnimationStatesHelper);
             result.subobjectsExistenceData = GetSubobjectExistenceData(persoBehaviourAnimationStatesHelper);
             result.morphs = GetMorphsData(persoBehaviourAnimationStatesHelper);
             return result;
         }
 
-        private Dictionary<string, List<SubobjectUsedMorphAssociationInfo>> GetMorphsData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
+        private List<SubobjectUsedMorphAssociationInfo> GetMorphsData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
         {
             throw new NotImplementedException();
         }
 
-        private Dictionary<string, List<SubobjectUsedAssociationInfo>> GetSubobjectExistenceData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
+        private Dictionary<int, List<SubobjectUsedAssociationInfo>> GetSubobjectExistenceData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
         {
             var subobjectUsedAssociationInfosBuilder = new SubobjectUsedAssociationInfosBuilder();
-            foreach (Tuple<int, List<string>> subobjectExistenceIndicatorsForFrame in 
+            foreach (Tuple<int, List<int>> subobjectExistenceIndicatorsForFrame in 
                 persoBehaviourAnimationStatesHelper.IterateSubobjectExistenceDataForThisAnimationState())
             {
                 int currentFrame = subobjectExistenceIndicatorsForFrame.Item1;
-                foreach (var subobjectName in subobjectExistenceIndicatorsForFrame.Item2)
+                foreach (var subobjectNumber in subobjectExistenceIndicatorsForFrame.Item2)
                 {
-                    subobjectUsedAssociationInfosBuilder.ConsiderAssociation(subobjectName: subobjectName, frameNumber: currentFrame);
+                    subobjectUsedAssociationInfosBuilder.ConsiderAssociation(subobjectNumber: subobjectNumber, frameNumber: currentFrame);
                 }
             }
             return subobjectUsedAssociationInfosBuilder.Build();
         }
 
-        private Dictionary<string, Dictionary<int, ChannelTransformModel>> GetChannelKeyframesData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
+        private Dictionary<int, Dictionary<int, ChannelTransformModel>> GetChannelKeyframesData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
         {
-            var result = new Dictionary<string, Dictionary<int, ChannelTransformModel>>();
-            foreach (Tuple<int, Dictionary<string, ChannelTransformModel>> channelKeyframesForFrame in
+            var result = new Dictionary<int, Dictionary<int, ChannelTransformModel>>();
+            foreach (Tuple<int, Dictionary<int, ChannelTransformModel>> channelKeyframesForFrame in
                 persoBehaviourAnimationStatesHelper.IterateKeyframeDataForThisAnimationState()) {
                 int currentFrame = channelKeyframesForFrame.Item1;
                 foreach (var channelKeyframe in channelKeyframesForFrame.Item2)
                 {
-                    var channelName = channelKeyframe.Key;
-                    if (!result.ContainsKey(channelName))
+                    var channelId = channelKeyframe.Key;
+                    if (!result.ContainsKey(channelId))
                     {
-                        result[channelName] = new Dictionary<int, ChannelTransformModel>();
+                        result[channelId] = new Dictionary<int, ChannelTransformModel>();
                     }
-                    result[channelName][currentFrame] = channelKeyframe.Value;
+                    result[channelId][currentFrame] = channelKeyframe.Value;
                 }
             }
             return result;
-        }
-
-        private AnimationClipType GetAnimationClipType(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
-        {
-            throw new NotImplementedException();
         }
     }
 }

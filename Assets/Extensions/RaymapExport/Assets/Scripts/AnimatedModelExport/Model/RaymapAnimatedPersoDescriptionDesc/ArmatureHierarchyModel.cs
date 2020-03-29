@@ -9,7 +9,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class ArmatureHierarchyModel
     {
-        public HashSet<string> channels;
-        public Dictionary<string, string> parenting;
+        public List<string> channels = new List<string>();
+        public Dictionary<string, string> parenting = new Dictionary<string, string>();
     }
 }

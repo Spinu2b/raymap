@@ -16,9 +16,20 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             this.physicalObject = physicalObject;
         }
 
-        public IEnumerable<GeometricObjectWrapper> IterateGeometricObjects()
+        public IEnumerable<Tuple<int, GeometricObjectWrapper>> IterateGeometricObjects()
         {
-            throw new NotImplementedException();
+            if (physicalObject != null)
+            {
+                int index = 0;
+                foreach (var visualSetLOD in physicalObject.visualSet)
+                {
+                    yield return new Tuple<int, GeometricObjectWrapper>(index, new GeometricObjectWrapper(visualSetLOD.obj));
+                    index++;
+                }
+            } else
+            {
+                throw new NotImplementedException("Not implemented handling of other physical objects!");
+            }
         }
     }
 }

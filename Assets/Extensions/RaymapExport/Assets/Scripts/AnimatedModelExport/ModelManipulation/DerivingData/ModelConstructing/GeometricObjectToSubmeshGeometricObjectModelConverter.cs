@@ -11,26 +11,31 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class GeometricObjectToSubmeshGeometricObjectModelConverter
     {
-        public SubmeshGeometricObject Convert(GeometricObjectWrapper geometricObject, int channelId)
+        private GeometricObjectElementToSubmeshGeometricObjectElementConverter geometricObjectElementToSubmeshGeometricObjectElementConverter
+            = new GeometricObjectElementToSubmeshGeometricObjectElementConverter();
+
+        public SubmeshGeometricObject Convert(GeometricObjectWrapper geometricObject, int channelId, int geometricObjectIndex)
         {
             var result = new SubmeshGeometricObject();
-            result.id = GetGeometricObjectId(geometricObject, channelId);
-            foreach (GeometricObjectElementWrapper geometricObjectElement in geometricObject.IterateElements())
+            result.id = GetGeometricObjectId(geometricObject, channelId, geometricObjectIndex);
+            foreach (Tuple<int, GeometricObjectElementWrapper> geometricObjectElementInfo in geometricObject.IterateElements())
             {
-                SubmeshGeometricObjectElement submeshGeometricObjectElement = GetSubmeshGeometricObjectElement(geometricObjectElement, channelId);
+                int geometricObjectElementIndex = geometricObjectElementInfo.Item1;
+                var geometricObjectElement = geometricObjectElementInfo.Item2;
+                SubmeshGeometricObjectElement submeshGeometricObjectElement = GetSubmeshGeometricObjectElement(geometricObjectElement, channelId, geometricObjectElementIndex);
                 result.elements.Add(submeshGeometricObjectElement.id, submeshGeometricObjectElement);
             }
             return result;
         }
 
-        private SubmeshGeometricObjectElement GetSubmeshGeometricObjectElement(GeometricObjectElementWrapper geometricObjectElement, int channelId)
+        private SubmeshGeometricObjectElement GetSubmeshGeometricObjectElement(GeometricObjectElementWrapper geometricObjectElement, int channelId, int geometricObjectElementIndex)
         {
-            throw new NotImplementedException();
+            return geometricObjectElementToSubmeshGeometricObjectElementConverter.Convert(geometricObjectElement, channelId, geometricObjectElementIndex);
         }
 
-        private int GetGeometricObjectId(GeometricObjectWrapper geometricObject, int channelId)
+        private int GetGeometricObjectId(GeometricObjectWrapper geometricObject, int channelId, int geometricObjectIndex)
         {
-            throw new NotImplementedException();
+            return geometricObjectIndex;
         }
     }
 }

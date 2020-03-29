@@ -30,6 +30,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             {
                 subobjectsCache[physicalObjectNumber] = GetSubobjectModel(physicalObject, physicalObjectNumber, channelId);
             }
+            if (!subobjectsAnimationFramesPersoStatesAssociationsCache.ContainsKey(stateIndex))
+            {
+                subobjectsAnimationFramesPersoStatesAssociationsCache.Add(stateIndex, new Dictionary<int, List<int>>());
+            }
+            if (!subobjectsAnimationFramesPersoStatesAssociationsCache[stateIndex].ContainsKey(animationFrame))
+            {
+                subobjectsAnimationFramesPersoStatesAssociationsCache[stateIndex].Add(animationFrame, new List<int>());
+            }
             if (!subobjectsAnimationFramesPersoStatesAssociationsCache[stateIndex][animationFrame].Contains(physicalObjectNumber))
             {
                 subobjectsAnimationFramesPersoStatesAssociationsCache[stateIndex][animationFrame].Add(physicalObjectNumber);
@@ -43,7 +51,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public SubobjectModel GetPhysicalObjectCachedModelFor(int physicalObjectNumber)
         {
-            throw new NotImplementedException();
+            return subobjectsCache[physicalObjectNumber];
         }
     }
 }

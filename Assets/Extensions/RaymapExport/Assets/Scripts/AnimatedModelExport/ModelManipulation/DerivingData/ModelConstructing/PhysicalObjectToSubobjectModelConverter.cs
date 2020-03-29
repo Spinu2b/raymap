@@ -28,22 +28,24 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         private Dictionary<int, SubmeshGeometricObject> GetGeometricObjects(PhysicalObjectWrapper physicalObject, int channelId)
         {
             var result = new Dictionary<int, SubmeshGeometricObject>();
-            foreach (GeometricObjectWrapper geometricObject in physicalObject.IterateGeometricObjects())
+            foreach (Tuple<int, GeometricObjectWrapper> geometricObjectInfo in physicalObject.IterateGeometricObjects())
             {
-                SubmeshGeometricObject submeshGeometricObject = GetSubmeshGeometricObject(geometricObject, channelId);
+                int geometricObjectIndex = geometricObjectInfo.Item1;
+                var geometricObject = geometricObjectInfo.Item2;
+                SubmeshGeometricObject submeshGeometricObject = GetSubmeshGeometricObject(geometricObject, channelId, geometricObjectIndex);
                 result.Add(submeshGeometricObject.id, submeshGeometricObject);
             }
             return result;
         }
 
-        private SubmeshGeometricObject GetSubmeshGeometricObject(GeometricObjectWrapper geometricObject, int channelId)
+        private SubmeshGeometricObject GetSubmeshGeometricObject(GeometricObjectWrapper geometricObject, int channelId, int geometricObjectIndex)
         {
-            return geometricObjectToSubmeshGeometricObjectModelConverter.Convert(geometricObject, channelId);
+            return geometricObjectToSubmeshGeometricObjectModelConverter.Convert(geometricObject, channelId, geometricObjectIndex);
         }
 
         private int GetObjectNumber(PhysicalObjectWrapper physicalObject, int physicalObjectNumber)
         {
-            throw new NotImplementedException();
+            return physicalObjectNumber;
         }
     }
 }

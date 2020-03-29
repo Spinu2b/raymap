@@ -20,5 +20,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Math
             this.y = y;
             this.z = z;
         }
+
+        public static Quaternion FromUnityQuaternion(UnityEngine.Quaternion quaternion)
+        {
+            return new Quaternion(quaternion.w, quaternion.x, quaternion.y, quaternion.z);
+        }
     }
 }
