@@ -12,6 +12,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public int frameBegin;
         public int frameEnd;
+
+        public SubobjectUsedAssociationInfo(int frameBegin, int frameEnd)
+        {
+            this.frameBegin = frameBegin;
+            this.frameEnd = frameEnd;
+        }
     }
 
     public class SubobjectUsedMorphAssociationInfo
