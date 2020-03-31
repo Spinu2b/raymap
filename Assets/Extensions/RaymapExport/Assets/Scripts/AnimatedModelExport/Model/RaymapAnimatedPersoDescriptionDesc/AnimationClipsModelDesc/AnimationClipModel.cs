@@ -25,6 +25,22 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         public int morphSubobjectStart;
         public int morphSubobjectEnd;
         public Dictionary<int, float> morphProgressKeyframes = new Dictionary<int, float>();
+
+        public SubobjectUsedMorphAssociationInfo(int morphSubobjectStart, int morphSubobjectEnd)
+        {
+            this.morphSubobjectStart = morphSubobjectStart;
+            this.morphSubobjectEnd = morphSubobjectEnd;
+        }
+
+        public int GetMinimalKeyframeNumber()
+        {
+            return morphProgressKeyframes.Keys.Min();
+        }
+
+        public int GetMaxKeyframeNumber()
+        {
+            return morphProgressKeyframes.Keys.Max();
+        }
     }
 
     public struct ChannelTransformModel

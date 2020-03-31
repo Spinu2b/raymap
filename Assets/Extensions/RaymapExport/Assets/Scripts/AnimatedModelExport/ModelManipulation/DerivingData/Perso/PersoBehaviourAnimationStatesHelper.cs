@@ -89,7 +89,8 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             var subobjectUsedMorphAssociationInfoListBuilder = new SubobjectUsedMorphAssociationInfoListBuilder();
             while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
             {
-                subobjectUsedMorphAssociationInfoListBuilder.Consider(persoBehaviourInterface.GetMorphDataForAnimationFrame(frameNumber));
+                subobjectUsedMorphAssociationInfoListBuilder.Consider(frameNumber,
+                    persoBehaviourInterface.GetMorphDataForAnimationFrame(frameNumber));
                 frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
             }
             return subobjectUsedMorphAssociationInfoListBuilder.Build();

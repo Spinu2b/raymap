@@ -29,6 +29,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         {
             animationClipModel = new AnimationClipModelFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
             animationClipName = animationClipModel.name;
+
+            submeshesDescriptionSet = new SubmeshesDescriptionSetFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
+            armatureHierarchyParentingInfo = new ArmatureHierarchyModelFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
         }
 
         public AnimationClipModel GetAnimationClipObj()
