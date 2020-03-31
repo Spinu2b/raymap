@@ -10,6 +10,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class AnimationClipsModel
     {
-        public Dictionary<string, AnimationClipModel> animationClips = new Dictionary<string, AnimationClipModel>();
+        public Dictionary<int, AnimationClipModel> animationClips = new Dictionary<int, AnimationClipModel>();
     }
 }

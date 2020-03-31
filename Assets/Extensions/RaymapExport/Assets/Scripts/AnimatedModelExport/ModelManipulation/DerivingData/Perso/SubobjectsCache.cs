@@ -29,6 +29,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             if (!subobjectsCache.ContainsKey(physicalObjectNumber))
             {
                 subobjectsCache[physicalObjectNumber] = GetSubobjectModel(physicalObject, physicalObjectNumber, channelId);
+            } else
+            {
+                var existingPhysicalObject = subobjectsCache[physicalObjectNumber];
+                if (!existingPhysicalObject.EqualsToAnother(GetSubobjectModel(physicalObject, physicalObjectNumber, channelId)))
+                {
+                    throw new InvalidOperationException(
+                        "Two physical objects share same physical object number, but they are not the same physical object!");
+                }
             }
             if (!subobjectsAnimationFramesPersoStatesAssociationsCache.ContainsKey(stateIndex))
             {

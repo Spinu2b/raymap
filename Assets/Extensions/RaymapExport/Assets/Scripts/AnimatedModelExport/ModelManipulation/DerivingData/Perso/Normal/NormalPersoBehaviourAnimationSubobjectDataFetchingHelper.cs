@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Normal
 {
-    public abstract class NormalPersoBehaviourAnimationSubobjectDataFetchingHelper : NormalPersoBehaviourAnimationDataFetchingHelper
+    public class NormalPersoBehaviourAnimationSubobjectDataFetchingHelper : NormalPersoBehaviourAnimationDataFetchingHelper
     {
         private SubobjectsCache subobjectsCache = new SubobjectsCache();
 
         public NormalPersoBehaviourAnimationSubobjectDataFetchingHelper(PersoBehaviour persoBehaviour) : base(persoBehaviour) {}
 
-        protected IEnumerable<SubobjectModel> IterateActualPhysicalSubobjectsForNormalFrame()
+        private IEnumerable<SubobjectModel> IterateActualPhysicalSubobjectsForNormalFrame()
         {
             AnimOnlyFrame of = persoBehaviour.a3d.onlyFrames[persoBehaviour.a3d.start_onlyFrames + persoBehaviour.currentFrame];
             for (int i = 0; i < persoBehaviour.a3d.num_channels; i++)
@@ -31,14 +31,35 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        protected IEnumerable<SubobjectModel> IterateActualPhysicalSubobjectsForLargoFrame()
+        private IEnumerable<SubobjectModel> IterateActualPhysicalSubobjectsForLargoFrame()
         {
             throw new NotImplementedException();
         }
 
-        protected IEnumerable<SubobjectModel> IterateActualPhysicalSubobjectsForMontrealFrame()
+        private IEnumerable<SubobjectModel> IterateActualPhysicalSubobjectsForMontrealFrame()
         {
             throw new NotImplementedException();
+        }
+
+        public List<SubobjectModel> GetPersoBehaviourSubobjectsUsedForFrame(int frameNumber)
+        {
+            UpdateAnimation(frameNumber);
+            if (IsNormalAnimation())
+            {
+                return new List<SubobjectModel>(IterateActualPhysicalSubobjectsForNormalFrame());
+            }
+            else if (IsMontrealAnimation())
+            {
+                return new List<SubobjectModel>(IterateActualPhysicalSubobjectsForMontrealFrame());
+            }
+            else if (IsLargoAnimation())
+            {
+                return new List<SubobjectModel>(IterateActualPhysicalSubobjectsForLargoFrame());
+            }
+            else
+            {
+                throw new InvalidOperationException("This perso behaviour does not have neither normal, montreal nor largo animation frames in this state!");
+            }
         }
     }
 }

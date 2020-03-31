@@ -13,11 +13,11 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class AnimationStateGeneralInfo
     {
-        public string animationClipName;
+        public int animationClipId;
         private PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper;
 
         private AnimationClipModel animationClipModel;
-        private Dictionary<string, SubobjectModel> submeshesDescriptionSet;
+        private Dictionary<int, SubobjectModel> submeshesDescriptionSet;
         private ArmatureHierarchyModel armatureHierarchyParentingInfo;
 
         public AnimationStateGeneralInfo(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
@@ -28,10 +28,25 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         public void BuildData()
         {
             animationClipModel = new AnimationClipModelFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
-            animationClipName = animationClipModel.name;
+            animationClipId = animationClipModel.id;
 
             submeshesDescriptionSet = new SubmeshesDescriptionSetFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
             armatureHierarchyParentingInfo = new ArmatureHierarchyModelFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
+        }
+
+        public Dictionary<string, Image> GetImages()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<string, Texture> GetTextures()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<string, Material> GetMaterials()
+        {
+            throw new NotImplementedException();
         }
 
         public AnimationClipModel GetAnimationClipObj()
@@ -39,7 +54,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             return animationClipModel;
         }
 
-        public Dictionary<string, SubobjectModel> GetSubmeshesDescriptionSet()
+        public Dictionary<int, SubobjectModel> GetSubmeshesDescriptionSet()
         {
             return submeshesDescriptionSet;
         }

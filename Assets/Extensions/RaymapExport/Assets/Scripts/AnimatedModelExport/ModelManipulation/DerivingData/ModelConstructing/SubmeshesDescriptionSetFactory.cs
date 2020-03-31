@@ -10,9 +10,20 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class SubmeshesDescriptionSetFactory
     {
-        public Dictionary<string, SubobjectModel> DeriveFor(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
+        public Dictionary<int, SubobjectModel> DeriveFor(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
         {
-            throw new NotImplementedException();
+            var result = new Dictionary<int, SubobjectModel>();
+            foreach (var subobjectModelInfo in persoBehaviourAnimationStatesHelper.IterateSubobjectsUsedForThisAnimationState())
+            {
+                foreach (var subobjectModel in subobjectModelInfo.Item2)
+                {
+                    if (!result.ContainsKey(subobjectModel.objectNumber))
+                    {
+                        result.Add(subobjectModel.objectNumber, subobjectModel);
+                    }
+                }
+            }
+            return result;
         }
     }
 }

@@ -10,7 +10,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class SubobjectsLibraryBuilder
     {
-        public void Consolidate(Dictionary<string, SubobjectModel> subobjects)
+        public void Consolidate(Dictionary<int, SubobjectModel> subobjects,
+            Dictionary<string, Material> materials,
+            Dictionary<string, Texture> textures,
+            Dictionary<string, Image> images)
         {
             throw new NotImplementedException();
         }

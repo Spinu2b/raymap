@@ -1,4 +1,5 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing;
 using System;
 using System.Collections.Generic;
@@ -98,11 +99,31 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public IEnumerable<Tuple<int, List<int>>> IterateSubobjectExistenceDataForThisAnimationState()
         {
+            foreach (var subobjectsUsedInfo in IterateSubobjectsUsedForThisAnimationState())
+            {
+                yield return new Tuple<int, List<int>>(
+                    subobjectsUsedInfo.Item1, subobjectsUsedInfo.Item2.Select(x => x.objectNumber).ToList());
+            }
+        }
+
+        public IEnumerable<Tuple<int, List<SubobjectModel>>> IterateSubobjectsUsedForThisAnimationState()
+        {
             int frameNumber = GetFirstValidStateAnimationKeyframeFrameNumber();
             while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
             {
-                yield return new Tuple<int, List<int>>(
-                    frameNumber, persoBehaviourInterface.GetSubobjectExistenceDataForAnimationFrame(frameNumber));
+                yield return new Tuple<int, List<SubobjectModel>>(frameNumber, 
+                    persoBehaviourInterface.GetSubobjectsUsedForAnimationFrame(frameNumber));
+                frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
+            }
+        }
+
+        public IEnumerable<Tuple<int, Dictionary<int, int>>> IterateChannelParentingInfosThisAnimationState()
+        {
+            int frameNumber = GetFirstValidStateAnimationKeyframeFrameNumber();
+            while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
+            {
+                yield return new Tuple<int, Dictionary<int, int>>(frameNumber,
+                    persoBehaviourInterface.GetChannelParentingInfosForAnimationFrame(frameNumber));
                 frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
             }
         }

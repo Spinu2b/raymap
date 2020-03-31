@@ -16,7 +16,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             result.channelKeyframes = GetChannelKeyframesData(persoBehaviourAnimationStatesHelper);
             result.subobjectsExistenceData = GetSubobjectExistenceData(persoBehaviourAnimationStatesHelper);
             result.morphs = GetMorphsData(persoBehaviourAnimationStatesHelper);
-            result.name = persoBehaviourAnimationStatesHelper.GetCurrentPersoStateIndex().ToString();
+            result.id = persoBehaviourAnimationStatesHelper.GetCurrentPersoStateIndex();
             return result;
         }
 

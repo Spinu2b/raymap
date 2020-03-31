@@ -61,7 +61,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
     public class AnimationClipModel
     {
-        public string name;
+        public int id;
         public Dictionary<int, Dictionary<int, ChannelTransformModel>> channelKeyframes = new Dictionary<int, Dictionary<int, ChannelTransformModel>>();
         public Dictionary<int, List<SubobjectUsedAssociationInfo>> subobjectsExistenceData = new Dictionary<int, List<SubobjectUsedAssociationInfo>>();
         public List<SubobjectUsedMorphAssociationInfo> morphs = new List<SubobjectUsedMorphAssociationInfo>();

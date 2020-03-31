@@ -12,7 +12,13 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public ArmatureHierarchyModel DeriveFor(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
         {
-            throw new NotImplementedException();
+            var result = new ArmatureHierarchyModel();
+            foreach (Tuple<int, Dictionary<int, int>> channelParentingInfoForFrame
+                in persoBehaviourAnimationStatesHelper.IterateChannelParentingInfosThisAnimationState())
+            {
+                
+            }
+            return result;
         }
     }
 }
