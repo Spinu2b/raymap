@@ -61,8 +61,8 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 else
                 {
                     Dictionary<short, List<int>> channelIDDictionary = 
-                        (Dictionary<short, List<int>>) typeof(PersoBehaviour).GetField("channelIDDictionary").GetValue(
-                            persoBehaviour);
+                        (Dictionary<short, List<int>>) typeof(PersoBehaviour).GetField(
+                            "channelIDDictionary", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(persoBehaviour);
 
                     if (!channelIDDictionary.ContainsKey(h.childChannelID) || !channelIDDictionary.ContainsKey(h.parentChannelID))
                     {
