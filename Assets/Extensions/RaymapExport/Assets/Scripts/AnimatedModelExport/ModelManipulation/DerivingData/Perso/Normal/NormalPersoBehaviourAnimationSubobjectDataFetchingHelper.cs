@@ -23,11 +23,15 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 AnimChannel ch = persoBehaviour.a3d.channels[persoBehaviour.a3d.start_channels + i];
                 AnimNumOfNTTO numOfNTTO = persoBehaviour.a3d.numOfNTTO[ch.numOfNTTO + of.numOfNTTO];
                 int poNum = numOfNTTO.numOfNTTO - persoBehaviour.a3d.start_NTTO;
-                PhysicalObject physicalObject = persoBehaviour.subObjects[i][poNum];
 
-                subobjectsCache.ConsiderPhysicalObject(
-                    physicalObject, persoBehaviour.currentState, (int)persoBehaviour.currentFrame, ch.id, poNum);
-                yield return subobjectsCache.GetPhysicalObjectCachedModelFor(poNum);
+                AnimNTTO ntto = persoBehaviour.a3d.ntto[persoBehaviour.a3d.start_NTTO + poNum];
+                if (!ntto.IsInvisibleNTTO)
+                {
+                    PhysicalObject physicalObject = persoBehaviour.subObjects[i][poNum];
+                    subobjectsCache.ConsiderPhysicalObject(
+                        physicalObject, persoBehaviour.currentState, (int)persoBehaviour.currentFrame, ch.id, poNum);
+                    yield return subobjectsCache.GetPhysicalObjectCachedModelFor(poNum);
+                }                    
             }
         }
 

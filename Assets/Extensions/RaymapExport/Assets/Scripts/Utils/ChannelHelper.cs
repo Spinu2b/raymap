@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.Utils
 {
-    public class ChannelHelper
+    public static class ChannelHelper
     {
         private static Regex numberRegex = new Regex(@"\d+");
 

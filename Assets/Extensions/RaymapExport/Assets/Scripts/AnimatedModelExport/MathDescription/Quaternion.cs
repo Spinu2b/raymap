@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Math
         public static Quaternion FromUnityQuaternion(UnityEngine.Quaternion quaternion)
         {
             return new Quaternion(quaternion.w, quaternion.x, quaternion.y, quaternion.z);
+        }
+
+        public bool RoundEquals(Quaternion other)
+        {
+            return NumberUtils.RoundEquals(w, other.w) && NumberUtils.RoundEquals(x, other.x) && NumberUtils.RoundEquals(y, other.y) &&
+                NumberUtils.RoundEquals(z, other.z);
         }
     }
 }

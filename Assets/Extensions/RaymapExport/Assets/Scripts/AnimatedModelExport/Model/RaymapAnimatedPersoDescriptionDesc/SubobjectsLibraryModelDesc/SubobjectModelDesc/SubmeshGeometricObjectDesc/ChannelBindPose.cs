@@ -31,5 +31,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             result.scale = Vector3d.FromUnityVector3(transform.lossyScale);
             return result;
         }
+
+        public bool RoundEquals(ChannelBindPose other)
+        {
+            return position.RoundEquals(other.position) && rotation.RoundEquals(other.rotation) && scale.RoundEquals(other.scale);
+        }
     }
 }

@@ -85,6 +85,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             this.normalPersoBehaviourAnimationKeyframesFetchingHelper = new NormalPersoBehaviourAnimationKeyframesFetchingHelper(persoBehaviour);
             this.normalPersoBehaviourAnimationSubobjectDataFetchingHelper = new NormalPersoBehaviourAnimationSubobjectDataFetchingHelper(persoBehaviour);
             this.normalPersoBehaviourMorphFetchingHelper = new NormalPersoBehaviourMorphFetchingHelper(persoBehaviour);
+            this.normalPersoBehaviourChannelsParentingFetchingHelper = new NormalPersoBehaviourChannelsParentingFetchingHelper(persoBehaviour);
         }
 
         public PersoBehaviourInterface(ROMPersoBehaviour romPersoBehaviour)
@@ -93,6 +94,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             this.romPersoBehaviourAnimationKeyframesFetchingHelper = new RomPersoBehaviourAnimationKeyframesFetchingHelper(romPersoBehaviour);
             this.romPersoBehaviourAnimationSubobjectDataFetchingHelper = new RomPersoBehaviourAnimationSubobjectDataFetchingHelper(romPersoBehaviour);
             this.romPersoBehaviourMorphFetchingHelper = new RomPersoBehaviourMorphFetchingHelper(romPersoBehaviour);
+            this.romPersoBehaviourChannelsParentingFetchingHelper = new RomPersoBehaviourChannelsParentingFetchingHelper(romPersoBehaviour);
         }
 
         public void SetState(int stateIndex)

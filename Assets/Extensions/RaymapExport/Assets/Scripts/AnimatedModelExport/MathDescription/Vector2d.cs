@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,11 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Math
         public static Vector2d FromUnityVector2(Vector2 vector)
         {
             return new Vector2d(vector.x, vector.y);
+        }
+
+        public bool RoundEquals(Vector2d other)
+        {
+            return NumberUtils.RoundEquals(x, other.x) && NumberUtils.RoundEquals(y, other.y);
         }
     }
 }

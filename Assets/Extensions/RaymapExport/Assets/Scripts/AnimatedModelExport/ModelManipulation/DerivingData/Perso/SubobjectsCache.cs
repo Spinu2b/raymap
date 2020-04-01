@@ -26,17 +26,11 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         private void ConsiderPhysicalObject(PhysicalObjectWrapper physicalObject, int stateIndex, int animationFrame, int channelId, int physicalObjectNumber)
         {
+            bool newlyAdded = false;
             if (!subobjectsCache.ContainsKey(physicalObjectNumber))
             {
                 subobjectsCache[physicalObjectNumber] = GetSubobjectModel(physicalObject, physicalObjectNumber, channelId);
-            } else
-            {
-                var existingPhysicalObject = subobjectsCache[physicalObjectNumber];
-                if (!existingPhysicalObject.EqualsToAnother(GetSubobjectModel(physicalObject, physicalObjectNumber, channelId)))
-                {
-                    throw new InvalidOperationException(
-                        "Two physical objects share same physical object number, but they are not the same physical object!");
-                }
+                newlyAdded = true;
             }
             if (!subobjectsAnimationFramesPersoStatesAssociationsCache.ContainsKey(stateIndex))
             {
@@ -48,6 +42,15 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
             if (!subobjectsAnimationFramesPersoStatesAssociationsCache[stateIndex][animationFrame].Contains(physicalObjectNumber))
             {
+                if (!newlyAdded)
+                {
+                    var existingPhysicalObject = subobjectsCache[physicalObjectNumber];
+                    if (!existingPhysicalObject.EqualsToAnother(GetSubobjectModel(physicalObject, physicalObjectNumber, channelId)))
+                    {
+                        throw new InvalidOperationException(
+                            "Two physical objects share same physical object number, but they are not the same physical object!");
+                    }
+                }
                 subobjectsAnimationFramesPersoStatesAssociationsCache[stateIndex][animationFrame].Add(physicalObjectNumber);
             }            
         }
