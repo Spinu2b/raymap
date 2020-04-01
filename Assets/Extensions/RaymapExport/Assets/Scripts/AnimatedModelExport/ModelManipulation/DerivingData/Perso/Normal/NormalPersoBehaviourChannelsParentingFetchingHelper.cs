@@ -1,6 +1,9 @@
-﻿using System;
+﻿using OpenSpace;
+using OpenSpace.Animation.Component;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -43,7 +46,43 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         private Dictionary<int, int> GetChannelsParentingForNormalAnimation()
         {
-            throw new NotImplementedException();
+            var result = new Dictionary<int, int>();
+            AnimOnlyFrame of = persoBehaviour.a3d.onlyFrames[persoBehaviour.a3d.start_onlyFrames + persoBehaviour.currentFrame];
+            // Create hierarchy for this frame
+            for (int i = of.start_hierarchies_for_frame;
+                i < of.start_hierarchies_for_frame + of.num_hierarchies_for_frame; i++)
+            {
+                AnimHierarchy h = persoBehaviour.a3d.hierarchies[i];
+
+                if (Settings.s.engineVersion <= Settings.EngineVersion.TT)
+                {
+                    result.Add(h.childChannelID, h.parentChannelID);
+                }
+                else
+                {
+                    Dictionary<short, List<int>> channelIDDictionary = 
+                        (Dictionary<short, List<int>>) typeof(PersoBehaviour).GetField("channelIDDictionary").GetValue(
+                            persoBehaviour);
+
+                    if (!channelIDDictionary.ContainsKey(h.childChannelID) || !channelIDDictionary.ContainsKey(h.parentChannelID))
+                    {
+                        continue;
+                    }
+
+                    var getChannelByIDMethod = typeof(PersoBehaviour).GetMethod("GetChannelByID", BindingFlags.NonPublic | BindingFlags.Instance);
+
+                    List<int> ch_child_list = (List<int>) getChannelByIDMethod.Invoke(persoBehaviour, new object[] { h.childChannelID });
+                    List<int> ch_parent_list = (List<int>)getChannelByIDMethod.Invoke(persoBehaviour, new object[] { h.parentChannelID });
+                    foreach (int ch_child in ch_child_list)
+                    {
+                        foreach (int ch_parent in ch_parent_list)
+                        {
+                            result.Add(ch_child, ch_parent);
+                        }
+                    }
+                }
+            }
+            return result;
         }
     }
 }
