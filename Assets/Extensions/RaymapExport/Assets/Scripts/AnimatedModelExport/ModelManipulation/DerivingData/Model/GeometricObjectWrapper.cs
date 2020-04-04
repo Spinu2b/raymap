@@ -10,23 +10,31 @@ using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model
 {
+    public enum GeometricObjectWrappingType
+    {
+        RAYMAP_NORMAL_GEOMETRIC_OBJECT,
+        RAYMAP_NORMAL_GEOMETRIC_OBJECT_INTERFACE
+    }
+
     public class GeometricObjectWrapper
     {
         private IGeometricObject geometricObject;
+        private GeometricObjectWrappingType wrappingType;
 
-        private GeometricObjectWrapper(IGeometricObject geometricObject)
+        private GeometricObjectWrapper(IGeometricObject geometricObject, GeometricObjectWrappingType wrappingType)
         {
             this.geometricObject = geometricObject;
+            this.wrappingType = wrappingType;
         }
 
         public static GeometricObjectWrapper FromRaymapNormalGeometricObject(GeometricObject geo)
         {
-            return new GeometricObjectWrapper(geo);
+            return new GeometricObjectWrapper(geo, GeometricObjectWrappingType.RAYMAP_NORMAL_GEOMETRIC_OBJECT);
         }
 
         public static GeometricObjectWrapper FromRaymapNormalGeometricObjectInterface(IGeometricObject obj)
         {
-            return new GeometricObjectWrapper(obj);
+            return new GeometricObjectWrapper(obj, GeometricObjectWrappingType.RAYMAP_NORMAL_GEOMETRIC_OBJECT_INTERFACE);
         }
 
         public IEnumerable<Vector3> vertices {
@@ -53,7 +61,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                     if (element is GeometricObjectElementTriangles)
                     {
                         yield return new Tuple<int, GeometricObjectElementWrapper>(
-                            index, GeometricObjectElementWrapper.FromRaymapNormalGeometricObjectInterface(element));
+                            index, GeometricObjectElementWrapper.FromRaymapNormalGeometricObjectElementInterface(element));
                     }                    
                     index++;
                 }

@@ -9,13 +9,25 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model
 {
+    public enum PhysicalObjectWrappingType
+    {
+        RAYMAP_NORMAL_PHYSICAL_OBJECT
+    }
+
     public class PhysicalObjectWrapper
     {
         private PhysicalObject physicalObject;
+        private PhysicalObjectWrappingType wrappingType;
 
-        private PhysicalObjectWrapper(PhysicalObject physicalObject)
+        private PhysicalObjectWrapper(PhysicalObject physicalObject, PhysicalObjectWrappingType wrappingType)
         {
             this.physicalObject = physicalObject;
+            this.wrappingType = wrappingType;
+        }
+
+        public static PhysicalObjectWrapper FromRaymapNormalPhysicalObject(PhysicalObject physicalObject)
+        {
+            return new PhysicalObjectWrapper(physicalObject, PhysicalObjectWrappingType.RAYMAP_NORMAL_PHYSICAL_OBJECT);
         }
 
         public IEnumerable<Tuple<int, GeometricObjectWrapper>> IterateGeometricObjects()
@@ -47,11 +59,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
             return MaterialsTexturesImagesModelUnifier.Unify(
                 parts: resultList, verifyIdsUniqueContract: true);
-        }
-
-        public static PhysicalObjectWrapper FromRaymapNormalPhysicalObject(PhysicalObject physicalObject)
-        {
-            return new PhysicalObjectWrapper(physicalObject);
         }
     }
 }

@@ -13,9 +13,15 @@ using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model
 {
+    public enum GeometricObjectElementWrappingType
+    {
+        RAYMAP_NORMAL_GEOMETRIC_OBJECT_ELEMENT_INTERFACE
+    }
+
     public class GeometricObjectElementWrapper
     {
         private IGeometricObjectElement geometricObjectElement;
+        private GeometricObjectElementWrappingType wrappingType;
 
         private GeometricObjectWrapper geometricObject
         {
@@ -61,15 +67,18 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        private GeometricObjectElementWrapper(IGeometricObjectElement geometricObjectElement)
+        private GeometricObjectElementWrapper(IGeometricObjectElement geometricObjectElement,
+            GeometricObjectElementWrappingType wrappingType)
         {
             this.geometricObjectElement = geometricObjectElement;
+            this.wrappingType = wrappingType;
         }
 
-        public static GeometricObjectElementWrapper FromRaymapNormalGeometricObjectInterface(
+        public static GeometricObjectElementWrapper FromRaymapNormalGeometricObjectElementInterface(
     IGeometricObjectElement element)
         {
-            return new GeometricObjectElementWrapper(element);
+            return new GeometricObjectElementWrapper(element,
+                GeometricObjectElementWrappingType.RAYMAP_NORMAL_GEOMETRIC_OBJECT_ELEMENT_INTERFACE);
         }
 
         public Dictionary<int, Dictionary<int, float>> GetChannelWeights()
