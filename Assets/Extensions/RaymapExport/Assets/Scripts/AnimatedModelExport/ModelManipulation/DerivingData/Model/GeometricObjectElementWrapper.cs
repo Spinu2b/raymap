@@ -2,6 +2,7 @@
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc.SubmeshGeometricObjectDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.MaterialsData;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using OpenSpace.Visual;
 using System;
@@ -278,7 +279,8 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         private List<Tuple<UnityEngine.Material, HashSet<string>>> GetMaterialsWithTextureNamesData()
         {
-            throw new NotImplementedException();
+            return SubmeshGameObjectMaterialsDataFetchingHelper.
+                GetGouraudShaderedMaterialData(gameObject);
         }
     }
 }
