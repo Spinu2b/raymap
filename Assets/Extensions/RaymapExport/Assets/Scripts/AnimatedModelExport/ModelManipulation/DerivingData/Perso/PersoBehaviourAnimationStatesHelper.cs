@@ -84,6 +84,18 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }      
         }
 
+        public IEnumerable<Tuple<int, Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>>>
+            IterateMaterialsTexturesImagesDataForThisAnimationState()
+        {
+            int frameNumber = GetFirstValidStateAnimationKeyframeFrameNumber();
+            while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
+            {
+                yield return new Tuple<int, Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>>(
+                    frameNumber, persoBehaviourInterface.GetMaterialsTexturesImagesForAnimationFrame(frameNumber));
+                frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
+            }
+        }
+
         public List<SubobjectUsedMorphAssociationInfo> GetMorphDataForThisAnimationState()
         {
             int frameNumber = GetFirstValidStateAnimationKeyframeFrameNumber();

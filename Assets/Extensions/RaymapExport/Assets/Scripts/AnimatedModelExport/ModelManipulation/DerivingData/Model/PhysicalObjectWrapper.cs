@@ -1,4 +1,6 @@
-﻿using OpenSpace.Object;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Normal;
+using OpenSpace.Object;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         private PhysicalObject physicalObject;
 
-        public PhysicalObjectWrapper(PhysicalObject physicalObject)
+        private PhysicalObjectWrapper(PhysicalObject physicalObject)
         {
             this.physicalObject = physicalObject;
         }
@@ -23,13 +25,33 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 int index = 0;
                 foreach (var visualSetLOD in physicalObject.visualSet)
                 {
-                    yield return new Tuple<int, GeometricObjectWrapper>(index, new GeometricObjectWrapper(visualSetLOD.obj));
+                    yield return new Tuple<int, GeometricObjectWrapper>(index,
+                        GeometricObjectWrapper.FromRaymapNormalGeometricObjectInterface(visualSetLOD.obj));
                     index++;
                 }
             } else
             {
                 throw new NotImplementedException("Not implemented handling of other physical objects!");
             }
+        }
+
+        public Tuple<Dictionary<string, Material>,
+            Dictionary<string, Texture>, Dictionary<string, Image>>
+            GetMaterialsTexturesImages()
+        {
+            var resultList = new List<Tuple<Dictionary<string, Material>,
+            Dictionary<string, Texture>, Dictionary<string, Image>>>();
+            foreach (Tuple<int, GeometricObjectWrapper> geometricObjectInfo in IterateGeometricObjects())
+            {
+                resultList.Add(geometricObjectInfo.Item2.GetMaterialsTexturesImages());
+            }
+            return MaterialsTexturesImagesModelUnifier.Unify(
+                parts: resultList, verifyIdsUniqueContract: true);
+        }
+
+        public static PhysicalObjectWrapper FromRaymapNormalPhysicalObject(PhysicalObject physicalObject)
+        {
+            return new PhysicalObjectWrapper(physicalObject);
         }
     }
 }

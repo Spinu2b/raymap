@@ -1,5 +1,7 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.MathDescription;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc.SubmeshGeometricObjectDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using OpenSpace.Visual;
 using System;
@@ -21,7 +23,8 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             {
                 if (geometricObjectElement is GeometricObjectElementTriangles)
                 {
-                    return new GeometricObjectWrapper((geometricObjectElement as GeometricObjectElementTriangles).geo);
+                    return GeometricObjectWrapper.FromRaymapNormalGeometricObject(
+                        (geometricObjectElement as GeometricObjectElementTriangles).geo);
                 } 
                 else
                 {
@@ -58,9 +61,15 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        public GeometricObjectElementWrapper(IGeometricObjectElement geometricObjectElement)
+        private GeometricObjectElementWrapper(IGeometricObjectElement geometricObjectElement)
         {
             this.geometricObjectElement = geometricObjectElement;
+        }
+
+        public static GeometricObjectElementWrapper FromRaymapNormalGeometricObjectInterface(
+    IGeometricObjectElement element)
+        {
+            return new GeometricObjectElementWrapper(element);
         }
 
         public Dictionary<int, Dictionary<int, float>> GetChannelWeights()
@@ -246,6 +255,21 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             {
                 return candidate;
             }
+        }
+
+        public Tuple<Dictionary<string,
+            AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Material>,
+            Dictionary<string, AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Texture>,
+            Dictionary<string, Image>> GetMaterialsTexturesImages()
+        {
+            var materialsTexturesImages = UnityMaterialsToMaterialsTexturesImagesModelConverter.
+                Convert(GetMaterialsWithTextureNamesData());
+            return materialsTexturesImages;
+        }
+
+        private List<Tuple<UnityEngine.Material, HashSet<string>>> GetMaterialsWithTextureNamesData()
+        {
+            throw new NotImplementedException();
         }
     }
 }

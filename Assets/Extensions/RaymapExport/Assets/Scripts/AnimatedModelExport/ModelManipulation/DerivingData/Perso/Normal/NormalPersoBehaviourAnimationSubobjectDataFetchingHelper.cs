@@ -9,13 +9,25 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Normal
 {
+    public static class MaterialsTexturesImagesModelUnifier
+    {
+        public static Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>> 
+            Unify(List<Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>> parts, 
+            bool verifyIdsUniqueContract = false)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class NormalPersoBehaviourAnimationSubobjectDataFetchingHelper : NormalPersoBehaviourAnimationDataFetchingHelper
     {
         private SubobjectsCache subobjectsCache = new SubobjectsCache();
 
         public NormalPersoBehaviourAnimationSubobjectDataFetchingHelper(PersoBehaviour persoBehaviour) : base(persoBehaviour) {}
 
-        private IEnumerable<SubobjectModel> IterateActualPhysicalSubobjectsForNormalFrame()
+        private IEnumerable<Tuple<SubobjectModel,
+            Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>>
+            IterateActualPhysicalSubobjectsForNormalFrame()
         {
             AnimOnlyFrame of = persoBehaviour.a3d.onlyFrames[persoBehaviour.a3d.start_onlyFrames + persoBehaviour.currentFrame];
             for (int i = 0; i < persoBehaviour.a3d.num_channels; i++)
@@ -35,12 +47,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        private IEnumerable<SubobjectModel> IterateActualPhysicalSubobjectsForLargoFrame()
+        private IEnumerable<Tuple<SubobjectModel,
+            Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>> IterateActualPhysicalSubobjectsForLargoFrame()
         {
             throw new NotImplementedException();
         }
 
-        private IEnumerable<SubobjectModel> IterateActualPhysicalSubobjectsForMontrealFrame()
+        private IEnumerable<Tuple<SubobjectModel,
+            Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>> IterateActualPhysicalSubobjectsForMontrealFrame()
         {
             throw new NotImplementedException();
         }
@@ -50,20 +64,47 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             UpdateAnimation(frameNumber);
             if (IsNormalAnimation())
             {
-                return new List<SubobjectModel>(IterateActualPhysicalSubobjectsForNormalFrame());
+                return new List<SubobjectModel>(IterateActualPhysicalSubobjectsForNormalFrame().Select(x => x.Item1));
             }
             else if (IsMontrealAnimation())
             {
-                return new List<SubobjectModel>(IterateActualPhysicalSubobjectsForMontrealFrame());
+                return new List<SubobjectModel>(IterateActualPhysicalSubobjectsForMontrealFrame().Select(x => x.Item1));
             }
             else if (IsLargoAnimation())
             {
-                return new List<SubobjectModel>(IterateActualPhysicalSubobjectsForLargoFrame());
+                return new List<SubobjectModel>(IterateActualPhysicalSubobjectsForLargoFrame().Select(x => x.Item1));
             }
             else
             {
                 throw new InvalidOperationException("This perso behaviour does not have neither normal, montreal nor largo animation frames in this state!");
             }
         }
+
+        public Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>
+            GetPersoBehaviourMaterialsTexturesImagesUsedForFrame(int frameNumber)
+        {
+            UpdateAnimation(frameNumber);
+            if (IsNormalAnimation())
+            {
+                return MaterialsTexturesImagesModelUnifier.Unify(
+                    IterateActualPhysicalSubobjectsForNormalFrame().Select(x => 
+                    new Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>(x.Item2, x.Item3, x.Item4)).ToList());
+            }
+            else if (IsMontrealAnimation())
+            {
+                return MaterialsTexturesImagesModelUnifier.Unify(IterateActualPhysicalSubobjectsForMontrealFrame().Select(x =>
+                    new Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>(x.Item2, x.Item3, x.Item4)).ToList());
+            }
+            else if (IsLargoAnimation())
+            {
+                return MaterialsTexturesImagesModelUnifier.Unify(IterateActualPhysicalSubobjectsForLargoFrame().Select(x =>
+                    new Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>(x.Item2, x.Item3, x.Item4)).ToList());
+            }
+            else
+            {
+                throw new InvalidOperationException("This perso behaviour does not have neither normal, montreal nor largo animation frames in this state!");
+            }
+        }
+
     }
 }

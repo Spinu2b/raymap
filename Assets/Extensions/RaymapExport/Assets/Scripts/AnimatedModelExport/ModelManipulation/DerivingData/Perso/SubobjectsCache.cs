@@ -18,9 +18,11 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         private PhysicalObjectToSubobjectModelConverter physicalObjectToSubobjectModelConverter = new PhysicalObjectToSubobjectModelConverter();
 
+        private MaterialsTexturesImagesCache materialsTexturesImagesCache = new MaterialsTexturesImagesCache();
+
         public void ConsiderPhysicalObject(PhysicalObject physicalObject, int stateIndex, int animationFrame, int channelId, int physicalObjectNumber)
         {
-            var physicalObjectWrapper = new PhysicalObjectWrapper(physicalObject);
+            var physicalObjectWrapper = PhysicalObjectWrapper.FromRaymapNormalPhysicalObject(physicalObject);
             ConsiderPhysicalObject(physicalObjectWrapper, stateIndex, animationFrame, channelId, physicalObjectNumber);
         }
 
@@ -52,7 +54,8 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                     }
                 }
                 subobjectsAnimationFramesPersoStatesAssociationsCache[stateIndex][animationFrame].Add(physicalObjectNumber);
-            }            
+            }
+            materialsTexturesImagesCache.ConsiderPhysicalObject(physicalObject, stateIndex, animationFrame, channelId, physicalObjectNumber);
         }
 
         private SubobjectModel GetSubobjectModel(PhysicalObjectWrapper physicalObject, int physicalObjectNumber, int channelId)
@@ -60,9 +63,16 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             return physicalObjectToSubobjectModelConverter.Convert(physicalObject, physicalObjectNumber, channelId);
         }
 
-        public SubobjectModel GetPhysicalObjectCachedModelFor(int physicalObjectNumber)
+        public Tuple<SubobjectModel,
+            Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>
+            GetPhysicalObjectCachedModelFor(int physicalObjectNumber)
         {
-            return subobjectsCache[physicalObjectNumber];
+            var materialsTexturesImagesForPhysicalObject = materialsTexturesImagesCache.GetMaterialsTexturesImagesCachedModelFor(physicalObjectNumber);
+
+            return new Tuple<SubobjectModel,
+            Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>(
+                subobjectsCache[physicalObjectNumber], materialsTexturesImagesForPhysicalObject.Item1, 
+                materialsTexturesImagesForPhysicalObject.Item2, materialsTexturesImagesForPhysicalObject.Item3);
         }
     }
 }

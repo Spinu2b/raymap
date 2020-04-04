@@ -9,9 +9,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class Material
     {
-        public string mainTexture;
-        public Vector2d mainTextureOffset;
-        public Vector2d mainTextureScale;
         public string name;
+        public HashSet<string> textures = new HashSet<string>();
     }
 }
