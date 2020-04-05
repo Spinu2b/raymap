@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Cache
 {
     public class MaterialsTexturesImagesCache
     {
@@ -37,7 +37,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         private void ConsiderImages(Dictionary<string, Image> images, int stateIndex, int animationFrame, int physicalObjectNumber)
         {
-            throw new NotImplementedException();
+            if (imagesCache.ContainsKey())
         }
 
         private void ConsiderTextures(Dictionary<string, Texture> textures, int stateIndex, int animationFrame, int physicalObjectNumber)

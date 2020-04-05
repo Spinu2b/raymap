@@ -1,4 +1,5 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
 using OpenSpace.Animation.Component;
 using OpenSpace.Object;
 using System;
@@ -15,7 +16,19 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             Unify(List<Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>> parts, 
             bool verifyIdsUniqueContract = false)
         {
-            throw new NotImplementedException();
+            var resultMaterials = new Dictionary<string, Material>();
+            var resultTextures = new Dictionary<string, Texture>();
+            var resultImages = new Dictionary<string, Image>();
+
+            foreach (var mergingPart in parts)
+            {
+                ComparableModelDictionariesMerger.MergeDictionariesToFirstDict(resultMaterials, mergingPart.Item1);
+                ComparableModelDictionariesMerger.MergeDictionariesToFirstDict(resultTextures, mergingPart.Item2);
+                ComparableModelDictionariesMerger.MergeDictionariesToFirstDict(resultImages, mergingPart.Item3);
+            }
+
+            return new Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>(
+                resultMaterials, resultTextures, resultImages);
         }
     }
 
