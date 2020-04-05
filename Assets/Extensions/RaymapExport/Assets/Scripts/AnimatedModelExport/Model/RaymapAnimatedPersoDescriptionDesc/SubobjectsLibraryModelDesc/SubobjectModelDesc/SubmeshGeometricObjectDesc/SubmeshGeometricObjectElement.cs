@@ -1,5 +1,6 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.MathDescription;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc.SubmeshGeometricObjectDesc
 {
-    public class SubmeshGeometricObjectElement
+    public class SubmeshGeometricObjectElement : IComparableModel<SubmeshGeometricObjectElement>
     {
         public int id;
         public List<Vector3d> vertices = new List<Vector3d>();

@@ -1,4 +1,5 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,11 +32,16 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         }
     }
 
-    public class Image
+    public class Image : IComparableModel<Image>
     {
         public string name;
         public int width;
         public int height;
         public List<Color> pixels;
+
+        public bool EqualsToAnother(Image other)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
