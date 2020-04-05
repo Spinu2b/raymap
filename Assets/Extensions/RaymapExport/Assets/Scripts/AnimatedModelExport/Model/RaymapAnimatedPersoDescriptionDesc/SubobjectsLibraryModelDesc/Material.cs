@@ -10,6 +10,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     public class Material
     {
         public string name;
-        public HashSet<string> textures = new HashSet<string>();
+        public List<string> textures = new List<string>();
     }
 }

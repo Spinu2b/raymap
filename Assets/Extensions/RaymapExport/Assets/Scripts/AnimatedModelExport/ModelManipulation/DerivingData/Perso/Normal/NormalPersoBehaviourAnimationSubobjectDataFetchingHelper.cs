@@ -105,6 +105,5 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 throw new InvalidOperationException("This perso behaviour does not have neither normal, montreal nor largo animation frames in this state!");
             }
         }
-
     }
 }

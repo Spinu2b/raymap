@@ -248,7 +248,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public List<string> GetMaterials()
         {
-            return gameObject.GetComponent<Renderer>().materials.Select(x => x.name).ToList();
+            var materialsTexturesImages = UnityMaterialsToMaterialsTexturesImagesModelConverter.
+                Convert(GetMaterialsWithTextureNamesData());
+            return materialsTexturesImages.Item1.Select(x => x.Key).ToList();
         }
 
         private GameObject GetCorrespondingChannelGameObjectForGameObjectInHierarchy(GameObject gameObject)
@@ -277,7 +279,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             return materialsTexturesImages;
         }
 
-        private List<Tuple<UnityEngine.Material, HashSet<string>>> GetMaterialsWithTextureNamesData()
+        private List<Tuple<UnityEngine.Material, List<string>>> GetMaterialsWithTextureNamesData()
         {
             return SubmeshGameObjectMaterialsDataFetchingHelper.
                 GetGouraudShaderedMaterialData(gameObject);

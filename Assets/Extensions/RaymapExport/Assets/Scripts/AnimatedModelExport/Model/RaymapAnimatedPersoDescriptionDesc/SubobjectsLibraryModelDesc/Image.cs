@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc
 {
-    public class Color
+    public class Color : ISerializableToBytes
     {
         public float red;
         public float green;
@@ -19,6 +20,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             this.green = green;
             this.blue = blue;
             this.alpha = alpha;
+        }
+
+        byte[] ISerializableToBytes.SerializeToBytes()
+        {
+            return BitConverter.GetBytes(red).
+                Concat(BitConverter.GetBytes(green)).
+                Concat(BitConverter.GetBytes(blue)).
+                Concat(BitConverter.GetBytes(alpha)).ToArray();
         }
     }
 
