@@ -58,12 +58,13 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 {
                     // if we ensure that physical object indexes/ids/numbers satisfy that number-unique contract across OpenSpace versions consequently
                     // we can omit consecutive comparisons and repeating model conversions to speed up the process (that is what this cache is for in the first place)
-                    var existingPhysicalObjectDescriptiveModel = subobjectsCache[physicalObjectNumber];
-                    if (!existingPhysicalObjectDescriptiveModel.EqualsToAnother(GetSubobjectDescriptiveModel(physicalObject, physicalObjectNumber, channelId)))
-                    {
-                        throw new InvalidOperationException(
-                            "Two physical objects share same physical object number, but they are not the same physical object!");
-                    }
+                    
+                    //var existingPhysicalObjectDescriptiveModel = subobjectsCache[physicalObjectNumber];
+                    //if (!existingPhysicalObjectDescriptiveModel.EqualsToAnother(GetSubobjectDescriptiveModel(physicalObject, physicalObjectNumber, channelId)))
+                    //{
+                    //    throw new InvalidOperationException(
+                    //        "Two physical objects share same physical object number, but they are not the same physical object!");
+                    //}
                 }
                 subobjectsAnimationFramesPersoStatesAssociationsCache[stateIndex][animationFrame].Add(physicalObjectNumber);
             }
