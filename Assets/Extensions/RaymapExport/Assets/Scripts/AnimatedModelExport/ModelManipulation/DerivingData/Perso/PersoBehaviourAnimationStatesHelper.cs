@@ -66,7 +66,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 currentStateIndex++;
                 if (currentStateIndex >= persoBehaviourInterface.statesCount)
                 {
-                    currentPersoAnimationStateIndex = currentStateIndex - 1;
+                    currentPersoAnimationStateIndex = currentStateIndex;
                     return;
                 }
             }

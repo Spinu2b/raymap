@@ -28,6 +28,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         private NormalPersoBehaviourChannelsParentingFetchingHelper normalPersoBehaviourChannelsParentingFetchingHelper;
         private RomPersoBehaviourChannelsParentingFetchingHelper romPersoBehaviourChannelsParentingFetchingHelper;
 
+        private NormalPersoBehaviourStateHelper normalPersoBehaviourStateHelper;
+        private RomPersoBehaviourStateHelper romPersoBehaviourStateHelper;
+
         public GameObject gameObject
         {
             get
@@ -86,6 +89,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             this.normalPersoBehaviourAnimationSubobjectDataFetchingHelper = new NormalPersoBehaviourAnimationSubobjectDataFetchingHelper(persoBehaviour);
             this.normalPersoBehaviourMorphFetchingHelper = new NormalPersoBehaviourMorphFetchingHelper(persoBehaviour);
             this.normalPersoBehaviourChannelsParentingFetchingHelper = new NormalPersoBehaviourChannelsParentingFetchingHelper(persoBehaviour);
+            this.normalPersoBehaviourStateHelper = new NormalPersoBehaviourStateHelper(persoBehaviour);
         }
 
         public PersoBehaviourInterface(ROMPersoBehaviour romPersoBehaviour)
@@ -95,6 +99,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             this.romPersoBehaviourAnimationSubobjectDataFetchingHelper = new RomPersoBehaviourAnimationSubobjectDataFetchingHelper(romPersoBehaviour);
             this.romPersoBehaviourMorphFetchingHelper = new RomPersoBehaviourMorphFetchingHelper(romPersoBehaviour);
             this.romPersoBehaviourChannelsParentingFetchingHelper = new RomPersoBehaviourChannelsParentingFetchingHelper(romPersoBehaviour);
+            this.romPersoBehaviourStateHelper = new RomPersoBehaviourStateHelper(romPersoBehaviour);
         }
 
         public void SetState(int stateIndex)
@@ -171,7 +176,13 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public bool IsValidAnimationState(int animationStateIndex)
         {
-            throw new NotImplementedException();
+            if (persoBehaviour != null)
+            {
+                return normalPersoBehaviourStateHelper.IsValidAnimationState(animationStateIndex);
+            } else
+            {
+                return romPersoBehaviourStateHelper.IsValidAnimationState(animationStateIndex);
+            }
         }
     }
 }

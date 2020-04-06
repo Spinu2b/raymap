@@ -20,6 +20,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 var result = new AnimationStateGeneralInfo(persoBehaviourAnimationStatesHelper);
                 result.BuildData();
                 yield return result;
+                persoBehaviourAnimationStatesHelper.AcquireNextValidPersoAnimationState();
             }
         }
 
