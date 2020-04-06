@@ -19,13 +19,28 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model
                 }
                 else
                 {
-                    if (dictA[item.Key].EqualsToAnother(item.Value))
+                    if (!dictA[item.Key].EqualsToAnother(item.Value))
                     {
-                        dictA.Add(item.Key, item.Value);
+                        throw new InvalidOperationException("Attempting to merge comparable models with same keys but indeed being different!");
                     }
-                    else
+                }
+            }
+        }
+
+        public static void MergeCSharpComparableDictionariesToFirstDict<KeyType, T>(
+            Dictionary<KeyType, T> dictA, Dictionary<KeyType, T> dictB) where T : IComparable<T>
+        {
+            foreach (var item in dictB)
+            {
+                if (!dictA.ContainsKey(item.Key))
+                {
+                    dictA.Add(item.Key, item.Value);
+                }
+                else
+                {
+                    if (dictA[item.Key].CompareTo(item.Value) != 0)
                     {
-                        throw new InvalidOperationException("Attempting to merge material-associated models with same keys but indeed being different!");
+                        throw new InvalidOperationException("Attempting to merge comparable models with same keys but indeed being different!");
                     }
                 }
             }

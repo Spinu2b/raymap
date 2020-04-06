@@ -1,5 +1,7 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Normal;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,17 +12,20 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class SubobjectsLibraryBuilder
     {
-        public void Consolidate(Dictionary<int, SubobjectModel> subobjects,
-            Dictionary<string, Material> materials,
-            Dictionary<string, Texture> textures,
-            Dictionary<string, Image> images)
+        SubobjectsLibraryModel result = new SubobjectsLibraryModel();
+
+        public void Consolidate(Dictionary<int, SubobjectModel> subobjects, VisualData visualData)
         {
-            throw new NotImplementedException();
+            var visualDatasToConsolidate = new List<VisualData>();
+            visualDatasToConsolidate.Add(result.visualData);
+            visualDatasToConsolidate.Add(visualData);
+            result.visualData = VisualDataUnifier.Unify(visualDatasToConsolidate);
+            ComparableModelDictionariesMerger.MergeDictionariesToFirstDict(result.subobjects, subobjects);
         }
 
         public SubobjectsLibraryModel Build()
         {
-            throw new NotImplementedException();
+            return result;
         }
     }
 }

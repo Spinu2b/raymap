@@ -16,14 +16,16 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         {
             var result = new SubmeshGeometricObjectElement();
             result.id = GetSubmeshGeometricObjectElementId(geometricObjectElement, channelId, geometricObjectElementIndex);
-            result.vertices = GetVertices(geometricObjectElement);
-            result.normals = GetNormals(geometricObjectElement);
-            result.triangles = GetTriangles(geometricObjectElement);
-            result.uvMaps = GetUvMaps(geometricObjectElement);
-            result.materials = GetMaterials(geometricObjectElement);
+            result.elementDescription.vertices = GetVertices(geometricObjectElement);
+            result.elementDescription.normals = GetNormals(geometricObjectElement);
+            result.elementDescription.triangles = GetTriangles(geometricObjectElement);
+            result.elementDescription.uvMaps = GetUvMaps(geometricObjectElement);
+            result.elementDescription.materials = GetMaterials(geometricObjectElement);
 
-            result.bindChannelPoses = GetBindChannelPoses(geometricObjectElement, channelId);
-            result.channelWeights = GetChannelWeights(geometricObjectElement, channelId);
+            result.elementDescription.bindChannelPoses = GetBindChannelPoses(geometricObjectElement, channelId);
+            result.elementDescription.channelWeights = GetChannelWeights(geometricObjectElement, channelId);
+
+            result.elementDescriptionHash = result.elementDescription.ComputeHash();
             return result;
         }
 

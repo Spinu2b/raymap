@@ -72,18 +72,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        public Tuple<Dictionary<string, AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Material>,
-            Dictionary<string, AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Texture>, Dictionary<string, Image>>
-            GetMaterialsTexturesImages()
+        public VisualData GetVisualData()
         {
-            var resultList = new List<Tuple<Dictionary<string, AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Material>,
-            Dictionary<string, AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Texture>, Dictionary<string, Image>>>();
+            var resultList = new List<VisualData>();
             foreach (Tuple<int, GeometricObjectElementWrapper> elementInfo in IterateElements())
             {
-                resultList.Add(elementInfo.Item2.GetMaterialsTexturesImages());
+                resultList.Add(elementInfo.Item2.GetVisualData());
             }
-            return MaterialsTexturesImagesModelUnifier.Unify(
-                parts: resultList, verifyIdsUniqueContract: true);
+            return VisualDataUnifier.Unify(parts: resultList);
         }
     }
 }

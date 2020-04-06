@@ -16,8 +16,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             throw new NotImplementedException();
         }
 
-        public Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>
-            GetPersoBehaviourMaterialsTexturesImagesUsedForFrame(int frameNumber)
+        public VisualData GetVisualDataForFrame(int frameNumber)
         {
             throw new NotImplementedException();
         }

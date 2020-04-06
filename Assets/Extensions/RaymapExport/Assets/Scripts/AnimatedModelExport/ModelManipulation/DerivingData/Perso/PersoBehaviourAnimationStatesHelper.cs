@@ -66,7 +66,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 currentStateIndex++;
                 if (currentStateIndex >= persoBehaviourInterface.statesCount)
                 {
-                    currentPersoAnimationStateIndex = currentStateIndex;
+                    currentPersoAnimationStateIndex = currentStateIndex - 1;
                     return;
                 }
             }
@@ -84,14 +84,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }      
         }
 
-        public IEnumerable<Tuple<int, Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>>>
-            IterateMaterialsTexturesImagesDataForThisAnimationState()
+        public IEnumerable<Tuple<int, VisualData>> IterateVisualDataForThisAnimationState()
         {
             int frameNumber = GetFirstValidStateAnimationKeyframeFrameNumber();
             while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
             {
-                yield return new Tuple<int, Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>>(
-                    frameNumber, persoBehaviourInterface.GetMaterialsTexturesImagesForAnimationFrame(frameNumber));
+                yield return new Tuple<int, VisualData>(frameNumber, persoBehaviourInterface.GetVisualDataForAnimationFrame(frameNumber));
                 frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
             }
         }

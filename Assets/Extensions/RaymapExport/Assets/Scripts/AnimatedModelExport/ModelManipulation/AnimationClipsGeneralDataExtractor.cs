@@ -27,9 +27,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 animationClipsModel.animationClips.Add(animationStateGeneralInfo.animationClipId, animationStateGeneralInfo.GetAnimationClipObj());
                 submeshesLibraryBuilder.Consolidate(
                     subobjects: animationStateGeneralInfo.GetSubmeshesDescriptionSet(),
-                    materials: animationStateGeneralInfo.GetMaterials(),
-                    textures: animationStateGeneralInfo.GetTextures(),
-                    images: animationStateGeneralInfo.GetImages());
+                    visualData: animationStateGeneralInfo.GetVisualData());
                 consolidatedArmatureHierarchyBuilder.Consolidate(animationStateGeneralInfo.GetArmatureHierarchyParentingInfo());
             }
             return new Tuple<AnimationClipsModel, SubobjectsLibraryModel, ArmatureHierarchyModel>(

@@ -157,17 +157,15 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        public Tuple<Dictionary<string, AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Material>,
-    Dictionary<string, AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Texture>,
-    Dictionary<string, Image>> GetMaterialsTexturesImagesForAnimationFrame(int frameNumber)
+        public VisualData GetVisualDataForAnimationFrame(int frameNumber)
         {
             if (persoBehaviour != null)
             {
-                return normalPersoBehaviourAnimationSubobjectDataFetchingHelper.GetPersoBehaviourMaterialsTexturesImagesUsedForFrame(frameNumber);
+                return normalPersoBehaviourAnimationSubobjectDataFetchingHelper.GetVisualDataForFrame(frameNumber);
             }
             else
             {
-                return romPersoBehaviourAnimationSubobjectDataFetchingHelper.GetPersoBehaviourMaterialsTexturesImagesUsedForFrame(frameNumber);
+                return romPersoBehaviourAnimationSubobjectDataFetchingHelper.GetVisualDataForFrame(frameNumber);
             }
         }
 

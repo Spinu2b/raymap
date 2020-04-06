@@ -1,4 +1,5 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Normal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,23 +10,19 @@ using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.MaterialsData
 {
-    public static class UnityMaterialsToMaterialsTexturesImagesModelConverter
+    public static class UnityMaterialsToVisualDataConverter
     {
-        public static Tuple<Dictionary<string,
-            AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Material>,
-            Dictionary<string, AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Texture>,
-            Dictionary<string, Image>> Convert(List<Tuple<UnityEngine.Material, List<string>>> materialsTextureNamesInfo)
+        public static VisualData Convert(List<Tuple<UnityEngine.Material, List<string>>> materialsTextureNamesInfo)
         {
-            var materialsTexturesImagesModelBuilder = new MaterialsTexturesImagesModelBuilder();
+            var resultList = new List<VisualData>();
             foreach (var unityMaterialInfo in materialsTextureNamesInfo)
             {
                 var unityMaterial = unityMaterialInfo.Item1;
                 var materialTextureNames = unityMaterialInfo.Item2;
-                var materialModeled =
-                    UnityMaterialToMaterialModelConverter.Convert(unityMaterial, materialTextureNames);
-                materialsTexturesImagesModelBuilder.Consider(materialModeled);
+                var materialModeled = UnityMaterialToMaterialVisualDataConverter.Convert(unityMaterial, materialTextureNames);
+                resultList.Add(materialModeled);
             }
-            return materialsTexturesImagesModelBuilder.Build();
+            return VisualDataUnifier.Unify(resultList);
         }
     }
 }

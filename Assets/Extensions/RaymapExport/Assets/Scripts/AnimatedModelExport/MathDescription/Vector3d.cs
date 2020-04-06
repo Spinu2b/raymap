@@ -1,4 +1,5 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.MathDescription
 {
-    public struct Vector3d
+    public struct Vector3d : ISerializableToBytes
     {
         public float x, y, z;
         public Vector3d(float x, float y, float z)
@@ -26,6 +27,11 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Math
         public bool RoundEquals(Vector3d other)
         {
             return NumberUtils.RoundEquals(x, other.x) && NumberUtils.RoundEquals(y, other.y) && NumberUtils.RoundEquals(z, other.z);
+        }
+
+        public byte[] SerializeToBytes()
+        {
+            return BitConverter.GetBytes(x).Concat(BitConverter.GetBytes(y)).Concat(BitConverter.GetBytes(z)).ToArray();
         }
     }
 }

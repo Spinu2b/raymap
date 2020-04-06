@@ -1,4 +1,5 @@
-﻿using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.VisualDataDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public static class MaterialModelFactory
     {
-        public static AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Material
-            GetMaterialModel(UnityEngine.Material unityMaterial, List<string> materialTextureNames, List<string> textureHashes = null)
+        public static Material GetMaterialModel(UnityEngine.Material unityMaterial, List<string> materialTextureNames, List<string> textureHashes = null)
         {
-            var result = new AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Material();
+            var result = new Material();
             if (textureHashes != null && textureHashes.Count > 0)
             {
                 result.textures = textureHashes.ToList();
@@ -20,9 +20,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             else
             {
                 result.textures = SubmeshGameObjectMaterialsDataFetchingHelper.
-                    IterateTextures2DOfMaterial(unityMaterial, materialTextureNames).Select(x => TextureModelFactory.GetTextureModel(x).name).ToList();
+                    IterateTextures2DOfMaterial(unityMaterial, materialTextureNames).Select(x => TextureModelFactory.GetTextureModel(x).textureDescriptionHash).ToList();
             }
-            result.name = ComputeMaterialHash(result.textures);
+            result.materialDescriptionHash = ComputeMaterialHash(result.textures);
             return result;
         }
 

@@ -1,4 +1,5 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,17 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class ConsolidatedArmatureHierarchyBuilder
     {
+        ArmatureHierarchyModel result = new ArmatureHierarchyModel();
+
         public ArmatureHierarchyModel Build()
         {
-            throw new NotImplementedException();
+            return result;
         }
 
         public void Consolidate(ArmatureHierarchyModel armatureHierarchy)
         {
-            throw new NotImplementedException();
+            ComparableModelDictionariesMerger.MergeCSharpComparableDictionariesToFirstDict(result.parenting, armatureHierarchy.parenting);
+            result.channels = new HashSet<int>(result.channels.Concat(armatureHierarchy.channels));
         }
     }
 }

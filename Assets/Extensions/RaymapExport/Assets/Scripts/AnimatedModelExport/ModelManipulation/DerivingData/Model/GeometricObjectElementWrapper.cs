@@ -248,9 +248,8 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public List<string> GetMaterials()
         {
-            var materialsTexturesImages = UnityMaterialsToMaterialsTexturesImagesModelConverter.
-                Convert(GetMaterialsWithTextureNamesData());
-            return materialsTexturesImages.Item1.Select(x => x.Key).ToList();
+            var visualData = UnityMaterialsToVisualDataConverter.Convert(GetMaterialsWithTextureNamesData());
+            return visualData.materials.Select(x => x.Key).ToList();
         }
 
         private GameObject GetCorrespondingChannelGameObjectForGameObjectInHierarchy(GameObject gameObject)
@@ -269,14 +268,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        public Tuple<Dictionary<string,
-            AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Material>,
-            Dictionary<string, AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Texture>,
-            Dictionary<string, Image>> GetMaterialsTexturesImages()
+        public VisualData GetVisualData()
         {
-            var materialsTexturesImages = UnityMaterialsToMaterialsTexturesImagesModelConverter.
-                Convert(GetMaterialsWithTextureNamesData());
-            return materialsTexturesImages;
+            var visualData = UnityMaterialsToVisualDataConverter.Convert(GetMaterialsWithTextureNamesData());
+            return visualData;
         }
 
         private List<Tuple<UnityEngine.Material, List<string>>> GetMaterialsWithTextureNamesData()

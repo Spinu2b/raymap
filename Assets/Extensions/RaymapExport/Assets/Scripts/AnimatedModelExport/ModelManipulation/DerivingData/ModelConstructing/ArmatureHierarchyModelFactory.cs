@@ -12,12 +12,20 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public ArmatureHierarchyModel DeriveFor(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
         {
-            var result = new ArmatureHierarchyModel();
+            var consolidatedArmatureHierarchyBuilder = new ConsolidatedArmatureHierarchyBuilder();
             foreach (Tuple<int, Dictionary<int, int>> channelParentingInfoForFrame
                 in persoBehaviourAnimationStatesHelper.IterateChannelParentingInfosThisAnimationState())
             {
-                
+                consolidatedArmatureHierarchyBuilder.Consolidate(GetArmatureHierarchyModelForParenting(channelParentingInfoForFrame.Item2));
             }
+            return consolidatedArmatureHierarchyBuilder.Build();
+        }
+
+        private ArmatureHierarchyModel GetArmatureHierarchyModelForParenting(Dictionary<int, int> channelsParenting)
+        {
+            var result = new ArmatureHierarchyModel();
+            result.parenting = channelsParenting.ToDictionary(x => x.Key, x => x.Value);
+            result.channels = new HashSet<int>(channelsParenting.Keys.Concat(channelsParenting.Values));
             return result;
         }
     }

@@ -47,18 +47,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        public Tuple<Dictionary<string, Material>,
-            Dictionary<string, Texture>, Dictionary<string, Image>>
-            GetMaterialsTexturesImages()
+        public VisualData GetVisualData()
         {
-            var resultList = new List<Tuple<Dictionary<string, Material>,
-            Dictionary<string, Texture>, Dictionary<string, Image>>>();
+            var resultList = new List<VisualData>();
             foreach (Tuple<int, GeometricObjectWrapper> geometricObjectInfo in IterateGeometricObjects())
             {
-                resultList.Add(geometricObjectInfo.Item2.GetMaterialsTexturesImages());
+                resultList.Add(geometricObjectInfo.Item2.GetVisualData());
             }
-            return MaterialsTexturesImagesModelUnifier.Unify(
-                parts: resultList, verifyIdsUniqueContract: true);
+            return VisualDataUnifier.Unify(parts: resultList);
         }
     }
 }

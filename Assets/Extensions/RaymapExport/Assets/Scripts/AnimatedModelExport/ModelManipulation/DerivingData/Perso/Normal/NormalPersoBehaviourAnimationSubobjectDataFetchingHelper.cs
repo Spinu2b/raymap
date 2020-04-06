@@ -1,4 +1,5 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Cache;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
 using OpenSpace.Animation.Component;
 using OpenSpace.Object;
@@ -10,25 +11,20 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Normal
 {
-    public static class MaterialsTexturesImagesModelUnifier
+    public static class VisualDataUnifier
     {
-        public static Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>> 
-            Unify(List<Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>> parts, 
-            bool verifyIdsUniqueContract = false)
+        public static VisualData Unify(List<VisualData> parts)
         {
-            var resultMaterials = new Dictionary<string, Material>();
-            var resultTextures = new Dictionary<string, Texture>();
-            var resultImages = new Dictionary<string, Image>();
+            var result = new VisualData();
 
             foreach (var mergingPart in parts)
             {
-                ComparableModelDictionariesMerger.MergeDictionariesToFirstDict(resultMaterials, mergingPart.Item1);
-                ComparableModelDictionariesMerger.MergeDictionariesToFirstDict(resultTextures, mergingPart.Item2);
-                ComparableModelDictionariesMerger.MergeDictionariesToFirstDict(resultImages, mergingPart.Item3);
+                ComparableModelDictionariesMerger.MergeDictionariesToFirstDict(result.materials, mergingPart.materials);
+                ComparableModelDictionariesMerger.MergeDictionariesToFirstDict(result.textures, mergingPart.textures);
+                ComparableModelDictionariesMerger.MergeDictionariesToFirstDict(result.images, mergingPart.images);
             }
 
-            return new Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>(
-                resultMaterials, resultTextures, resultImages);
+            return result;
         }
     }
 
@@ -38,8 +34,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public NormalPersoBehaviourAnimationSubobjectDataFetchingHelper(PersoBehaviour persoBehaviour) : base(persoBehaviour) {}
 
-        private IEnumerable<Tuple<SubobjectModel,
-            Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>>
+        private IEnumerable<Tuple<SubobjectModel, VisualData>>
             IterateActualPhysicalSubobjectsForNormalFrame()
         {
             AnimOnlyFrame of = persoBehaviour.a3d.onlyFrames[persoBehaviour.a3d.start_onlyFrames + persoBehaviour.currentFrame];
@@ -60,14 +55,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        private IEnumerable<Tuple<SubobjectModel,
-            Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>> IterateActualPhysicalSubobjectsForLargoFrame()
+        private IEnumerable<Tuple<SubobjectModel, VisualData>> IterateActualPhysicalSubobjectsForLargoFrame()
         {
             throw new NotImplementedException();
         }
 
-        private IEnumerable<Tuple<SubobjectModel,
-            Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>> IterateActualPhysicalSubobjectsForMontrealFrame()
+        private IEnumerable<Tuple<SubobjectModel, VisualData>> IterateActualPhysicalSubobjectsForMontrealFrame()
         {
             throw new NotImplementedException();
         }
@@ -93,25 +86,21 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        public Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>
-            GetPersoBehaviourMaterialsTexturesImagesUsedForFrame(int frameNumber)
+        public VisualData GetVisualDataForFrame(int frameNumber)
         {
             UpdateAnimation(frameNumber);
             if (IsNormalAnimation())
             {
-                return MaterialsTexturesImagesModelUnifier.Unify(
-                    IterateActualPhysicalSubobjectsForNormalFrame().Select(x => 
-                    new Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>(x.Item2, x.Item3, x.Item4)).ToList());
+                return VisualDataUnifier.Unify(
+                    IterateActualPhysicalSubobjectsForNormalFrame().Select(x => x.Item2).ToList());
             }
             else if (IsMontrealAnimation())
             {
-                return MaterialsTexturesImagesModelUnifier.Unify(IterateActualPhysicalSubobjectsForMontrealFrame().Select(x =>
-                    new Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>(x.Item2, x.Item3, x.Item4)).ToList());
+                return VisualDataUnifier.Unify(IterateActualPhysicalSubobjectsForMontrealFrame().Select(x => x.Item2).ToList());
             }
             else if (IsLargoAnimation())
             {
-                return MaterialsTexturesImagesModelUnifier.Unify(IterateActualPhysicalSubobjectsForLargoFrame().Select(x =>
-                    new Tuple<Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>(x.Item2, x.Item3, x.Item4)).ToList());
+                return VisualDataUnifier.Unify(IterateActualPhysicalSubobjectsForLargoFrame().Select(x => x.Item2).ToList());
             }
             else
             {

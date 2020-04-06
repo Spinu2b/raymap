@@ -20,10 +20,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         private Dictionary<int, SubobjectModel> submeshesDescriptionSet;
         private ArmatureHierarchyModel armatureHierarchyParentingInfo;
 
-        private Dictionary<string, Material> materials;
-        private Dictionary<string, Texture> textures;
-        private Dictionary<string, Image> images;
-
+        private VisualData visualData;
 
         public AnimationStateGeneralInfo(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
         {
@@ -38,25 +35,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             submeshesDescriptionSet = new SubmeshesDescriptionSetFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
             armatureHierarchyParentingInfo = new ArmatureHierarchyModelFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
 
-            var materialsTexturesImages = new MaterialsTexturesImagesFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
-            materials = materialsTexturesImages.Item1;
-            textures = materialsTexturesImages.Item2;
-            images = materialsTexturesImages.Item3;
+            visualData = new VisualDataFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
         }
 
-        public Dictionary<string, Image> GetImages()
+        public VisualData GetVisualData()
         {
-            return images;
-        }
-
-        public Dictionary<string, Texture> GetTextures()
-        {
-            return textures;
-        }
-
-        public Dictionary<string, Material> GetMaterials()
-        {
-            return materials;
+            return visualData;
         }
 
         public AnimationClipModel GetAnimationClipObj()

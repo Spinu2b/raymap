@@ -1,4 +1,5 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.VisualDataDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,11 @@ using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.MaterialsData
 {
-    public static class UnityMaterialToMaterialModelConverter
+    public static class UnityMaterialToMaterialVisualDataConverter
     {
-        public static Tuple<AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Material,
-            Dictionary<string, AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Texture>,
-            Dictionary<string, Image>> Convert(UnityEngine.Material unityMaterial, List<string> materialTextureNames)
+        public static VisualData Convert(UnityEngine.Material unityMaterial, List<string> materialTextureNames)
         {
-            var texturesResult = new Dictionary<string, 
-                AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Texture>();
+            var texturesResult = new Dictionary<string, AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.VisualDataDesc.Texture>();
             var imagesResult = new Dictionary<string, Image>();
 
             var texturesHashes = new List<string>();
@@ -25,10 +23,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 SubmeshGameObjectMaterialsDataFetchingHelper.IterateTextures2DOfMaterial(unityMaterial, materialTextureNames))
             {
                 Image imageModel = ImageModelFactory.GetImageModel(materialTexture2D);
-                string imageHash = imageModel.name;
+                string imageHash = imageModel.imageDescriptionHash;
 
                 var textureModel = TextureModelFactory.GetTextureModel(materialTexture2D, imageHash);
-                string textureHash = textureModel.name;
+                string textureHash = textureModel.textureDescriptionHash;
 
                 texturesHashes.AddWithUniqueCheck(textureHash);
 
@@ -37,10 +35,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
 
             var resultMaterialModel = MaterialModelFactory.GetMaterialModel(unityMaterial, materialTextureNames, texturesHashes);
-            return new Tuple<
-                AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Material,
-                Dictionary<string, AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Texture>,
-                Dictionary<string, Image>>(resultMaterialModel, texturesResult, imagesResult);
+            var materialDict = new Dictionary<string, AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.VisualDataDesc.Material>();
+            materialDict.Add(resultMaterialModel.materialDescriptionHash, resultMaterialModel);
+
+            var result = new VisualData();
+            result.materials = materialDict;
+            result.textures = texturesResult;
+            result.images = imagesResult;
+            return result;
         } 
     }
 }

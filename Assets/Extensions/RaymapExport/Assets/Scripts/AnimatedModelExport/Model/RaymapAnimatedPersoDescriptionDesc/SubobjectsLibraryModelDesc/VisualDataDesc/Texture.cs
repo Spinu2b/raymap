@@ -5,16 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.VisualDataDesc
 {
     public class Texture : IComparableModel<Texture>
     {
-        public string name;
+        public string textureDescriptionHash;
         public string image;
 
         public bool EqualsToAnother(Texture other)
         {
-            throw new NotImplementedException();
+            return textureDescriptionHash.Equals(other.textureDescriptionHash);
         }
     }
 }

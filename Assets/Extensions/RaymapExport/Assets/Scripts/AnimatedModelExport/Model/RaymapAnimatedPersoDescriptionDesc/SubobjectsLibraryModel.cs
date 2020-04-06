@@ -9,9 +9,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class SubobjectsLibraryModel
     {
-        public Dictionary<string, Material> materials = new Dictionary<string, Material>();
-        public Dictionary<string, Texture> textures = new Dictionary<string, Texture>();
-        public Dictionary<string, Image> images = new Dictionary<string, Image>();
+        public VisualData visualData = new VisualData();
         public Dictionary<int, SubobjectModel> subobjects = new Dictionary<int, SubobjectModel>();
     }
 }

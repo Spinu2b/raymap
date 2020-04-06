@@ -1,6 +1,7 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
 using OpenSpace.Object;
 using System;
 using System.Collections.Generic;
@@ -10,15 +11,24 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Cache
 {
+    public class SubobjectCacheBlock : IComparableModel<SubobjectCacheBlock>
+    {
+        public SubobjectModel subobject;
+        public VisualData visualData;
+
+        public bool EqualsToAnother(SubobjectCacheBlock other)
+        {
+            return subobject.EqualsToAnother(other.subobject) && visualData.EqualsToAnother(other.visualData);
+        }
+    }
+
     public class SubobjectsCache
     {
         private Dictionary<int, Dictionary<int, List<int>>> subobjectsAnimationFramesPersoStatesAssociationsCache
              = new Dictionary<int, Dictionary<int, List<int>>>();
-        private Dictionary<int, SubobjectModel> subobjectsCache = new Dictionary<int, SubobjectModel>();
+        private Dictionary<int, SubobjectCacheBlock> subobjectsCache = new Dictionary<int, SubobjectCacheBlock>();
 
         private PhysicalObjectToSubobjectModelConverter physicalObjectToSubobjectModelConverter = new PhysicalObjectToSubobjectModelConverter();
-
-        private MaterialsTexturesImagesCache materialsTexturesImagesCache = new MaterialsTexturesImagesCache();
 
         public void ConsiderPhysicalObject(PhysicalObject physicalObject, int stateIndex, int animationFrame, int channelId, int physicalObjectNumber)
         {
@@ -31,7 +41,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             bool newlyAdded = false;
             if (!subobjectsCache.ContainsKey(physicalObjectNumber))
             {
-                subobjectsCache[physicalObjectNumber] = GetSubobjectModel(physicalObject, physicalObjectNumber, channelId);
+                subobjectsCache[physicalObjectNumber] = GetSubobjectDescriptiveModel(physicalObject, physicalObjectNumber, channelId);
                 newlyAdded = true;
             }
             if (!subobjectsAnimationFramesPersoStatesAssociationsCache.ContainsKey(stateIndex))
@@ -46,8 +56,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             {
                 if (!newlyAdded)
                 {
-                    var existingPhysicalObject = subobjectsCache[physicalObjectNumber];
-                    if (!existingPhysicalObject.EqualsToAnother(GetSubobjectModel(physicalObject, physicalObjectNumber, channelId)))
+                    // if we ensure that physical object indexes/ids/numbers satisfy that number-unique contract across OpenSpace versions consequently
+                    // we can omit consecutive comparisons and repeating model conversions to speed up the process (that is what this cache is for in the first place)
+                    var existingPhysicalObjectDescriptiveModel = subobjectsCache[physicalObjectNumber];
+                    if (!existingPhysicalObjectDescriptiveModel.EqualsToAnother(GetSubobjectDescriptiveModel(physicalObject, physicalObjectNumber, channelId)))
                     {
                         throw new InvalidOperationException(
                             "Two physical objects share same physical object number, but they are not the same physical object!");
@@ -55,24 +67,20 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 }
                 subobjectsAnimationFramesPersoStatesAssociationsCache[stateIndex][animationFrame].Add(physicalObjectNumber);
             }
-            materialsTexturesImagesCache.ConsiderPhysicalObject(physicalObject, stateIndex, animationFrame, channelId, physicalObjectNumber);
         }
 
-        private SubobjectModel GetSubobjectModel(PhysicalObjectWrapper physicalObject, int physicalObjectNumber, int channelId)
+        private SubobjectCacheBlock GetSubobjectDescriptiveModel(PhysicalObjectWrapper physicalObject, int physicalObjectNumber, int channelId)
         {
-            return physicalObjectToSubobjectModelConverter.Convert(physicalObject, physicalObjectNumber, channelId);
+            var result = new SubobjectCacheBlock();
+            result.subobject = physicalObjectToSubobjectModelConverter.Convert(physicalObject, physicalObjectNumber, channelId);
+            result.visualData = physicalObject.GetVisualData();
+            return result;
         }
 
-        public Tuple<SubobjectModel,
-            Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>
-            GetPhysicalObjectCachedModelFor(int physicalObjectNumber)
+        public Tuple<SubobjectModel, VisualData> GetPhysicalObjectCachedModelFor(int physicalObjectNumber)
         {
-            var materialsTexturesImagesForPhysicalObject = materialsTexturesImagesCache.GetMaterialsTexturesImagesCachedModelFor(physicalObjectNumber);
-
-            return new Tuple<SubobjectModel,
-            Dictionary<string, Material>, Dictionary<string, Texture>, Dictionary<string, Image>>(
-                subobjectsCache[physicalObjectNumber], materialsTexturesImagesForPhysicalObject.Item1, 
-                materialsTexturesImagesForPhysicalObject.Item2, materialsTexturesImagesForPhysicalObject.Item3);
+            var result = subobjectsCache[physicalObjectNumber];
+            return new Tuple<SubobjectModel, VisualData>(result.subobject, result.visualData);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.VisualDataDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     public static class ImageHashHelper
     {
         public static string GetImageHashString(int width, int height,
-            List<AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.Color> pixels)
+            List<Color> pixels)
         {
-            List<byte> imageBytes = pixels.Select(x => ((ISerializableToBytes)x).SerializeToBytes()).SelectMany(x => x).ToList();
+            List<byte> imageBytes = pixels.Select(x => ((ISerializableToBytes)x).SerializeToBytes()).SelectMany(x => x).ToList()
+                ;
             imageBytes.AddRange(BitConverter.GetBytes(width));
             imageBytes.AddRange(BitConverter.GetBytes(height));
             return BytesHashHelper.GetHashHexStringFor(imageBytes.ToArray());
