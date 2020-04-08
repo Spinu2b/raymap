@@ -1,4 +1,5 @@
-﻿using OpenSpace;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
+using OpenSpace;
 using OpenSpace.Animation.Component;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         private Dictionary<int, int> GetChannelsParentingForNormalAnimation()
         {
             var result = new Dictionary<int, int>();
+
             AnimOnlyFrame of = persoBehaviour.a3d.onlyFrames[persoBehaviour.a3d.start_onlyFrames + persoBehaviour.currentFrame];
             // Create hierarchy for this frame
             for (int i = of.start_hierarchies_for_frame;
@@ -73,13 +75,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
                     List<int> ch_child_list = (List<int>) getChannelByIDMethod.Invoke(persoBehaviour, new object[] { h.childChannelID });
                     List<int> ch_parent_list = (List<int>)getChannelByIDMethod.Invoke(persoBehaviour, new object[] { h.parentChannelID });
-                    foreach (int ch_child in ch_child_list)
-                    {
-                        foreach (int ch_parent in ch_parent_list)
-                        {
-                            result.Add(ch_child, ch_parent);
-                        }
-                    }
+                    result.Add(h.childChannelID, h.parentChannelID);
                 }
             }
             return result;
