@@ -43,6 +43,11 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             {
                 subobjectsCache[physicalObjectNumber] = GetSubobjectDescriptiveModel(physicalObject, physicalObjectNumber, channelId);
                 newlyAdded = true;
+            } 
+            else
+            {
+                PhysicalObjectModelsBasicComplianceVerifier.VerifyBasicCompliance(
+                    subobjectsCache[physicalObjectNumber].subobject, physicalObject);
             }
             if (!subobjectsAnimationFramesPersoStatesAssociationsCache.ContainsKey(stateIndex))
             {
