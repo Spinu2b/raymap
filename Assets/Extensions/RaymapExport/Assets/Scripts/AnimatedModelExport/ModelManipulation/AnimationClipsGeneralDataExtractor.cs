@@ -13,11 +13,11 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class AnimationClipsGeneralDataExtractor
     {
-        public Tuple<AnimationClipsModel, SubobjectsLibraryModel, ArmatureHierarchyModel> DeriveFor(GameObject persoGameObject)
+        public Tuple<AnimationClipsModel, SubobjectsLibraryModel, ChannelHierarchies> DeriveFor(GameObject persoGameObject)
         {
             var persoAnimationStatesDataManipulator = new PersoAnimationStatesGeneralDataManipulator();
 
-            var consolidatedArmatureHierarchyBuilder = new ConsolidatedArmatureHierarchyBuilder();
+            var consolidatedChannelHierarchiesBuilder = new ConsolidatedChannelHierarchiesBuilder();
             var submeshesLibraryBuilder = new SubobjectsLibraryBuilder();
 
             var animationClipsModel = new AnimationClipsModel();
@@ -28,10 +28,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 submeshesLibraryBuilder.Consolidate(
                     subobjects: animationStateGeneralInfo.GetSubmeshesDescriptionSet(),
                     visualData: animationStateGeneralInfo.GetVisualData());
-                consolidatedArmatureHierarchyBuilder.Consolidate(animationStateGeneralInfo.GetArmatureHierarchyParentingInfo()); 
+                consolidatedChannelHierarchiesBuilder.Consolidate(animationStateGeneralInfo.GetChannelHierarchiesInfo()); 
             }
-            return new Tuple<AnimationClipsModel, SubobjectsLibraryModel, ArmatureHierarchyModel>(
-                animationClipsModel, submeshesLibraryBuilder.Build(), consolidatedArmatureHierarchyBuilder.Build());
+            return new Tuple<AnimationClipsModel, SubobjectsLibraryModel, ChannelHierarchies>(
+                animationClipsModel, submeshesLibraryBuilder.Build(), consolidatedChannelHierarchiesBuilder.Build());
         }
     }
 }

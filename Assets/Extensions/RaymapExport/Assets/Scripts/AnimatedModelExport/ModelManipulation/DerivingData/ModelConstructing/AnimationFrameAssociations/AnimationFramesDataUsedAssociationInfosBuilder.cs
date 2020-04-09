@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.AnimationFrameAssociations
 {
     public class SubobjectUsedAssociationInfoListBuilder
     {
-        private List<SubobjectUsedAssociationInfo> result = new List<SubobjectUsedAssociationInfo>();
+        private List<AnimationFramesPeriodInfo> result = new List<AnimationFramesPeriodInfo>();
 
-        public List<SubobjectUsedAssociationInfo> Build()
+        public List<AnimationFramesPeriodInfo> Build()
         {
             return result;
         }
@@ -20,19 +20,19 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         {
             if (result.Count == 0)
             {
-                result.Add(new SubobjectUsedAssociationInfo(subobjectExistingFrame, subobjectExistingFrame));
-            } 
+                result.Add(new AnimationFramesPeriodInfo(subobjectExistingFrame, subobjectExistingFrame));
+            }
             else
             {
                 var lastExistenceElementSoFar = GetLastExistenceElementSoFar();
                 if (subobjectExistingFrame > lastExistenceElementSoFar.frameEnd + 1)
                 {
-                    result.Add(new SubobjectUsedAssociationInfo(subobjectExistingFrame, subobjectExistingFrame));
-                } 
+                    result.Add(new AnimationFramesPeriodInfo(subobjectExistingFrame, subobjectExistingFrame));
+                }
                 else if (subobjectExistingFrame == lastExistenceElementSoFar.frameEnd + 1)
                 {
                     lastExistenceElementSoFar.frameEnd = subobjectExistingFrame;
-                } 
+                }
                 else
                 {
                     throw new InvalidOperationException("Wrong order of putting frame numbers in the builder to build subobject existence info in animation clip!");
@@ -40,31 +40,33 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        private SubobjectUsedAssociationInfo GetLastExistenceElementSoFar()
+        private AnimationFramesPeriodInfo GetLastExistenceElementSoFar()
         {
             return result.Last();
         }
     }
 
-    public class SubobjectUsedAssociationInfosBuilder
+    public abstract class AnimationFramesDataUsedAssociationInfosBuilder<T, KeyType>
     {
-        private Dictionary<int, List<int>> temporaryBuildingAnimationFrames = new Dictionary<int, List<int>>();
+        private Dictionary<KeyType, List<int>> temporaryBuildingAnimationFrames = new Dictionary<KeyType, List<int>>();
 
-        public void ConsiderAssociation(int subobjectNumber, int frameNumber)
+        public void ConsiderAssociation(T data, int frameNumber)
         {
-            if (!temporaryBuildingAnimationFrames.ContainsKey(subobjectNumber))
+            KeyType key = GetKey(data);
+
+            if (!temporaryBuildingAnimationFrames.ContainsKey(key))
             {
-                temporaryBuildingAnimationFrames.Add(subobjectNumber, new List<int>());
+                temporaryBuildingAnimationFrames.Add(key, new List<int>());
             }
-            if (!temporaryBuildingAnimationFrames[subobjectNumber].Contains(frameNumber))
+            if (!temporaryBuildingAnimationFrames[key].Contains(frameNumber))
             {
-                temporaryBuildingAnimationFrames[subobjectNumber].Add(frameNumber);
-            }            
+                temporaryBuildingAnimationFrames[key].Add(frameNumber);
+            }
         }
 
-        public Dictionary<int, List<SubobjectUsedAssociationInfo>> Build()
+        public Dictionary<KeyType, List<AnimationFramesPeriodInfo>> Build()
         {
-            var result = new Dictionary<int, List<SubobjectUsedAssociationInfo>>();
+            var result = new Dictionary<KeyType, List<AnimationFramesPeriodInfo>>();
             foreach (var buildingExistenceFramesForSubobject in temporaryBuildingAnimationFrames)
             {
                 buildingExistenceFramesForSubobject.Value.Sort();
@@ -77,5 +79,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
             return result;
         }
+
+        protected abstract KeyType GetKey(T data);
     }
 }

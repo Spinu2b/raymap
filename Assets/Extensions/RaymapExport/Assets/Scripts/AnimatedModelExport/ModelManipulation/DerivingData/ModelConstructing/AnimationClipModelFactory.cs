@@ -1,4 +1,5 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.AnimationFrameAssociations;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             var result = new AnimationClipModel();
             result.channelKeyframes = GetChannelKeyframesData(persoBehaviourAnimationStatesHelper);
             result.subobjectsExistenceData = GetSubobjectExistenceData(persoBehaviourAnimationStatesHelper);
+            result.animationHierarchies = GetAnimationHierarchiesData(persoBehaviourAnimationStatesHelper);
             result.morphs = GetMorphsData(persoBehaviourAnimationStatesHelper);
             result.id = persoBehaviourAnimationStatesHelper.GetCurrentPersoStateIndex();
             return result;
@@ -25,7 +27,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             return persoBehaviourAnimationStatesHelper.GetMorphDataForThisAnimationState();
         }
 
-        private Dictionary<int, List<SubobjectUsedAssociationInfo>> GetSubobjectExistenceData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
+        private Dictionary<int, List<AnimationFramesPeriodInfo>> GetSubobjectExistenceData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
         {
             var subobjectUsedAssociationInfosBuilder = new SubobjectUsedAssociationInfosBuilder();
             foreach (Tuple<int, List<int>> subobjectExistenceIndicatorsForFrame in 
@@ -34,10 +36,24 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 int currentFrame = subobjectExistenceIndicatorsForFrame.Item1;
                 foreach (var subobjectNumber in subobjectExistenceIndicatorsForFrame.Item2)
                 {
-                    subobjectUsedAssociationInfosBuilder.ConsiderAssociation(subobjectNumber: subobjectNumber, frameNumber: currentFrame);
+                    subobjectUsedAssociationInfosBuilder.ConsiderAssociation(data: subobjectNumber, frameNumber: currentFrame);
                 }
             }
             return subobjectUsedAssociationInfosBuilder.Build();
+        }
+
+        private Dictionary<string, List<AnimationFramesPeriodInfo>> GetAnimationHierarchiesData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
+        {
+            var armatureHierarchiesUsedAssociationInfosBuilder = new ArmatureHierarchiesUsedAssociationInfosBuilder();
+            foreach (Tuple<int, Dictionary<int, int>> channelsParentingForFrameInfo in 
+                persoBehaviourAnimationStatesHelper.IterateChannelParentingInfosThisAnimationState())
+            {
+                int currentFrame = channelsParentingForFrameInfo.Item1;
+                armatureHierarchiesUsedAssociationInfosBuilder.ConsiderAssociation(
+                    data: channelsParentingForFrameInfo.Item2, frameNumber: currentFrame);
+            }
+
+            return armatureHierarchiesUsedAssociationInfosBuilder.Build();
         }
 
         private Dictionary<int, Dictionary<int, ChannelTransformModel>> GetChannelKeyframesData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)

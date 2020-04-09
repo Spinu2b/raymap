@@ -23,5 +23,21 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model
             }
             return true;
         }
+
+        public static bool AreCSharpComparableDictionariesCompliant<KeyType, T>(Dictionary<KeyType, T> dictA, Dictionary<KeyType, T> dictB) where T : IComparable
+        {
+            if (dictA.Count != dictB.Count)
+            {
+                return false;
+            }
+            foreach (var key in dictA.Keys)
+            {
+                if (!dictB.ContainsKey(key) || dictA[key].CompareTo(dictB[key]) != 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

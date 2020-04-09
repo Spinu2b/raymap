@@ -8,12 +8,12 @@ using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc
 {
-    public class SubobjectUsedAssociationInfo
+    public class AnimationFramesPeriodInfo
     {
         public int frameBegin;
         public int frameEnd;
 
-        public SubobjectUsedAssociationInfo(int frameBegin, int frameEnd)
+        public AnimationFramesPeriodInfo(int frameBegin, int frameEnd)
         {
             this.frameBegin = frameBegin;
             this.frameEnd = frameEnd;
@@ -63,7 +63,8 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public int id;
         public Dictionary<int, Dictionary<int, ChannelTransformModel>> channelKeyframes = new Dictionary<int, Dictionary<int, ChannelTransformModel>>();
-        public Dictionary<int, List<SubobjectUsedAssociationInfo>> subobjectsExistenceData = new Dictionary<int, List<SubobjectUsedAssociationInfo>>();
+        public Dictionary<int, List<AnimationFramesPeriodInfo>> subobjectsExistenceData = new Dictionary<int, List<AnimationFramesPeriodInfo>>();
+        public Dictionary<string, List<AnimationFramesPeriodInfo>> animationHierarchies = new Dictionary<string, List<AnimationFramesPeriodInfo>>();
         public List<SubobjectUsedMorphAssociationInfo> morphs = new List<SubobjectUsedMorphAssociationInfo>();
     }
 }

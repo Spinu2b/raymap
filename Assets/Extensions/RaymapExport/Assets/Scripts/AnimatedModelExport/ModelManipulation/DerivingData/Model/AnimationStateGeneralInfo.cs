@@ -18,7 +18,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         private AnimationClipModel animationClipModel;
         private Dictionary<int, SubobjectModel> submeshesDescriptionSet;
-        private ArmatureHierarchyModel armatureHierarchyParentingInfo;
+        private ChannelHierarchies channelHierarchiesInfo;
 
         private VisualData visualData;
 
@@ -33,7 +33,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             animationClipId = animationClipModel.id;
 
             submeshesDescriptionSet = new SubmeshesDescriptionSetFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
-            armatureHierarchyParentingInfo = new ArmatureHierarchyModelFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
+            channelHierarchiesInfo = new ChannelHierarchiesFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
 
             visualData = new VisualDataFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
         }
@@ -53,9 +53,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             return submeshesDescriptionSet;
         }
 
-        public ArmatureHierarchyModel GetArmatureHierarchyParentingInfo()
+        public ChannelHierarchies GetChannelHierarchiesInfo()
         {
-            return armatureHierarchyParentingInfo;
+            return channelHierarchiesInfo;
         }
     }
 }
