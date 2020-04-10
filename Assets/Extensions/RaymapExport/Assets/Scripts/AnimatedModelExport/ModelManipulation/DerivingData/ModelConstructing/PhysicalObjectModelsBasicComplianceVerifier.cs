@@ -2,23 +2,58 @@
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc.SubmeshGeometricObjectDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing
 {
     public class GeometricObjectElementModelsBasicComplianceVerifier
     {
-        public static void VerifyFor(SubmeshGeometricObjectElement exportElement, GeometricObjectElementWrapper raymapElement)
+        private static void VerifyMeshData(SubmeshGeometricObjectElement exportElement, Mesh unityMesh)
         {
-            if (exportElement.elementDescription.vertices.Count != raymapElement.GetVertices().Count())
+            if (exportElement.elementDescription.vertices.Count != unityMesh.vertexCount)
             {
                 throw new InvalidOperationException("Vertices counts in geometric object elements do not match!");
             }
-            throw new NotImplementedException();
+            if (exportElement.elementDescription.normals.Count != unityMesh.normals.Count())
+            {
+                throw new InvalidOperationException("Normals counts in geometric object elements do not match!");
+            }
+            if (exportElement.elementDescription.triangles.Count != unityMesh.triangles.Count())
+            {
+                throw new InvalidOperationException("Triangles vertices indices counts in geometric object elements do not match!");
+            }
+        }
+
+        private static void VerifyMaterialsData(SubmeshGeometricObjectElement exportElement, GeometricObjectElementWrapper raymapElement)
+        {
+            if (exportElement.elementDescription.materials.Count != raymapElement.gameObject.GetComponent<Renderer>().materials.Count())
+            {
+                throw new InvalidOperationException("Materials counts for geometric object elements do not match!");
+            }
+        }
+
+        private static void VerifySkinningData(SubmeshGeometricObjectElement exportElement, GeometricObjectElementWrapper raymapElement)
+        {
+            var modelExportBindChannels = exportElement.elementDescription.bindChannelPoses;
+            var raymapBindChannels = raymapElement.GetBindChannelPoses();
+            if (!ComparableModelDictionariesComparator.AreDictionariesCompliant(modelExportBindChannels, raymapBindChannels))
+            {
+                throw new InvalidOperationException("Channel bind poses in geometric object elements do not match!");
+            }
+            // could do some channel weights sanity verification as well, to consider
+        }
+
+        public static void VerifyFor(SubmeshGeometricObjectElement exportElement, GeometricObjectElementWrapper raymapElement)
+        {
+            VerifyMeshData(exportElement, raymapElement.GetMesh());
+            VerifyMaterialsData(exportElement, raymapElement);
+            VerifySkinningData(exportElement, raymapElement);
         }
     }
 

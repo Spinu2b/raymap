@@ -3,6 +3,7 @@ using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.Ra
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc.SubmeshGeometricObjectDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.MaterialsData;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.RaymapModelFetching;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using OpenSpace.Visual;
 using System;
@@ -40,7 +41,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        private GameObject gameObject { 
+        public GameObject gameObject { 
             get {
                 if (geometricObjectElement is GeometricObjectElementTriangles)
                 {
@@ -53,7 +54,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        private Mesh GetMesh()
+        public Mesh GetMesh()
         {
             if (gameObject.GetComponent<SkinnedMeshRenderer>() != null)
             {
@@ -194,7 +195,13 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public List<Vector3d> GetVertices()
         {
-            return geometricObject.vertices.Select(x => Vector3d.FromUnityVector3(x)).ToList();
+            if (geometricObjectElement is GeometricObjectElementTriangles)
+            {
+                return GeometricObjectElementTrianglesVerticesFetcher.GetVerticesList(geometricObjectElement as GeometricObjectElementTriangles);
+            } else
+            {
+                throw new NotImplementedException("Getting vertices list not implemented for other geometric object element kinds!");
+            }            
         }
 
         public List<Vector3d> GetNormals()
