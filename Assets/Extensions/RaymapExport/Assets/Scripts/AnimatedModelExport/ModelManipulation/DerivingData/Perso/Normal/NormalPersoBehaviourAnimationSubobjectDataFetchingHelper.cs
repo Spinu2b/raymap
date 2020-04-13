@@ -49,8 +49,8 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 {
                     PhysicalObject physicalObject = persoBehaviour.subObjects[i][poNum];
                     subobjectsCache.ConsiderPhysicalObject(
-                        physicalObject, persoBehaviour.currentState, (int)persoBehaviour.currentFrame, ch.id, poNum);
-                    yield return subobjectsCache.GetPhysicalObjectCachedModelFor(poNum);
+                        physicalObject, persoBehaviour.currentState, (int)persoBehaviour.currentFrame, ch.id, ntto.object_index);
+                    yield return subobjectsCache.GetPhysicalObjectCachedModelFor(ntto.object_index);
                 }                    
             }
         }

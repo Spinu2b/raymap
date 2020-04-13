@@ -76,7 +76,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             } else
             {
                 int currentIndex = 0;
-                foreach (var subobjectModelGeometricObject in subobjectModelGeometricObjects)
+                foreach (var subobjectModelGeometricObject in subobjectModelGeometricObjects.OrderBy(x => x.Key))
                 {
                     var saidCompliantPhysicalObjectGeometricObject = physicalObjectGeometricObjects[currentIndex];
                     VerifyGeometricObject(currentIndex, subobjectModelGeometricObject, saidCompliantPhysicalObjectGeometricObject);
@@ -89,19 +89,30 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             , KeyValuePair<int, SubmeshGeometricObject> subobjectModelGeometricObject,
             Tuple<int, GeometricObjectWrapper> saidCompliantPhysicalObjectGeometricObject)
         {
+            Func<List<KeyValuePair<int, SubmeshGeometricObjectElement>>, int, int> GetIndexOnListForGeometricObjectOriginalIndex = 
+                (elementsList, originalIndex) => {
+                    for (int i = 0; i < elementsList.Count; i++)
+                    {
+                        if (elementsList[i].Key == originalIndex) return i;
+                    }
+                    throw new InvalidOperationException("Could not find list index mapping for original index of geometric object element!");
+            };
+
             if (currentIndex != subobjectModelGeometricObject.Key || currentIndex != saidCompliantPhysicalObjectGeometricObject.Item1)
             {
                 throw new InvalidOperationException("Geometric objects indexes do not match!");
             }
 
             var saidCompliantPhysicalObjectGeometricObjectElementsList = saidCompliantPhysicalObjectGeometricObject.Item2.IterateElements().ToList();
+            var elementModelsList = subobjectModelGeometricObject.Value.elements.OrderBy(x => x.Key).ToList();
 
-            foreach (var subobjectGeometricObjectModelElement in subobjectModelGeometricObject.Value.elements.OrderBy(x => x.Key))
+            foreach (var subobjectGeometricObjectModelElement in elementModelsList)
             {
-                int index = subobjectGeometricObjectModelElement.Key;
+                int index = GetIndexOnListForGeometricObjectOriginalIndex(
+                    elementModelsList, subobjectGeometricObjectModelElement.Key);
                 var saidCompliantPhysicalObjectGeometricObjectElement = saidCompliantPhysicalObjectGeometricObjectElementsList[index];
 
-                VerifyGeometricObjectElement(subobjectGeometricObjectModelElement, saidCompliantPhysicalObjectGeometricObjectElement);
+                VerifyGeometricObjectElement(subobjectGeometricObjectModelElement, saidCompliantPhysicalObjectGeometricObjectElement); 
             }
         }
 
