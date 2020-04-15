@@ -1,4 +1,5 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.RaymapModelFetching;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Cache;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
 using OpenSpace.Animation.Component;
@@ -38,6 +39,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             GetActualPhysicalSubobjectsForNormalFrame()
         {
             var resultSubobjectsList = new List<Tuple<SubobjectModel, VisualData>>();
+            SubobjectsChannelsAssociation subobjectsChannelsAssociation = GetSubobjectsChannelsAssociationForNormalFrame();
             AnimOnlyFrame of = persoBehaviour.a3d.onlyFrames[persoBehaviour.a3d.start_onlyFrames + persoBehaviour.currentFrame];
             for (int i = 0; i < persoBehaviour.a3d.num_channels; i++)
             {
@@ -54,7 +56,13 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                     resultSubobjectsList.Add(subobjectsCache.GetPhysicalObjectCachedModelFor(ntto.object_index));
                 }                    
             }
-            throw new NotImplementedException();
+            return new Tuple<SubobjectsChannelsAssociation, List<Tuple<SubobjectModel, VisualData>>>
+                (subobjectsChannelsAssociation, resultSubobjectsList);
+        }
+
+        private SubobjectsChannelsAssociation GetSubobjectsChannelsAssociationForNormalFrame()
+        {
+            return NormalPersoNormalFrameSubobjectsChannelsAssociationDataFetcher.DeriveFor(persoBehaviour);
         }
 
         private Tuple<SubobjectsChannelsAssociation, List<Tuple<SubobjectModel, VisualData>>> GetActualPhysicalSubobjectsForLargoFrame()

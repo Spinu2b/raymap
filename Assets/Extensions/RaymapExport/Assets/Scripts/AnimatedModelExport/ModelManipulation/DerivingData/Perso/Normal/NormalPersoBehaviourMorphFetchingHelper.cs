@@ -76,8 +76,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                                 continue;
                             }
 
+                            AnimNTTO ntto_link = persoBehaviour.a3d.ntto[numOfNTTO.numOfNTTO];
+
                             int physicalObjectNumberMorphTo = morphData.objectIndexTo;
-                            int physicalObjectNumberMorphFrom = poNum;
+                            int physicalObjectNumberMorphFrom = ntto_link.object_index;
                             int morphProgress = morphData.morphProgress;
                             result.Add(new Tuple<int, int, int>(
                                 physicalObjectNumberMorphFrom, physicalObjectNumberMorphTo, morphProgress));

@@ -12,18 +12,19 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public Dictionary<int, SubobjectModel> DeriveFor(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
         {
-            var result = new Dictionary<int, SubobjectModel>();
-            foreach (var subobjectModelInfo in persoBehaviourAnimationStatesHelper.IterateSubobjectsUsedForThisAnimationState())
-            {
-                foreach (var subobjectModel in subobjectModelInfo.Item2)
-                {
-                    if (!result.ContainsKey(subobjectModel.objectNumber))
-                    {
-                        result.Add(subobjectModel.objectNumber, subobjectModel);
-                    }
-                }
-            }
-            return result;
+            throw new NotImplementedException();
+            //var result = new Dictionary<int, SubobjectModel>();
+            //foreach (var subobjectModelInfo in persoBehaviourAnimationStatesHelper.IterateSubobjectsUsedForThisAnimationState())
+            //{
+            //    foreach (var subobjectModel in subobjectModelInfo.Item2)
+            //    {
+            //        if (!result.ContainsKey(subobjectModel.objectNumber))
+            //        {
+             //           result.Add(subobjectModel.objectNumber, subobjectModel);
+             //       }
+             //   }
+           // }
+            //return result;
         }
     }
 }
