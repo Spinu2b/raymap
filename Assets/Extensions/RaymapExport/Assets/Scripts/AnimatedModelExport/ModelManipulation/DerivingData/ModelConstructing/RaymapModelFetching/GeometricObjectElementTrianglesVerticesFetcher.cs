@@ -1,4 +1,4 @@
-﻿using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.MathDescription;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.MathDescription;
 using OpenSpace.Visual;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.RaymapModelFetching
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.RaymapModelFetching
 {
     public class GeometricObjectElementTrianglesVerticesFetcher
     {

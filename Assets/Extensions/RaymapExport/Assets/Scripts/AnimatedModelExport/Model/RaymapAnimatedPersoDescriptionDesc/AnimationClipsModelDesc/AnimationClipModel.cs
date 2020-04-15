@@ -1,4 +1,4 @@
-﻿using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.MathDescription;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.MathDescription;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc
 {
     public class AnimationFramesPeriodInfo
     {
@@ -63,7 +63,7 @@ namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Mod
     {
         public int id;
         public Dictionary<int, Dictionary<int, ChannelTransformModel>> channelKeyframes = new Dictionary<int, Dictionary<int, ChannelTransformModel>>();
-        public Dictionary<int, List<AnimationFramesPeriodInfo>> subobjectsExistenceData = new Dictionary<int, List<AnimationFramesPeriodInfo>>();
+        public Dictionary<string, List<AnimationFramesPeriodInfo>> channelsForSubobjectsAssociationsData = new Dictionary<string, List<AnimationFramesPeriodInfo>>();
         public Dictionary<string, List<AnimationFramesPeriodInfo>> animationHierarchies = new Dictionary<string, List<AnimationFramesPeriodInfo>>();
         public List<SubobjectUsedMorphAssociationInfo> morphs = new List<SubobjectUsedMorphAssociationInfo>();
     }

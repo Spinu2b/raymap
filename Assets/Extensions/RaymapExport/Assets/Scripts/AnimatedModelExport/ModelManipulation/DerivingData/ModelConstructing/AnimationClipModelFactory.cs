@@ -1,13 +1,13 @@
-﻿using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.AnimationFrameAssociations;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.AnimationFrameAssociations;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing
 {
     public class AnimationClipModelFactory
     {
@@ -15,7 +15,7 @@ namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Mod
         {
             var result = new AnimationClipModel();
             result.channelKeyframes = GetChannelKeyframesData(persoBehaviourAnimationStatesHelper);
-            result.subobjectsExistenceData = GetSubobjectExistenceData(persoBehaviourAnimationStatesHelper);
+            //result.subobjectsExistenceData = GetSubobjectExistenceData(persoBehaviourAnimationStatesHelper);
             result.animationHierarchies = GetAnimationHierarchiesData(persoBehaviourAnimationStatesHelper);
             result.morphs = GetMorphsData(persoBehaviourAnimationStatesHelper);
             result.id = persoBehaviourAnimationStatesHelper.GetCurrentPersoStateIndex();
@@ -44,16 +44,16 @@ namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Mod
 
         private Dictionary<string, List<AnimationFramesPeriodInfo>> GetAnimationHierarchiesData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
         {
-            var armatureHierarchiesUsedAssociationInfosBuilder = new ArmatureHierarchiesUsedAssociationInfosBuilder();
+            var channelHierarchiesUsedAssociationInfosBuilder = new ChannelHierarchiesUsedAssociationInfosBuilder();
             foreach (Tuple<int, Dictionary<int, int>> channelsParentingForFrameInfo in 
                 persoBehaviourAnimationStatesHelper.IterateChannelParentingInfosThisAnimationState())
             {
                 int currentFrame = channelsParentingForFrameInfo.Item1;
-                armatureHierarchiesUsedAssociationInfosBuilder.ConsiderAssociation(
+                channelHierarchiesUsedAssociationInfosBuilder.ConsiderAssociation(
                     data: channelsParentingForFrameInfo.Item2, frameNumber: currentFrame);
             }
 
-            return armatureHierarchiesUsedAssociationInfosBuilder.Build();
+            return channelHierarchiesUsedAssociationInfosBuilder.Build();
         }
 
         private Dictionary<int, Dictionary<int, ChannelTransformModel>> GetChannelKeyframesData(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)

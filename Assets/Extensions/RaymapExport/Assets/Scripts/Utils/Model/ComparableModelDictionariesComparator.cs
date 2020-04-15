@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Extensions.RayExportOld2.Assets.Scripts.Utils.Model
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model
 {
     public static class ComparableModelDictionariesComparator
     {

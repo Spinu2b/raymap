@@ -1,12 +1,12 @@
-﻿using Assets.Extensions.RayExportOld2.Assets.Scripts.Utils;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.Utils.Model;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.MathDescription
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.MathDescription
 {
     public struct Quaternion : ISerializableToBytes
     {

@@ -1,13 +1,13 @@
-﻿using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.ChannelHierarchiesDesc;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.ChannelHierarchiesDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing
 {
     public class ChannelHierarchiesFactory
     {
@@ -24,10 +24,10 @@ namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Mod
 
         private ChannelHierarchies GetChannelHierarchiesModelForParenting(Dictionary<int, int> channelsParenting)
         {
-            var armatureHierarchy = ArmatureHierarchyModel.FromChannelsParenting(channelsParenting);
+            var channelHierarchy = ChannelHierarchyModel.FromChannelsParenting(channelsParenting);
 
             var result = new ChannelHierarchies();
-            result.armatureHierarchies.Add(armatureHierarchy.armatureHierarchyDescriptionHash, armatureHierarchy);
+            result.channelHierarchies.Add(channelHierarchy.channelHierarchyDescriptionHash, channelHierarchy);
             return result;
         }
     }

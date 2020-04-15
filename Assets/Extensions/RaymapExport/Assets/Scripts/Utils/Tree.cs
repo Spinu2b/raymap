@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Extensions.RayExportOld2.Assets.Scripts.Utils
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.Utils
 {
     public class ParentChildPair<T, KeyType>
     {

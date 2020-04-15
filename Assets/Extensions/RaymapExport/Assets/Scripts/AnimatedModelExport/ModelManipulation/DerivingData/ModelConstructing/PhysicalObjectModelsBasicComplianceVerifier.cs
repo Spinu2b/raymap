@@ -1,8 +1,8 @@
-﻿using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc.SubmeshGeometricObjectDesc;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.Utils.Model;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc.SubmeshGeometricObjectDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing
 {
     public class GeometricObjectElementModelsBasicComplianceVerifier
     {
@@ -40,11 +40,11 @@ namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Mod
 
         private static void VerifySkinningData(SubmeshGeometricObjectElement exportElement, GeometricObjectElementWrapper raymapElement)
         {
-            var modelExportBindChannels = exportElement.elementDescription.bindChannelPoses;
-            var raymapBindChannels = raymapElement.GetBindChannelPoses();
-            if (!ComparableModelDictionariesComparator.AreDictionariesCompliant(modelExportBindChannels, raymapBindChannels))
+            var modelExportBindBones = exportElement.elementDescription.bindBonePoses;
+            var raymapBindBones = raymapElement.GetBindBonePoses();
+            if (!ComparableModelDictionariesComparator.AreDictionariesCompliant(modelExportBindBones, raymapBindBones))
             {
-                throw new InvalidOperationException("Channel bind poses in geometric object elements do not match!");
+                throw new InvalidOperationException("Bone bind poses in geometric object elements do not match!");
             }
             // could do some channel weights sanity verification as well, to consider
         }

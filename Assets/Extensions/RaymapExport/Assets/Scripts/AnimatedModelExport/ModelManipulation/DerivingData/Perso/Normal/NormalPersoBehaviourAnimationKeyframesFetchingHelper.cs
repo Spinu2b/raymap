@@ -1,5 +1,5 @@
-﻿using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.Utils;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using OpenSpace.Animation.Component;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Normal
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Normal
 {
     public class NormalPersoBehaviourAnimationKeyframesFetchingHelper : NormalPersoBehaviourAnimationDataFetchingHelper
     {

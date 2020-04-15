@@ -1,5 +1,5 @@
-﻿using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model.Shaders;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.Utils;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model.Shaders;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using OpenSpace.Visual;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.MaterialsData
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.MaterialsData
 {
     public static class SubmeshGameObjectMaterialsDataFetchingHelper
     {

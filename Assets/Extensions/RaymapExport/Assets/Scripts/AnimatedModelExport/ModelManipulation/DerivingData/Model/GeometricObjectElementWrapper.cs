@@ -1,10 +1,10 @@
-﻿using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.MathDescription;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc.SubmeshGeometricObjectDesc;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.MaterialsData;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.RaymapModelFetching;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.Utils;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.MathDescription;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc.SubmeshGeometricObjectDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.MaterialsData;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.RaymapModelFetching;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using OpenSpace.Visual;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model
 {
     public enum GeometricObjectElementWrappingType
     {
@@ -83,58 +83,43 @@ namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Mod
                 GeometricObjectElementWrappingType.RAYMAP_NORMAL_GEOMETRIC_OBJECT_ELEMENT_INTERFACE);
         }
 
-        public Dictionary<int, Dictionary<int, float>> GetChannelWeights()
+        public Dictionary<int, Dictionary<int, float>> GetBoneWeights()
         {
             if (gameObject.GetComponent<SkinnedMeshRenderer>() != null)
             {
-                return GetChannelWeightsForActualUnityBoneWeights(gameObject.GetComponent<SkinnedMeshRenderer>().bones, GetMesh().boneWeights);
+                return GetBoneWeightsForActualUnityBoneWeights(gameObject.GetComponent<SkinnedMeshRenderer>().bones, GetMesh().boneWeights);
             }  
             else
             {
-                return GetChannelFullVerticesWeightsForOnlyParentChannel();
+                return new Dictionary<int, Dictionary<int, float>>();
             }
         }
 
-        private Dictionary<int, Dictionary<int, float>> GetChannelFullVerticesWeightsForOnlyParentChannel()
+        private Dictionary<int, Dictionary<int, float>> GetBoneWeightsForActualUnityBoneWeights(Transform[] bones, BoneWeight[] boneWeights)
         {
-            var parentChannelId = ChannelHelper.GetChannelId(GetCorrespondingChannelGameObjectForGameObjectInHierarchy(gameObject).name);
-            var result = new Dictionary<int, Dictionary<int, float>>();
-            result[parentChannelId] = new Dictionary<int, float>();
-            int verticesLength = GetVertices().Count;
-            for (int i = 0; i < verticesLength; i++)
-            {
-                result[parentChannelId][i] = 1.0f;
-            }
-            return result;
-        }
-
-        private Dictionary<int, Dictionary<int, float>> GetChannelWeightsForActualUnityBoneWeights(Transform[] bones, BoneWeight[] boneWeights)
-        {
-            List<int> channelIds = bones.Select(x => ChannelHelper.GetChannelId(GetCorrespondingChannelGameObjectForGameObjectInHierarchy(x.gameObject).name)).ToList();
             var result = new Dictionary<int, Dictionary<int, float>>();
 
-            int boneIndex = 0;
-            foreach (var channelId in channelIds)
+            for (int boneIndex = 0; boneIndex < bones.Length; boneIndex++)
             {
-                result.Add(channelId, new Dictionary<int, float>());
+                result.Add(boneIndex, new Dictionary<int, float>());
                 int vertexIndex = 0;
                 foreach (var boneWeight in boneWeights)
                 {
                     if (boneWeight.boneIndex0 == boneIndex)
                     {
-                        result[channelId].Add(vertexIndex, boneWeight.weight0);
+                        result[boneIndex].Add(vertexIndex, boneWeight.weight0);
                     }
                     else if (boneWeight.boneIndex1 == boneIndex)
                     {
-                        result[channelId].Add(vertexIndex, boneWeight.weight1);
+                        result[boneIndex].Add(vertexIndex, boneWeight.weight1);
                     }
                     else if (boneWeight.boneIndex2 == boneIndex)
                     {
-                        result[channelId].Add(vertexIndex, boneWeight.weight2);
+                        result[boneIndex].Add(vertexIndex, boneWeight.weight2);
                     }
                     else if (boneWeight.boneIndex3 == boneIndex)
                     {
-                        result[channelId].Add(vertexIndex, boneWeight.weight3);
+                        result[boneIndex].Add(vertexIndex, boneWeight.weight3);
                     }
                     vertexIndex++;
                 }
@@ -144,15 +129,7 @@ namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Mod
             return result;
         }
 
-        private Dictionary<int, ChannelBindPose> GetChannelBindPoseForParentChannel()
-        {
-            var parentChannelId = ChannelHelper.GetChannelId(GetCorrespondingChannelGameObjectForGameObjectInHierarchy(gameObject).name);
-            var result = new Dictionary<int, ChannelBindPose>();
-            result[parentChannelId] = ChannelBindPose.HomeTransform();
-            return result;
-        }
-
-        private ChannelBindPose GetChannelBindPoseFromBindposeMatrix(Matrix4x4 bindpose)
+        private BoneBindPose GetBoneBindPoseFromBindposeMatrix(Matrix4x4 bindpose)
         {
             GameObject boneWorkingDuplicate = new GameObject();
             boneWorkingDuplicate.transform.SetParent(null);
@@ -163,33 +140,31 @@ namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Mod
             boneWorkingDuplicate.transform.localScale =
                 new Vector3(localMatrix.GetColumn(0).magnitude, localMatrix.GetColumn(1).magnitude, localMatrix.GetColumn(2).magnitude);
 
-            var result = ChannelBindPose.FromUnityAbsoluteTransform(boneWorkingDuplicate.transform);
+            var result = BoneBindPose.FromUnityAbsoluteTransform(boneWorkingDuplicate.transform);
             UnityEngine.Object.Destroy(boneWorkingDuplicate);
             return result;
         }
 
-        private Dictionary<int, ChannelBindPose> GetChannelBindPosesForActualUnityBindposes(Transform[] bones, Matrix4x4[] bindposes)
+        private Dictionary<int, BoneBindPose> GetBoneBindPosesForActualUnityBindposes(Transform[] bones, Matrix4x4[] bindposes)
         {
-            List<int> channelIds = bones.Select(x => ChannelHelper.GetChannelId(GetCorrespondingChannelGameObjectForGameObjectInHierarchy(x.gameObject).name)).ToList();
-            var result = new Dictionary<int, ChannelBindPose>();
-            int boneIndex = 0;
-            foreach (var channelId in channelIds)
+            var result = new Dictionary<int, BoneBindPose>();
+            for (int boneIndex = 0; boneIndex < bones.Length; boneIndex++)
             {
-                result[channelId] = GetChannelBindPoseFromBindposeMatrix(bindposes[boneIndex]);
+                result[boneIndex] = GetBoneBindPoseFromBindposeMatrix(bindposes[boneIndex]);
                 boneIndex++;
             }
             return result;
         }
 
-        public Dictionary<int, ChannelBindPose> GetBindChannelPoses()
+        public Dictionary<int, BoneBindPose> GetBindBonePoses()
         {
             if (gameObject.GetComponent<SkinnedMeshRenderer>() != null)
             {
-                return GetChannelBindPosesForActualUnityBindposes(gameObject.GetComponent<SkinnedMeshRenderer>().bones, GetMesh().bindposes);
+                return GetBoneBindPosesForActualUnityBindposes(gameObject.GetComponent<SkinnedMeshRenderer>().bones, GetMesh().bindposes);
             } 
             else
             {
-                return GetChannelBindPoseForParentChannel();
+                return new Dictionary<int, BoneBindPose>();
             }
         }
 
@@ -257,22 +232,6 @@ namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Mod
         {
             var visualData = UnityMaterialsToVisualDataConverter.Convert(GetMaterialsWithTextureNamesData());
             return visualData.materials.Select(x => x.Key).ToList();
-        }
-
-        private GameObject GetCorrespondingChannelGameObjectForGameObjectInHierarchy(GameObject gameObject)
-        {
-            var candidate = gameObject;
-            while (candidate != null && !candidate.name.Contains("Channel"))
-            {
-                candidate = candidate.transform.parent?.gameObject;
-            }
-            if (candidate == null)
-            {
-                throw new InvalidOperationException("Could not find corresponding channel game object in hierarchy!");
-            } else
-            {
-                return candidate;
-            }
         }
 
         public VisualData GetVisualData()

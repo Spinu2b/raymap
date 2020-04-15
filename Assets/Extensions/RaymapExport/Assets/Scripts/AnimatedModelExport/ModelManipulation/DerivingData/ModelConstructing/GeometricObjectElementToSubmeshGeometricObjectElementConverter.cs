@@ -1,6 +1,6 @@
-﻿using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.MathDescription;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc.SubmeshGeometricObjectDesc;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.MathDescription;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc.SubmeshGeometricObjectDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing
 {
     public class GeometricObjectElementToSubmeshGeometricObjectElementConverter
     {
@@ -22,21 +22,21 @@ namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Mod
             result.elementDescription.uvMaps = GetUvMaps(geometricObjectElement);
             result.elementDescription.materials = GetMaterials(geometricObjectElement);
 
-            result.elementDescription.bindChannelPoses = GetBindChannelPoses(geometricObjectElement, channelId);
-            result.elementDescription.channelWeights = GetChannelWeights(geometricObjectElement, channelId);
+            result.elementDescription.bindBonePoses = GetBindBonePoses(geometricObjectElement, channelId);
+            result.elementDescription.boneWeights = GetBoneWeights(geometricObjectElement, channelId);
 
             result.elementDescriptionHash = result.elementDescription.ComputeHash();
             return result;
         }
 
-        private Dictionary<int, Dictionary<int, float>> GetChannelWeights(GeometricObjectElementWrapper geometricObjectElement, int channelId)
+        private Dictionary<int, Dictionary<int, float>> GetBoneWeights(GeometricObjectElementWrapper geometricObjectElement, int channelId)
         {
-            return geometricObjectElement.GetChannelWeights();
+            return geometricObjectElement.GetBoneWeights();
         }
 
-        private Dictionary<int, ChannelBindPose> GetBindChannelPoses(GeometricObjectElementWrapper geometricObjectElement, int channelId)
+        private Dictionary<int, BoneBindPose> GetBindBonePoses(GeometricObjectElementWrapper geometricObjectElement, int channelId)
         {
-            return geometricObjectElement.GetBindChannelPoses();
+            return geometricObjectElement.GetBindBonePoses();
         }
 
         private List<string> GetMaterials(GeometricObjectElementWrapper geometricObjectElement)

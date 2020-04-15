@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Extensions.RayExportOld2.Assets.Scripts.Utils
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.Utils
 {
     public class UnityHierarchyHelper
     {

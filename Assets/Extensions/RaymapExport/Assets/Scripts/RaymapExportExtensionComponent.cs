@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Extensions.Api;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport;
 using UnityEngine;
 
-namespace Assets.Extensions.RayExportOld2.Assets.Scripts
+namespace Assets.Extensions.RaymapExport.Assets.Scripts
 {
     public class RaymapExportExtensionComponent : RaymapExtensionComponent
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport
 {
     [CustomEditor(typeof(RaymapExportPersoComponent))]
     public class RaymapExportPersoComponentEditor : Editor

@@ -1,5 +1,5 @@
-﻿using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.Model;
-using Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport.ModelManipulation;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Extensions.RayExportOld2.Assets.Scripts.AnimatedModelExport
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport
 {
     public class RaymapExportPersoComponent : MonoBehaviour
     {
