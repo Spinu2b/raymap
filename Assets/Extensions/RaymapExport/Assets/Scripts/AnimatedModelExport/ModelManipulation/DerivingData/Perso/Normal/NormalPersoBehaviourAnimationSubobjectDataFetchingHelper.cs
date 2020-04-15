@@ -34,9 +34,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public NormalPersoBehaviourAnimationSubobjectDataFetchingHelper(PersoBehaviour persoBehaviour) : base(persoBehaviour) {}
 
-        private IEnumerable<Tuple<SubobjectModel, VisualData>>
-            IterateActualPhysicalSubobjectsForNormalFrame()
+        private Tuple<SubobjectsChannelsAssociation, List<Tuple<SubobjectModel, VisualData>>>
+            GetActualPhysicalSubobjectsForNormalFrame()
         {
+            var resultSubobjectsList = new List<Tuple<SubobjectModel, VisualData>>();
             AnimOnlyFrame of = persoBehaviour.a3d.onlyFrames[persoBehaviour.a3d.start_onlyFrames + persoBehaviour.currentFrame];
             for (int i = 0; i < persoBehaviour.a3d.num_channels; i++)
             {
@@ -50,35 +51,42 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                     PhysicalObject physicalObject = persoBehaviour.subObjects[i][poNum];
                     subobjectsCache.ConsiderPhysicalObject(
                         physicalObject, persoBehaviour.currentState, (int)persoBehaviour.currentFrame, ch.id, ntto.object_index);
-                    yield return subobjectsCache.GetPhysicalObjectCachedModelFor(ntto.object_index);
+                    resultSubobjectsList.Add(subobjectsCache.GetPhysicalObjectCachedModelFor(ntto.object_index));
                 }                    
             }
+            throw new NotImplementedException();
         }
 
-        private IEnumerable<Tuple<SubobjectModel, VisualData>> IterateActualPhysicalSubobjectsForLargoFrame()
+        private Tuple<SubobjectsChannelsAssociation, List<Tuple<SubobjectModel, VisualData>>> GetActualPhysicalSubobjectsForLargoFrame()
         {
             throw new NotImplementedException();
         }
 
-        private IEnumerable<Tuple<SubobjectModel, VisualData>> IterateActualPhysicalSubobjectsForMontrealFrame()
+        private Tuple<SubobjectsChannelsAssociation, List<Tuple<SubobjectModel, VisualData>>> GetActualPhysicalSubobjectsForMontrealFrame()
         {
             throw new NotImplementedException();
         }
 
-        public List<SubobjectModel> GetPersoBehaviourSubobjectsUsedForFrame(int frameNumber)
+        public Tuple<SubobjectsChannelsAssociation, List<SubobjectModel>> GetPersoBehaviourSubobjectsUsedForFrame(int frameNumber)
         {
             UpdateAnimation(frameNumber);
             if (IsNormalAnimation())
             {
-                return new List<SubobjectModel>(IterateActualPhysicalSubobjectsForNormalFrame().Select(x => x.Item1));
+                var result = GetActualPhysicalSubobjectsForNormalFrame();
+                return new Tuple<SubobjectsChannelsAssociation, List<SubobjectModel>>(result.Item1,
+                    result.Item2.Select(x => x.Item1).ToList());
             }
             else if (IsMontrealAnimation())
             {
-                return new List<SubobjectModel>(IterateActualPhysicalSubobjectsForMontrealFrame().Select(x => x.Item1));
+                var result = GetActualPhysicalSubobjectsForMontrealFrame();
+                return new Tuple<SubobjectsChannelsAssociation, List<SubobjectModel>>(result.Item1,
+                    result.Item2.Select(x => x.Item1).ToList());
             }
             else if (IsLargoAnimation())
             {
-                return new List<SubobjectModel>(IterateActualPhysicalSubobjectsForLargoFrame().Select(x => x.Item1));
+                var result = GetActualPhysicalSubobjectsForLargoFrame();
+                return new Tuple<SubobjectsChannelsAssociation, List<SubobjectModel>>(result.Item1,
+                    result.Item2.Select(x => x.Item1).ToList());
             }
             else
             {
@@ -91,16 +99,24 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             UpdateAnimation(frameNumber);
             if (IsNormalAnimation())
             {
-                return VisualDataUnifier.Unify(
-                    IterateActualPhysicalSubobjectsForNormalFrame().Select(x => x.Item2).ToList());
+                var result = GetActualPhysicalSubobjectsForNormalFrame();
+                var visualsList = result.Item2.Select(x => x.Item2).ToList();
+
+                return VisualDataUnifier.Unify(visualsList);
             }
             else if (IsMontrealAnimation())
             {
-                return VisualDataUnifier.Unify(IterateActualPhysicalSubobjectsForMontrealFrame().Select(x => x.Item2).ToList());
+                var result = GetActualPhysicalSubobjectsForMontrealFrame();
+                var visualsList = result.Item2.Select(x => x.Item2).ToList();
+
+                return VisualDataUnifier.Unify(visualsList);
             }
             else if (IsLargoAnimation())
             {
-                return VisualDataUnifier.Unify(IterateActualPhysicalSubobjectsForLargoFrame().Select(x => x.Item2).ToList());
+                var result = GetActualPhysicalSubobjectsForLargoFrame();
+                var visualsList = result.Item2.Select(x => x.Item2).ToList();
+
+                return VisualDataUnifier.Unify(visualsList);
             }
             else
             {

@@ -108,21 +108,21 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             return subobjectUsedMorphAssociationInfoListBuilder.Build();
         }
 
-        public IEnumerable<Tuple<int, List<int>>> IterateSubobjectExistenceDataForThisAnimationState()
+        public IEnumerable<Tuple<int, SubobjectsChannelsAssociation>> IterateChannelsSubobjectsAssociationsDataForThisAnimationState()
         {
             foreach (var subobjectsUsedInfo in IterateSubobjectsUsedForThisAnimationState())
             {
-                yield return new Tuple<int, List<int>>(
-                    subobjectsUsedInfo.Item1, subobjectsUsedInfo.Item2.Select(x => x.objectNumber).ToList());
+                yield return new Tuple<int, SubobjectsChannelsAssociation>(
+                    subobjectsUsedInfo.Item1, subobjectsUsedInfo.Item2.Item1);
             }
         }
 
-        public IEnumerable<Tuple<int, List<SubobjectModel>>> IterateSubobjectsUsedForThisAnimationState()
+        public IEnumerable<Tuple<int, Tuple<SubobjectsChannelsAssociation, List<SubobjectModel>>>> IterateSubobjectsUsedForThisAnimationState()
         {
             int frameNumber = GetFirstValidStateAnimationKeyframeFrameNumber();
             while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
             {
-                yield return new Tuple<int, List<SubobjectModel>>(frameNumber, 
+                yield return new Tuple<int, Tuple<SubobjectsChannelsAssociation, List<SubobjectModel>>>(frameNumber, 
                     persoBehaviourInterface.GetSubobjectsUsedForAnimationFrame(frameNumber));
                 frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
             }

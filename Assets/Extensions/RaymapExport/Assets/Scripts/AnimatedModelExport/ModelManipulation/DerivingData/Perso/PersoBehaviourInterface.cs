@@ -138,7 +138,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        public List<SubobjectModel> GetSubobjectsUsedForAnimationFrame(int frameNumber)
+        public Tuple<SubobjectsChannelsAssociation, List<SubobjectModel>> GetSubobjectsUsedForAnimationFrame(int frameNumber)
         {
             if (persoBehaviour != null)
             {

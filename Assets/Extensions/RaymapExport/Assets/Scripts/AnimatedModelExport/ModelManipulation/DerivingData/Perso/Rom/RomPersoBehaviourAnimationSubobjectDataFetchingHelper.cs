@@ -11,7 +11,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public RomPersoBehaviourAnimationSubobjectDataFetchingHelper(ROMPersoBehaviour romPersoBehaviour) : base(romPersoBehaviour) {}
 
-        public List<SubobjectModel> GetPersoBehaviourSubobjectsUsedForFrame(int frameNumber)
+        public Tuple<SubobjectsChannelsAssociation, List<SubobjectModel>> GetPersoBehaviourSubobjectsUsedForFrame(int frameNumber)
         {
             throw new NotImplementedException();
         }

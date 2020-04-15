@@ -1,4 +1,5 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.AnimationFrameAssociations
 {
-    public class SubobjectUsedAssociationInfosBuilder : AnimationFramesDataUsedAssociationInfosBuilder<int, int>
+    public class ChannelsSubobjectsAssociationInfosBuilder : 
+        AnimationFramesDataUsedAssociationInfosBuilder<SubobjectsChannelsAssociation, string>
     {
-        protected override int GetKey(int subobjectNumber)
+        protected override string GetKey(SubobjectsChannelsAssociation subobjectsChannelsAssociation)
         {
-            return subobjectNumber;
+            return subobjectsChannelsAssociation.subobjectsChannelsAssociationDescriptionHash;
         }
     }
 }
