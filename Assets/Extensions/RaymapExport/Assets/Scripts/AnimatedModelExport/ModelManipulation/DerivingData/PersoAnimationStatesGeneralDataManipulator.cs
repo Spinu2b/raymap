@@ -1,4 +1,5 @@
-﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
+        public SubobjectsLibraryModel GetSubobjectsLibrary(GameObject persoGameObject)
+        {
+            var persoBehaviour = GetPersoBehaviourFor(persoGameObject);
+            return persoBehaviour.GetSubobjectsLibrary();
+        }
+
         private PersoBehaviourInterface GetPersoBehaviourFor(GameObject persoGameObject)
         {
             if (persoGameObject.GetComponent<PersoBehaviour>() != null)
@@ -38,6 +45,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             {
                 throw new InvalidOperationException("This game object does not have any Perso Behaviour component!");
             }
-        }
+        }   
     }
 }

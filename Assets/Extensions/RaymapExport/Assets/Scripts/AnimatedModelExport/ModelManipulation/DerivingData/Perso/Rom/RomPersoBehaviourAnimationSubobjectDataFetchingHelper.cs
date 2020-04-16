@@ -1,4 +1,5 @@
-﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public RomPersoBehaviourAnimationSubobjectDataFetchingHelper(ROMPersoBehaviour romPersoBehaviour) : base(romPersoBehaviour) {}
 
-        public Tuple<SubobjectsChannelsAssociation, List<SubobjectModel>> GetPersoBehaviourSubobjectsUsedForFrame(int frameNumber)
+        public SubobjectsChannelsAssociation GetPersoBehaviourSubobjectsChannelsAssociationForFrame(int frameNumber)
         {
             throw new NotImplementedException();
         }

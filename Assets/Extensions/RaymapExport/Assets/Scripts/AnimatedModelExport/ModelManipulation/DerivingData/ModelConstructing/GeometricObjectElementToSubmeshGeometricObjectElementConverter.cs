@@ -12,29 +12,29 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class GeometricObjectElementToSubmeshGeometricObjectElementConverter
     {
-        public SubmeshGeometricObjectElement Convert(GeometricObjectElementWrapper geometricObjectElement, int channelId, int geometricObjectElementIndex)
+        public SubmeshGeometricObjectElement Convert(GeometricObjectElementWrapper geometricObjectElement, int geometricObjectElementIndex)
         {
             var result = new SubmeshGeometricObjectElement();
-            result.id = GetSubmeshGeometricObjectElementId(geometricObjectElement, channelId, geometricObjectElementIndex);
+            result.id = GetSubmeshGeometricObjectElementId(geometricObjectElement, geometricObjectElementIndex);
             result.elementDescription.vertices = GetVertices(geometricObjectElement);
             result.elementDescription.normals = GetNormals(geometricObjectElement);
             result.elementDescription.triangles = GetTriangles(geometricObjectElement);
             result.elementDescription.uvMaps = GetUvMaps(geometricObjectElement);
             result.elementDescription.materials = GetMaterials(geometricObjectElement);
 
-            result.elementDescription.bindBonePoses = GetBindBonePoses(geometricObjectElement, channelId);
-            result.elementDescription.boneWeights = GetBoneWeights(geometricObjectElement, channelId);
+            result.elementDescription.bindBonePoses = GetBindBonePoses(geometricObjectElement);
+            result.elementDescription.boneWeights = GetBoneWeights(geometricObjectElement);
 
             result.elementDescriptionHash = result.elementDescription.ComputeHash();
             return result;
         }
 
-        private Dictionary<int, Dictionary<int, float>> GetBoneWeights(GeometricObjectElementWrapper geometricObjectElement, int channelId)
+        private Dictionary<int, Dictionary<int, float>> GetBoneWeights(GeometricObjectElementWrapper geometricObjectElement)
         {
             return geometricObjectElement.GetBoneWeights();
         }
 
-        private Dictionary<int, BoneBindPose> GetBindBonePoses(GeometricObjectElementWrapper geometricObjectElement, int channelId)
+        private Dictionary<int, BoneBindPose> GetBindBonePoses(GeometricObjectElementWrapper geometricObjectElement)
         {
             return geometricObjectElement.GetBindBonePoses();
         }
@@ -64,7 +64,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             return geometricObjectElement.GetVertices();
         }
 
-        private int GetSubmeshGeometricObjectElementId(GeometricObjectElementWrapper geometricObjectElement, int channelId, int geometricObjectElementIndex)
+        private int GetSubmeshGeometricObjectElementId(GeometricObjectElementWrapper geometricObjectElement, int geometricObjectElementIndex)
         {
             return geometricObjectElementIndex;
         }

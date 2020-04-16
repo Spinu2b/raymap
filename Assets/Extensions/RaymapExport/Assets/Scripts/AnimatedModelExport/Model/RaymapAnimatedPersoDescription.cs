@@ -12,6 +12,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         public string name;
         public SubobjectsLibraryModel submeshesLibrary = new SubobjectsLibraryModel();
         public ChannelHierarchies channelHierarchies = new ChannelHierarchies();
+        public Dictionary<string, SubobjectsChannelsAssociation> subobjectsChannelsAssociations = new Dictionary<string, SubobjectsChannelsAssociation>();
         public AnimationClipsModel animationClipsModel = new AnimationClipsModel();
     }
 }

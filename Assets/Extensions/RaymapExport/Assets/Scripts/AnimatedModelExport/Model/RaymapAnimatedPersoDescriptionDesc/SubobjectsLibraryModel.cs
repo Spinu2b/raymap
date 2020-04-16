@@ -10,7 +10,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     public class SubobjectsLibraryModel
     {
         public VisualData visualData = new VisualData();
-        public Dictionary<string, SubobjectsChannelsAssociation> subobjectsChannelsAssociations = new Dictionary<string, SubobjectsChannelsAssociation>();
         public Dictionary<int, SubobjectModel> subobjects = new Dictionary<int, SubobjectModel>();
     }
 }

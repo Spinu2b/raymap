@@ -1,6 +1,7 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Normal;
 using OpenSpace.Object;
+using OpenSpace.Visual;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,8 +38,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 int index = 0;
                 foreach (var visualSetLOD in physicalObject.visualSet)
                 {
-                    yield return new Tuple<int, GeometricObjectWrapper>(index,
+                    //we iterate actual GeometricObject instances
+                    if (visualSetLOD.obj is GeometricObject)
+                    {
+                        yield return new Tuple<int, GeometricObjectWrapper>(index,
                         GeometricObjectWrapper.FromRaymapNormalGeometricObjectInterface(visualSetLOD.obj));
+                    }                    
                     index++;
                 }
             } else

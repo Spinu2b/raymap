@@ -15,8 +15,8 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public string ComputeHash()
         {
-            var armatureHierarchyBytes = SerializeToBytes();
-            return BytesHashHelper.GetHashHexStringFor(armatureHierarchyBytes);
+            var channelHierarchyBytes = SerializeToBytes();
+            return BytesHashHelper.GetHashHexStringFor(channelHierarchyBytes);
         }
 
         public bool EqualsToAnother(ChannelHierarchyDescription other)
@@ -33,9 +33,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public byte[] SerializeToBytes()
         {
-            return channels.OrderBy(x => x).Select(x => BitConverter.GetBytes(x))
-                .Concat(parenting.OrderBy(x => x.Key).Select(x => BitConverter.GetBytes(x.Key)
-                .Concat(BitConverter.GetBytes(x.Value)))).SelectMany(x => x).ToArray();
+            return channels.OrderBy(x => x).Select(x => BitConverter.GetBytes(x)).SelectMany(x => x).Concat(
+                ComparableKeyDictionaryToBytesSerializer.WithCSharpComparableKeySerializeToBytes(
+                    parenting, x => BitConverter.GetBytes(x), x => BitConverter.GetBytes(x))).ToArray();
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Normal;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Rom;
@@ -19,8 +20,8 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         private NormalPersoBehaviourAnimationKeyframesFetchingHelper normalPersoBehaviourAnimationKeyframesFetchingHelper;
         private RomPersoBehaviourAnimationKeyframesFetchingHelper romPersoBehaviourAnimationKeyframesFetchingHelper;
 
-        private NormalPersoBehaviourAnimationSubobjectDataFetchingHelper normalPersoBehaviourAnimationSubobjectDataFetchingHelper;
-        private RomPersoBehaviourAnimationSubobjectDataFetchingHelper romPersoBehaviourAnimationSubobjectDataFetchingHelper;
+        private NormalPersoBehaviourAnimationSubobjectsChannelsAssociationFetchingHelper normalPersoBehaviourAnimationSubobjectsChannelsAssociationFetchingHelper;
+        private RomPersoBehaviourAnimationSubobjectDataFetchingHelper romPersoBehaviourAnimationSubobjectsChannelsAssociationFetchingHelper;
 
         private NormalPersoBehaviourMorphFetchingHelper normalPersoBehaviourMorphFetchingHelper;
         private RomPersoBehaviourMorphFetchingHelper romPersoBehaviourMorphFetchingHelper;
@@ -30,6 +31,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         private NormalPersoBehaviourStateHelper normalPersoBehaviourStateHelper;
         private RomPersoBehaviourStateHelper romPersoBehaviourStateHelper;
+
+        private NormalPersoBehaviourSubobjectsLibraryFetchingHelper normalPersoBehaviourSubobjectsLibraryFetchingHelper;
+        private RomPersoBehaviourSubobjectsLibraryFetchingHelper romPersoBehaviourSubobjectsLibraryFetchingHelper;
 
         public GameObject gameObject
         {
@@ -86,20 +90,22 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         {
             this.persoBehaviour = persoBehaviour;
             this.normalPersoBehaviourAnimationKeyframesFetchingHelper = new NormalPersoBehaviourAnimationKeyframesFetchingHelper(persoBehaviour);
-            this.normalPersoBehaviourAnimationSubobjectDataFetchingHelper = new NormalPersoBehaviourAnimationSubobjectDataFetchingHelper(persoBehaviour);
+            this.normalPersoBehaviourAnimationSubobjectsChannelsAssociationFetchingHelper = new NormalPersoBehaviourAnimationSubobjectsChannelsAssociationFetchingHelper(persoBehaviour);
             this.normalPersoBehaviourMorphFetchingHelper = new NormalPersoBehaviourMorphFetchingHelper(persoBehaviour);
             this.normalPersoBehaviourChannelsParentingFetchingHelper = new NormalPersoBehaviourChannelsParentingFetchingHelper(persoBehaviour);
             this.normalPersoBehaviourStateHelper = new NormalPersoBehaviourStateHelper(persoBehaviour);
+            this.normalPersoBehaviourSubobjectsLibraryFetchingHelper = new NormalPersoBehaviourSubobjectsLibraryFetchingHelper(persoBehaviour);
         }
 
         public PersoBehaviourInterface(ROMPersoBehaviour romPersoBehaviour)
         {
             this.romPersoBehaviour = romPersoBehaviour;
             this.romPersoBehaviourAnimationKeyframesFetchingHelper = new RomPersoBehaviourAnimationKeyframesFetchingHelper(romPersoBehaviour);
-            this.romPersoBehaviourAnimationSubobjectDataFetchingHelper = new RomPersoBehaviourAnimationSubobjectDataFetchingHelper(romPersoBehaviour);
+            this.romPersoBehaviourAnimationSubobjectsChannelsAssociationFetchingHelper = new RomPersoBehaviourAnimationSubobjectDataFetchingHelper(romPersoBehaviour);
             this.romPersoBehaviourMorphFetchingHelper = new RomPersoBehaviourMorphFetchingHelper(romPersoBehaviour);
             this.romPersoBehaviourChannelsParentingFetchingHelper = new RomPersoBehaviourChannelsParentingFetchingHelper(romPersoBehaviour);
             this.romPersoBehaviourStateHelper = new RomPersoBehaviourStateHelper(romPersoBehaviour);
+            this.romPersoBehaviourSubobjectsLibraryFetchingHelper = new RomPersoBehaviourSubobjectsLibraryFetchingHelper(romPersoBehaviour);
         }
 
         public void SetState(int stateIndex)
@@ -138,15 +144,26 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        public Tuple<SubobjectsChannelsAssociation, List<SubobjectModel>> GetSubobjectsUsedForAnimationFrame(int frameNumber)
+        public SubobjectsLibraryModel GetSubobjectsLibrary()
         {
             if (persoBehaviour != null)
             {
-                return normalPersoBehaviourAnimationSubobjectDataFetchingHelper.GetPersoBehaviourSubobjectsUsedForFrame(frameNumber);
+                return normalPersoBehaviourSubobjectsLibraryFetchingHelper.GetPersoBehaviourSubobjectsLibrary();
+            } else
+            {
+                return romPersoBehaviourSubobjectsLibraryFetchingHelper.GetPersoBehaviourSubobjectsLibrary();
+            }
+        }
+
+        public SubobjectsChannelsAssociation GetSubobjectsChannelsAssociationForAnimationFrame(int frameNumber)
+        {
+            if (persoBehaviour != null)
+            {
+                return normalPersoBehaviourAnimationSubobjectsChannelsAssociationFetchingHelper.GetPersoBehaviourSubobjectsChannelsAssociationForFrame(frameNumber);
             } 
             else
             {
-                return romPersoBehaviourAnimationSubobjectDataFetchingHelper.GetPersoBehaviourSubobjectsUsedForFrame(frameNumber);
+                return romPersoBehaviourAnimationSubobjectsChannelsAssociationFetchingHelper.GetPersoBehaviourSubobjectsChannelsAssociationForFrame(frameNumber);
             }
         }
 
@@ -159,18 +176,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             else
             {
                 return romPersoBehaviourChannelsParentingFetchingHelper.GetPersoBehaviourChannelsParentingForFrame(frameNumber);
-            }
-        }
-
-        public VisualData GetVisualDataForAnimationFrame(int frameNumber)
-        {
-            if (persoBehaviour != null)
-            {
-                return normalPersoBehaviourAnimationSubobjectDataFetchingHelper.GetVisualDataForFrame(frameNumber);
-            }
-            else
-            {
-                return romPersoBehaviourAnimationSubobjectDataFetchingHelper.GetVisualDataForFrame(frameNumber);
             }
         }
 

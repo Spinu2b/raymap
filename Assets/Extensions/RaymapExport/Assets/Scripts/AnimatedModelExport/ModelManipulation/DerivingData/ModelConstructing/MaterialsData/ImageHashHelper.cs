@@ -14,8 +14,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         public static string GetImageHashString(int width, int height,
             List<Color> pixels)
         {
-            List<byte> imageBytes = pixels.Select(x => ((ISerializableToBytes)x).SerializeToBytes()).SelectMany(x => x).ToList()
-                ;
+            List<byte> imageBytes = pixels.Select(x => ((ISerializableToBytes)x).SerializeToBytes()).SelectMany(x => x).ToList();
             imageBytes.AddRange(BitConverter.GetBytes(width));
             imageBytes.AddRange(BitConverter.GetBytes(height));
             return BytesHashHelper.GetHashHexStringFor(imageBytes.ToArray());

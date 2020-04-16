@@ -13,25 +13,25 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class AnimationClipsGeneralDataExtractor
     {
-        public Tuple<AnimationClipsModel, SubobjectsLibraryModel, ChannelHierarchies> DeriveFor(GameObject persoGameObject)
+        public Tuple<AnimationClipsModel, SubobjectsLibraryModel, ChannelHierarchies, Dictionary<string, SubobjectsChannelsAssociation>>
+            DeriveFor(GameObject persoGameObject)
         {
             var persoAnimationStatesDataManipulator = new PersoAnimationStatesGeneralDataManipulator();
 
             var consolidatedChannelHierarchiesBuilder = new ConsolidatedChannelHierarchiesBuilder();
-            var submeshesLibraryBuilder = new SubobjectsLibraryBuilder();
-
             var animationClipsModel = new AnimationClipsModel();
+
+            var subobjectsLibrary = persoAnimationStatesDataManipulator.GetSubobjectsLibrary(persoGameObject);
+            var subobjectsChannelsAssociationsInfoBuilder = new SubobjectsChannelsAssociationsInfoBuilder();
 
             foreach (var animationStateGeneralInfo in persoAnimationStatesDataManipulator.IterateAnimationStatesGeneralDataForExport(persoGameObject))
             {
                 animationClipsModel.animationClips.Add(animationStateGeneralInfo.animationClipId, animationStateGeneralInfo.GetAnimationClipObj());
-                submeshesLibraryBuilder.Consolidate(
-                    subobjects: animationStateGeneralInfo.GetSubmeshesDescriptionSet(),
-                    visualData: animationStateGeneralInfo.GetVisualData());
-                consolidatedChannelHierarchiesBuilder.Consolidate(animationStateGeneralInfo.GetChannelHierarchiesInfo()); 
+                consolidatedChannelHierarchiesBuilder.Consolidate(animationStateGeneralInfo.GetChannelHierarchiesInfo());
+                subobjectsChannelsAssociationsInfoBuilder.Consolidate(animationStateGeneralInfo.GetSubobjectsChannelsAssociationsInfo());
             }
-            return new Tuple<AnimationClipsModel, SubobjectsLibraryModel, ChannelHierarchies>(
-                animationClipsModel, submeshesLibraryBuilder.Build(), consolidatedChannelHierarchiesBuilder.Build());
+            return new Tuple<AnimationClipsModel, SubobjectsLibraryModel, ChannelHierarchies, Dictionary<string, SubobjectsChannelsAssociation>>(
+                animationClipsModel, subobjectsLibrary, consolidatedChannelHierarchiesBuilder.Build(), subobjectsChannelsAssociationsInfoBuilder.Build());
         }
     }
 }

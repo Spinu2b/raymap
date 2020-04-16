@@ -17,10 +17,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         private PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper;
 
         private AnimationClipModel animationClipModel;
-        private Dictionary<int, SubobjectModel> submeshesDescriptionSet;
         private ChannelHierarchies channelHierarchiesInfo;
 
-        private VisualData visualData;
+        private Dictionary<string, SubobjectsChannelsAssociation> subobjectsChannelsAssociations;
 
         public AnimationStateGeneralInfo(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
         {
@@ -32,25 +31,18 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             animationClipModel = new AnimationClipModelFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
             animationClipId = animationClipModel.id;
 
-            submeshesDescriptionSet = new SubmeshesDescriptionSetFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
+            subobjectsChannelsAssociations = new SubobjectsChannelsAssociationsInfoFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
             channelHierarchiesInfo = new ChannelHierarchiesFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
-
-            visualData = new VisualDataFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
         }
 
-        public VisualData GetVisualData()
+        public Dictionary<string, SubobjectsChannelsAssociation> GetSubobjectsChannelsAssociationsInfo()
         {
-            return visualData;
+            return subobjectsChannelsAssociations;
         }
 
         public AnimationClipModel GetAnimationClipObj()
         {
             return animationClipModel;
-        }
-
-        public Dictionary<int, SubobjectModel> GetSubmeshesDescriptionSet()
-        {
-            return submeshesDescriptionSet;
         }
 
         public ChannelHierarchies GetChannelHierarchiesInfo()

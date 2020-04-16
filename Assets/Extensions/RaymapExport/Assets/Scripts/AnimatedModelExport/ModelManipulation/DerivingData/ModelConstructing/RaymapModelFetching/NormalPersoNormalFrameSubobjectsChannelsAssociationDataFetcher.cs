@@ -1,4 +1,5 @@
-﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using OpenSpace;
 using OpenSpace.Animation.Component;
@@ -33,15 +34,23 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 short channelId = persoBehaviour.a3d.channels[persoBehaviour.a3d.start_channels + i].id;
                 AnimChannel ch = persoBehaviour.a3d.channels[persoBehaviour.a3d.start_channels + i];
                 List<ushort> listOfNTTOforChannel = new List<ushort>();
-                for (int j = 0; j < persoBehaviour.a3d.num_onlyFrames; j++)
+
+                AnimOnlyFrame of = persoBehaviour.a3d.onlyFrames[persoBehaviour.a3d.start_onlyFrames + persoBehaviour.currentFrame];
+                AnimNumOfNTTO numOfNTTO = persoBehaviour.a3d.numOfNTTO[ch.numOfNTTO + of.numOfNTTO];
+                if (!listOfNTTOforChannel.Contains(numOfNTTO.numOfNTTO))
                 {
-                    AnimOnlyFrame of = persoBehaviour.a3d.onlyFrames[persoBehaviour.a3d.start_onlyFrames + j];
-                    AnimNumOfNTTO numOfNTTO = persoBehaviour.a3d.numOfNTTO[ch.numOfNTTO + of.numOfNTTO];
-                    if (!listOfNTTOforChannel.Contains(numOfNTTO.numOfNTTO))
-                    {
-                        listOfNTTOforChannel.Add(numOfNTTO.numOfNTTO);
-                    }
+                    listOfNTTOforChannel.Add(numOfNTTO.numOfNTTO);
                 }
+
+                //for (int j = 0; j < persoBehaviour.a3d.num_onlyFrames; j++)
+                //{
+                //    AnimOnlyFrame of = persoBehaviour.a3d.onlyFrames[persoBehaviour.a3d.start_onlyFrames + j];
+                //    AnimNumOfNTTO numOfNTTO = persoBehaviour.a3d.numOfNTTO[ch.numOfNTTO + of.numOfNTTO];
+                //    if (!listOfNTTOforChannel.Contains(numOfNTTO.numOfNTTO))
+                //    {
+                //        listOfNTTOforChannel.Add(numOfNTTO.numOfNTTO);
+                //    }
+                //}
                 for (int k = 0; k < listOfNTTOforChannel.Count; k++)
                 {
                     int j = listOfNTTOforChannel[k] - persoBehaviour.a3d.start_NTTO;
