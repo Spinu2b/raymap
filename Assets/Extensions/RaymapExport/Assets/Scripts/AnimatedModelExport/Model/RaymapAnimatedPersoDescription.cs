@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model
 {
-    public class RaymapAnimatedPersoDescription
+    public class RaymapAnimatedPersoDescription : IExportModel
     {
         public string name;
         public SubobjectsLibraryModel submeshesLibrary = new SubobjectsLibraryModel();

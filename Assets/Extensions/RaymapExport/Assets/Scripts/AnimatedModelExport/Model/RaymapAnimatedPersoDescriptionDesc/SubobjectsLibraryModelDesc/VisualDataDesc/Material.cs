@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.VisualDataDesc
 
 {
-    public class Material : IComparableModel<Material>
+    public class Material : IExportModel, IComparableModel<Material>
     {
         public string materialDescriptionHash;
         public List<string> textures = new List<string>();

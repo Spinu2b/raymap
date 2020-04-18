@@ -38,7 +38,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             return NormalPersoNormalFrameSubobjectsChannelsAssociationDataFetcher.DeriveFor(persoBehaviour);
         }
 
-        private SubobjectsChannelsAssociation GetActualPhysicalSubobjectsForLargoFrame()
+        private SubobjectsChannelsAssociation GetSubobjectsChannelsAssociationForLargoFrame()
         {
             throw new NotImplementedException();
         }
@@ -61,7 +61,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
             else if (IsLargoAnimation())
             {
-                return GetActualPhysicalSubobjectsForLargoFrame();
+                return GetSubobjectsChannelsAssociationForLargoFrame();
             }
             else
             {

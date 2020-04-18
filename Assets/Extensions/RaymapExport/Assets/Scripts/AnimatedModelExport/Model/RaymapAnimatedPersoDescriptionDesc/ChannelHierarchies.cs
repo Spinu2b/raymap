@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc
 {
-    public class ChannelHierarchies
+    public class ChannelHierarchies : IExportModel
     {
         public Dictionary<string, ChannelHierarchyModel> channelHierarchies = new Dictionary<string, ChannelHierarchyModel>();
     }

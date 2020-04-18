@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc
 {
-    public class AnimationFramesPeriodInfo
+    public class AnimationFramesPeriodInfo : IExportModel
     {
         public int frameBegin;
         public int frameEnd;
@@ -20,7 +20,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         }
     }
 
-    public class SubobjectUsedMorphAssociationInfo
+    public class SubobjectUsedMorphAssociationInfo : IExportModel
     {
         public int morphSubobjectStart;
         public int morphSubobjectEnd;
@@ -43,7 +43,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         }
     }
 
-    public struct ChannelTransformModel
+    public struct ChannelTransformModel : IExportModel
     {
         public Vector3d position;
         public MathDescription.Quaternion rotation;

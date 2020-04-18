@@ -1,5 +1,6 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model.BytesSerialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.VisualDataDesc
 {
-    public class Color : ISerializableToBytes
+    public class Color : IExportModel, ISerializableToBytes
     {
         public float red;
         public float green;
@@ -25,14 +26,11 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public byte[] SerializeToBytes()
         {
-            return BitConverter.GetBytes(red).
-                Concat(BitConverter.GetBytes(green)).
-                Concat(BitConverter.GetBytes(blue)).
-                Concat(BitConverter.GetBytes(alpha)).ToArray();
+            return ExportModelSerializer.SerializeToBytes(this);
         }
     }
 
-    public class ImageDescription : ISerializableToBytes, IHashableModel
+    public class ImageDescription : IExportModel, ISerializableToBytes, IHashableModel
     {
         public int width = 0;
         public int height = 0;
@@ -46,8 +44,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public byte[] SerializeToBytes()
         {
-            var pixelBytes = pixels.SelectMany(x => x.SerializeToBytes()).ToArray();
-            return BitConverter.GetBytes(width).Concat(BitConverter.GetBytes(height)).Concat(pixelBytes).ToArray();
+            return ExportModelSerializer.SerializeToBytes(this);
         }
     }
 

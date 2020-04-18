@@ -1,5 +1,6 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model.BytesSerialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.ChannelHierarchiesDesc
 {
-    public class ChannelHierarchyDescription : ISerializableToBytes, IHashableModel, IComparableModel<ChannelHierarchyDescription>
+    public class ChannelHierarchyDescription : IExportModel, ISerializableToBytes, IHashableModel, IComparableModel<ChannelHierarchyDescription>
     {
         public HashSet<int> channels = new HashSet<int>();
         public Dictionary<int, int> parenting = new Dictionary<int, int>();
@@ -39,7 +40,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         }
     }
 
-    public class ChannelHierarchyModel : IComparableModel<ChannelHierarchyModel>
+    public class ChannelHierarchyModel : IExportModel, IComparableModel<ChannelHierarchyModel>
     {
         public string channelHierarchyDescriptionHash;
         public ChannelHierarchyDescription channelHierarchy = new ChannelHierarchyDescription();

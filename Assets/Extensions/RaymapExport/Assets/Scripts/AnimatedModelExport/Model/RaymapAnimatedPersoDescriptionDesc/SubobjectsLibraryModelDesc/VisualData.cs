@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc
 {
-    public class VisualData : IComparableModel<VisualData>
+    public class VisualData : IExportModel, IComparableModel<VisualData>
     {
         public Dictionary<string, Material> materials = new Dictionary<string, Material>();
         public Dictionary<string, Texture> textures = new Dictionary<string, Texture>();

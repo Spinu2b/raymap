@@ -1,5 +1,7 @@
-﻿using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model.BytesSerialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.MathDescription
 {
-    public struct Vector2d : ISerializableToBytes
+    public struct Vector2d : IExportModel, ISerializableToBytes
     {
         public float x, y;
         public Vector2d(float x, float y)

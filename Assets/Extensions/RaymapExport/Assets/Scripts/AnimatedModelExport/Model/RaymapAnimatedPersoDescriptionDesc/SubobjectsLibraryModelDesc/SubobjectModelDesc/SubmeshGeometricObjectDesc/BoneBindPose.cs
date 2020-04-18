@@ -1,6 +1,7 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.MathDescription;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model.BytesSerialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc.SubmeshGeometricObjectDesc
 {
-    public struct BoneBindPose : ISerializableToBytes, IComparableModel<BoneBindPose>
+    public struct BoneBindPose : IExportModel, ISerializableToBytes, IComparableModel<BoneBindPose>
     {
         public Vector3d position;
         public MathDescription.Quaternion rotation;

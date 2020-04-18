@@ -1,6 +1,7 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.MathDescription;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model.BytesSerialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc.SubmeshGeometricObjectDesc
 {
-    public class SubmeshGeometricObjectElementDescription : ISerializableToBytes, IHashableModel
+    public class SubmeshGeometricObjectElementDescription : IExportModel, ISerializableToBytes, IHashableModel
     {
         public List<Vector3d> vertices = new List<Vector3d>();
         public List<Vector3d> normals = new List<Vector3d>();
@@ -43,7 +44,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         }
     }
 
-    public class SubmeshGeometricObjectElement : IComparableModel<SubmeshGeometricObjectElement>
+    public class SubmeshGeometricObjectElement : IExportModel, IComparableModel<SubmeshGeometricObjectElement>
     {
         public int id;
         public string elementDescriptionHash;

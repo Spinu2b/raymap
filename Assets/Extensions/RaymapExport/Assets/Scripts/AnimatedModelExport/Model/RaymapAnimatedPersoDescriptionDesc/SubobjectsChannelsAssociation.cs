@@ -1,5 +1,6 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model.BytesSerialization;
 using PeepsCompress;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc
 {
-    public class SubobjectsChannelsAssociationDescription : ISerializableToBytes, IHashableModel
+    public class SubobjectsChannelsAssociationDescription : IExportModel, ISerializableToBytes, IHashableModel
     {
         public Dictionary<int, List<int>> channelsForSubobjectsParenting = new Dictionary<int, List<int>>();
         public Dictionary<int, Dictionary<int, List<int>>> channelsForSubobjectsBonesParenting = new Dictionary<int, Dictionary<int, List<int>>>();
@@ -40,7 +41,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         }
     }
 
-    public class SubobjectsChannelsAssociation : IComparableModel<SubobjectsChannelsAssociation>
+    public class SubobjectsChannelsAssociation : IExportModel, IComparableModel<SubobjectsChannelsAssociation>
     {
         public string subobjectsChannelsAssociationDescriptionHash;
         public SubobjectsChannelsAssociationDescription subobjectsChannelsAssociationDescription =

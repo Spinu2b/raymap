@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.VisualDataDesc
 {
-    public class Texture : IComparableModel<Texture>
+    public class Texture : IExportModel, IComparableModel<Texture>
     {
         public string textureDescriptionHash;
         public string image;

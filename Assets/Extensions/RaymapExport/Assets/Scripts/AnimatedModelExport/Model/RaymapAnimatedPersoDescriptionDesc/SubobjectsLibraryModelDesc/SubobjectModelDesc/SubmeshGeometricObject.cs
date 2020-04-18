@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc
 {
-    public class SubmeshGeometricObject : IComparableModel<SubmeshGeometricObject>
+    public class SubmeshGeometricObject : IExportModel, IComparableModel<SubmeshGeometricObject>
     {
         public int id;
         public Dictionary<int, SubmeshGeometricObjectElement> elements = new Dictionary<int, SubmeshGeometricObjectElement>();

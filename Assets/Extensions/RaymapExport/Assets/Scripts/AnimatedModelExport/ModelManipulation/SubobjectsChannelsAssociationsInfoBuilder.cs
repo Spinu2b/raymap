@@ -1,4 +1,5 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,16 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class SubobjectsChannelsAssociationsInfoBuilder
     {
+        private Dictionary<string, SubobjectsChannelsAssociation> result = new Dictionary<string, SubobjectsChannelsAssociation>();
+
         public void Consolidate(Dictionary<string, SubobjectsChannelsAssociation> subobjectsChannelsAssociations)
         {
-            throw new NotImplementedException();
+            ComparableModelDictionariesMerger.MergeDictionariesToFirstDict(result, subobjectsChannelsAssociations);
         }
 
         public Dictionary<string, SubobjectsChannelsAssociation> Build()
         {
-            throw new NotImplementedException();
+            return result;
         }
     }
 }

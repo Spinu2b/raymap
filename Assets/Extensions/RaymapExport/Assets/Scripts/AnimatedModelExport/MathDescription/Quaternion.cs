@@ -1,5 +1,7 @@
-﻿using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
+using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model.BytesSerialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.MathDescription
 {
-    public struct Quaternion : ISerializableToBytes
+    public struct Quaternion : IExportModel, ISerializableToBytes
     {
         public float w;
         public float x;
