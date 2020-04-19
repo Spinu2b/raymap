@@ -13,7 +13,7 @@ namespace Assets.Extensions.Api
 
         private Controller raymapController;
 
-        private bool MapFinallyLoaded = false;
+        private bool FinallyLoaded = false;
         private bool IsMapLoaded()
         {
             return raymapController.LoadState == Controller.State.Finished;
@@ -30,10 +30,10 @@ namespace Assets.Extensions.Api
             {
                 return;
             }
-            else if (!MapFinallyLoaded)
+            else if (!FinallyLoaded)
             {
                 OnMapLoaded();
-                MapFinallyLoaded = true;
+                FinallyLoaded = true;
             }
         }
     }

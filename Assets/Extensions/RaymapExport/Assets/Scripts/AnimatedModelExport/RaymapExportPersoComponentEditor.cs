@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,10 +22,13 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport
                 var outputFilePath = EditorUtility.SaveFilePanel(
                     "Save model as RAYMAPEXPORT",
                     "",
-                    modelExport.gameObject.name + ".raymapexport",
+                    FileNamesHelper.RemoveInvalidCharacters(modelExport.gameObject.name) + ".raymapexport",
                     "raymapexport"
                     );
-                modelExport.ExportModelWithAnimations(outputFilePath);
+                if (outputFilePath != null && outputFilePath.Length != 0)
+                {
+                    modelExport.ExportModelWithAnimations(outputFilePath);
+                }                
             }
         }
     }
