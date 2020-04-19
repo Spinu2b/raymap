@@ -41,7 +41,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts
 
             if (actionsToPerform.Count != 0)
             {
-                PerformScheduledActions();
+                PerformScheduledActions(editorActionsExtensionComponent);
             }
         }
 
@@ -58,12 +58,13 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts
             persoGameObject.AddComponent<RaymapExportPersoComponent>();
         }
 
-        public void OnEditorAction(string actionName, Dictionary<string, string> actionArguments)
+        public void OnEditorAction(EditorActionsExtensionComponent editorActionsExtensionComponent, 
+            string actionName, Dictionary<string, string> actionArguments)
         {
             actionsToPerform.Enqueue(new Tuple<string, Dictionary<string, string>>(actionName, actionArguments));
             if (injected)
             {
-                PerformScheduledActions();
+                PerformScheduledActions(editorActionsExtensionComponent);
             }
         }
 
@@ -74,7 +75,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts
             this.editorActionsExtensionComponent = editorActionsExtensionComponent;
         }
 
-        private void PerformScheduledActions()
+        private void PerformScheduledActions(EditorActionsExtensionComponent editorActionsExtensionComponent)
         {
             while (actionsToPerform.Count != 0)
             {
