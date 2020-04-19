@@ -21,7 +21,13 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         {
             var legitimatePhysicalObjects = GetLegitimatePhysicalObjects();
             var result = new SubobjectsLibraryModel();
-            result.subobjects = legitimatePhysicalObjects.ToDictionary(x => x.Key, x => physicalObjectToSubobjectModelConverter.Convert(x.Value, x.Key));
+            //result.subobjects = legitimatePhysicalObjects.ToDictionary(x => x.Key, x => physicalObjectToSubobjectModelConverter.Convert(x.Value, x.Key));
+            
+            foreach (var entry in legitimatePhysicalObjects)
+            {
+                result.subobjects.Add(entry.Key, physicalObjectToSubobjectModelConverter.Convert(entry.Value, entry.Key));
+            }
+
             result.visualData = VisualDataUnifier.Unify(legitimatePhysicalObjects.Select(x => x.Value.GetVisualData()).ToList());
             return result;
         }

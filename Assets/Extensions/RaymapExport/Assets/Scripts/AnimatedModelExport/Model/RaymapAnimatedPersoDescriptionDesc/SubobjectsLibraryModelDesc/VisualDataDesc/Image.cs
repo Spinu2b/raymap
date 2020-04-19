@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.VisualDataDesc
 {
-    public class Color : IExportModel, ISerializableToBytes
+    public struct Color : IExportModel, ISerializableToBytes
     {
         public float red;
         public float green;
@@ -26,7 +26,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public byte[] SerializeToBytes()
         {
-            return ExportModelSerializer.SerializeToBytes(this);
+            return BitConverter.GetBytes(red).
+                Concat(BitConverter.GetBytes(green)).
+                Concat(BitConverter.GetBytes(blue)).
+                Concat(BitConverter.GetBytes(alpha)).ToArray();
         }
     }
 
@@ -44,7 +47,8 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public byte[] SerializeToBytes()
         {
-            return ExportModelSerializer.SerializeToBytes(this);
+            var pixelBytes = pixels.SelectMany(x => x.SerializeToBytes()).ToArray();
+            return BitConverter.GetBytes(width).Concat(BitConverter.GetBytes(height)).Concat(pixelBytes).ToArray();
         }
     }
 

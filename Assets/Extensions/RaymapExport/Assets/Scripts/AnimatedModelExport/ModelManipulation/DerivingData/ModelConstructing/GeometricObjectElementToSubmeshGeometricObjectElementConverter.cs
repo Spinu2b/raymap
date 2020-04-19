@@ -25,6 +25,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             result.elementDescription.bindBonePoses = GetBindBonePoses(geometricObjectElement);
             result.elementDescription.boneWeights = GetBoneWeights(geometricObjectElement);
 
+            // for performance reasons - dirty, need to get rid of comparison contracts, they are not needed anymore
+            // once the engine's structure is better understood
+            // lets bring it back for a while - realized that accidentaly did not remove reflection-based bytes serialization mechanism from
+            // most crucial objects in terms of performance - images and their pixels
             result.elementDescriptionHash = result.elementDescription.ComputeHash();
             return result;
         }
