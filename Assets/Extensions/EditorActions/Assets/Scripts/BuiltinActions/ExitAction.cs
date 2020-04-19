@@ -11,7 +11,8 @@ namespace Assets.Extensions.EditorActions.Assets.Scripts.BuiltinActions
     {
         public const string actionName = "EXIT_ACTION";
 
-        public void OnEditorAction(string actionName, Dictionary<string, string> actionArguments)
+        public void OnEditorAction(EditorActionsExtensionComponent editorActionsExtensionComponent, 
+            string actionName, Dictionary<string, string> actionArguments)
         {
             Application.Quit();
         }
