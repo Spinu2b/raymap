@@ -11,9 +11,12 @@ namespace Assets.Extensions.Api
     {
         public static IEnumerable<GameObject> IteratePersoGameObjects()
         {
-            foreach (PersoBehaviour persoBehaviour in UnityEngine.Object.FindObjectsOfType(typeof(PersoBehaviour)))
+            var persoGameObjects = UnityEngine.Object.FindObjectsOfType(typeof(PersoBehaviour)).Select(x => ((PersoBehaviour)x).gameObject).ToList();
+            persoGameObjects.AddRange(UnityEngine.Object.FindObjectsOfType(typeof(ROMPersoBehaviour)).Select(x => ((ROMPersoBehaviour)x).gameObject).ToList());
+
+            foreach (GameObject persoGameObject in persoGameObjects)
             {
-                yield return persoBehaviour.gameObject;
+                yield return persoGameObject;
             }
         }
     }
