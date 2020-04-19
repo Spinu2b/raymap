@@ -86,6 +86,19 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
+        public bool playAnimation { 
+            set
+            {
+                if (persoBehaviour != null)
+                {
+                    persoBehaviour.playAnimation = value;
+                } else
+                {
+                    romPersoBehaviour.playAnimation = value;
+                }
+            }
+        }
+
         public PersoBehaviourInterface(PersoBehaviour persoBehaviour)
         {
             this.persoBehaviour = persoBehaviour;

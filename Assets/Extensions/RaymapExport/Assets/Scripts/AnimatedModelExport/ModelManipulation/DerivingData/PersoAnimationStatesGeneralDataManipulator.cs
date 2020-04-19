@@ -15,6 +15,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         public IEnumerable<AnimationStateGeneralInfo> IterateAnimationStatesGeneralDataForExport(GameObject persoGameObject)
         {
             var persoBehaviourAnimationStatesHelper = new PersoBehaviourAnimationStatesHelper(GetPersoBehaviourFor(persoGameObject));
+
+            persoBehaviourAnimationStatesHelper.DisablePlayingAnimationsAutomatically();
+
             persoBehaviourAnimationStatesHelper.SwitchToFirstAnimationState();
             while (persoBehaviourAnimationStatesHelper.AreValidPersoAnimationStatesLeftIncludingCurrentOne())
             {
