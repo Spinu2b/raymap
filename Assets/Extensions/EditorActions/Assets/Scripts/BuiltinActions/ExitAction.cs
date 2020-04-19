@@ -7,19 +7,8 @@ using UnityEngine;
 
 namespace Assets.Extensions.EditorActions.Assets.Scripts.BuiltinActions
 {
-    public class ExitAction : IEditorActionListenerComponent
+    public static class ExitAction
     {
         public const string actionName = "EXIT_ACTION";
-
-        public void OnEditorAction(EditorActionsExtensionComponent editorActionsExtensionComponent, 
-            string actionName, Dictionary<string, string> actionArguments)
-        {
-            Application.Quit();
-        }
-
-        public void RegisterForActions(EditorActionsExtensionComponent editorActionsExtensionComponent)
-        {
-            editorActionsExtensionComponent.SetActionListener(actionName, this);
-        }
     }
 }

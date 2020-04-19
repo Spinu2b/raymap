@@ -45,11 +45,11 @@ namespace Assets.Extensions.ExternalAsyncConsole.Assets.Scripts
             if (actionName.Equals(ExternalAsyncConsoleActions.useExternalAsyncConsole))
             {
                 ConnectToExternalAsyncConsole(actionArguments[ExternalAsyncConsoleActions.UseExternalAsyncConsoleArguments.pipeName]);
-                editorActionsExtensionComponent.SetActionCompleted(actionName);
+                editorActionsExtensionComponent.SetActionCompleted(this, actionName);
             } 
             else if (actionName.Equals(ExitAction.actionName)) {
                 EndExternalConsoleConnection();
-                editorActionsExtensionComponent.SetActionCompleted(actionName);
+                editorActionsExtensionComponent.SetActionCompleted(this, actionName);
             }
             else
             {

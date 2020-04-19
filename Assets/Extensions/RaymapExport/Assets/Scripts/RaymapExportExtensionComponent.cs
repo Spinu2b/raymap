@@ -81,7 +81,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts
             {
                 var actionInfo = actionsToPerform.Dequeue();
                 PerformAction(actionInfo.Item1, actionInfo.Item2);
-                editorActionsExtensionComponent.SetActionCompleted(actionInfo.Item1);
+                editorActionsExtensionComponent.SetActionCompleted(this, actionInfo.Item1);
             }            
         }
 
