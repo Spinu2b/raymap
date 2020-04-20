@@ -1,5 +1,6 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.RaymapWrappers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,17 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport
         public void ExportModelWithAnimations(string outputFilePath)
         {
             var exporter = new RaymapAnimatedPersoExporter();
-            RaymapAnimatedPersoDescription result = exporter.Export(gameObject);
+
+            PersoAccessor persoAccessor = GetPersoAccessor(gameObject);
+
+            RaymapAnimatedPersoDescription result = exporter.Export(persoAccessor);
             var fileContent = JsonConvert.SerializeObject(result);
             File.WriteAllText(outputFilePath, fileContent);
+        }
+
+        private PersoAccessor GetPersoAccessor(GameObject gameObject)
+        {
+            return PersoAccessorFactory.FromPersoGameObject(gameObject);
         }
     }
 }

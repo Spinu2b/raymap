@@ -15,11 +15,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public PersoBehaviourInterface persoBehaviourInterface { get; private set; }
 
-        public void DisablePlayingAnimationsAutomatically()
-        {
-            persoBehaviourInterface.playAnimation = false;
-        }
-
         private int currentPersoAnimationStateIndex = 0;
 
         public PersoBehaviourAnimationStatesHelper(PersoBehaviourInterface persoBehaviourInterface)

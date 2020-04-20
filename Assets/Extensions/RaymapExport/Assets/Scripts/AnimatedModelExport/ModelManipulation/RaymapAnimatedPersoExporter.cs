@@ -1,5 +1,6 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.RaymapWrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class RaymapAnimatedPersoExporter
     {
-        public RaymapAnimatedPersoDescription Export(GameObject persoGameObject)
+        public RaymapAnimatedPersoDescription Export(PersoAccessor persoAccessor)
         {
             var result = new RaymapAnimatedPersoDescription();
-            result.name = GetPersoName(persoGameObject);
+            result.name = GetPersoName(persoAccessor);
 
-            var exportData = GetDataFromPersoAnimationStates(persoGameObject);
+            var exportData = GetDataFromPersoAnimationStates(persoAccessor);
             result.animationClipsModel = exportData.Item1;
             result.submeshesLibrary = exportData.Item2;
             result.channelHierarchies = exportData.Item3;
@@ -25,14 +26,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         }
 
         private Tuple<AnimationClipsModel, SubobjectsLibraryModel, ChannelHierarchies,
-            Dictionary<string, SubobjectsChannelsAssociation>> GetDataFromPersoAnimationStates(GameObject persoGameObject)
+            Dictionary<string, SubobjectsChannelsAssociation>> GetDataFromPersoAnimationStates(PersoAccessor persoAccessor)
         {
-            return new AnimationClipsGeneralDataExtractor().DeriveFor(persoGameObject);
+            return new AnimationClipsGeneralDataExtractor().DeriveFor(persoAccessor);
         }
 
-        private string GetPersoName(GameObject persoGameObject)
+        private string GetPersoName(PersoAccessor persoAccessor)
         {
-            return persoGameObject.name;
+            return persoAccessor.name;
         }
     }
 }

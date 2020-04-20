@@ -1,6 +1,7 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.RaymapWrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class PersoAnimationStatesGeneralDataManipulator
     {
-        public IEnumerable<AnimationStateGeneralInfo> IterateAnimationStatesGeneralDataForExport(GameObject persoGameObject)
+        public IEnumerable<AnimationStateGeneralInfo> IterateAnimationStatesGeneralDataForExport(PersoAccessor persoAccessor)
         {
-            var persoBehaviourAnimationStatesHelper = new PersoBehaviourAnimationStatesHelper(GetPersoBehaviourFor(persoGameObject));
+            var persoBehaviourAnimationStatesHelper = new PersoBehaviourAnimationStatesHelper(GetPersoBehaviourFor(persoAccessor));
 
             persoBehaviourAnimationStatesHelper.DisablePlayingAnimationsAutomatically();
 
@@ -28,14 +29,16 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        public SubobjectsLibraryModel GetSubobjectsLibrary(GameObject persoGameObject)
+        public SubobjectsLibraryModel GetSubobjectsLibrary(PersoAccessor persoAccessor)
         {
-            var persoBehaviour = GetPersoBehaviourFor(persoGameObject);
+            var persoBehaviour = GetPersoBehaviourFor(persoAccessor);
             return persoBehaviour.GetSubobjectsLibrary();
         }
 
-        private PersoBehaviourInterface GetPersoBehaviourFor(GameObject persoGameObject)
+        private PersoBehaviourInterface GetPersoBehaviourFor(PersoAccessor persoAccessor)
         {
+            return new PersoBehaviourInterface(persoAccessor);
+            /* * /
             if (persoGameObject.GetComponent<PersoBehaviour>() != null)
             {
                 return new PersoBehaviourInterface(persoGameObject.GetComponent<PersoBehaviour>());
@@ -48,6 +51,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             {
                 throw new InvalidOperationException("This game object does not have any Perso Behaviour component!");
             }
+            /* */
         }   
     }
 }
