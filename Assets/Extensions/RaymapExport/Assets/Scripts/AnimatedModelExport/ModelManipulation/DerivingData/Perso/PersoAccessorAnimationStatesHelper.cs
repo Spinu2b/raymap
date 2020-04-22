@@ -3,6 +3,7 @@ using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.Ra
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.AnimationFrameAssociations;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.RaymapWrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,15 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso
 {
-    public class PersoBehaviourAnimationStatesHelper
+    public class PersoAccessorAnimationStatesHelper
     {
-        public PersoBehaviourInterface persoBehaviourInterface { get; private set; }
+        public PersoAccessor persoAccessor { get; private set; }
 
         private int currentPersoAnimationStateIndex = 0;
 
-        public PersoBehaviourAnimationStatesHelper(PersoBehaviourInterface persoBehaviourInterface)
+        public PersoAccessorAnimationStatesHelper(PersoAccessor persoAccessor)
         {
-            this.persoBehaviourInterface = persoBehaviourInterface;
+            this.persoAccessor = persoAccessor;
         }
 
         public void SwitchToFirstAnimationState()
@@ -35,18 +36,18 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         private void SwitchContextToAnimationStateOfIndex(int stateIndex)
         {
-            persoBehaviourInterface.SetState(stateIndex);
+            persoAccessor.SetState(stateIndex);
             currentPersoAnimationStateIndex = stateIndex;
         }
 
         public bool AreValidPersoAnimationStatesLeftIncludingCurrentOne()
         {
-            return currentPersoAnimationStateIndex < persoBehaviourInterface.statesCount;
+            return currentPersoAnimationStateIndex < persoAccessor.statesCount;
         }
 
         public bool AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(int currentFrameNumber)
         {
-            return currentFrameNumber < persoBehaviourInterface.currentAnimationStateFramesCount;
+            return currentFrameNumber < persoAccessor.currentAnimationStateFramesCount;
         }
 
         public int GetStateAnimationNextFrameNumberAfter(int currentFrameNumber)
@@ -67,7 +68,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             while (!IsValidPersoAnimationState(currentStateIndex))
             {
                 currentStateIndex++;
-                if (currentStateIndex >= persoBehaviourInterface.statesCount)
+                if (currentStateIndex >= persoAccessor.statesCount)
                 {
                     currentPersoAnimationStateIndex = currentStateIndex;
                     return;
@@ -82,7 +83,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
             {
                 yield return new Tuple<int, Dictionary<int, ChannelTransformModel>>(
-                    frameNumber, persoBehaviourInterface.GetChannelsKeyframeDataForAnimationFrame(frameNumber));
+                    frameNumber, persoAccessor.GetChannelsKeyframeDataForAnimationFrame(frameNumber));
                 frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
             }      
         }
@@ -94,7 +95,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
             {
                 subobjectUsedMorphAssociationInfoListBuilder.Consider(frameNumber,
-                    persoBehaviourInterface.GetMorphDataForAnimationFrame(frameNumber));
+                    persoAccessor.GetMorphDataForAnimationFrame(frameNumber));
                 frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
             }
             return subobjectUsedMorphAssociationInfoListBuilder.Build();
@@ -106,7 +107,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
             {
                 yield return new Tuple<int, SubobjectsChannelsAssociation>(frameNumber,
-                    persoBehaviourInterface.GetSubobjectsChannelsAssociationForAnimationFrame(frameNumber));
+                    persoAccessor.GetSubobjectsChannelsAssociationForAnimationFrame(frameNumber));
                 frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
             }
         }
@@ -117,14 +118,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
             {
                 yield return new Tuple<int, Dictionary<int, int>>(frameNumber,
-                    persoBehaviourInterface.GetChannelParentingInfosForAnimationFrame(frameNumber));
+                    persoAccessor.GetChannelParentingInfosForAnimationFrame(frameNumber));
                 frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
             }
         }
 
         private bool IsValidPersoAnimationState(int animationStateIndex)
         {
-            return persoBehaviourInterface.IsValidAnimationState(animationStateIndex);
+            return persoAccessor.IsValidAnimationState(animationStateIndex);
         }
 
         public int GetFirstValidStateAnimationKeyframeFrameNumber()

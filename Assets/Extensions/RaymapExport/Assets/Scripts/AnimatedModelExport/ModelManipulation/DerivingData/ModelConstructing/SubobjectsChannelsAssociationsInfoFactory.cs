@@ -10,7 +10,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class SubobjectsChannelsAssociationsInfoFactory
     {
-        public Dictionary<string, SubobjectsChannelsAssociation> DeriveFor(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
+        public Dictionary<string, SubobjectsChannelsAssociation> DeriveFor(PersoAccessorAnimationStatesHelper persoBehaviourAnimationStatesHelper)
         {
             var subobjectsChannelsAssociationsInfoBuilder = new SubobjectsChannelsAssociationsInfoBuilder();
             foreach (Tuple<int, SubobjectsChannelsAssociation> subobjectsChannelsAssociationForFrame

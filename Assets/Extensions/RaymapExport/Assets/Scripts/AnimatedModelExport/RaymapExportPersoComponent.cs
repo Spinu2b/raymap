@@ -25,9 +25,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport
             File.WriteAllText(outputFilePath, fileContent);
         }
 
-        private PersoAccessor GetPersoAccessor(GameObject gameObject)
+        private PersoAccessor GetPersoAccessor(GameObject persoGameObject)
         {
-            return PersoAccessorFactory.FromPersoGameObject(gameObject);
+            return PersoAccessorFactory.FromPersoGameObject(persoGameObject);
         }
     }
 }

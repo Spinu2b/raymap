@@ -9,7 +9,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
 {
     public static class PersoAccessorFactory
     {
-        public static PersoAccessor FromPersoGameObject(GameObject gameObject)
+        public static PersoAccessor FromPersoGameObject(GameObject persoGameObject)
         {
             throw new NotImplementedException();
         }

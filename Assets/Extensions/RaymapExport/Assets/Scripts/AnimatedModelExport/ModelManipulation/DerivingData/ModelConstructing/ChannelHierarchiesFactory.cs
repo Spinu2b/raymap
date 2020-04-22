@@ -11,7 +11,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class ChannelHierarchiesFactory
     {
-        public ChannelHierarchies DeriveFor(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
+        public ChannelHierarchies DeriveFor(PersoAccessorAnimationStatesHelper persoBehaviourAnimationStatesHelper)
         {
             var consolidatedChannelHierarchiesBuilder = new ConsolidatedChannelHierarchiesBuilder();
             foreach (Tuple<int, Dictionary<int, int>> channelParentingInfoForFrame

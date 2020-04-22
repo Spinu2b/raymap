@@ -15,9 +15,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public IEnumerable<AnimationStateGeneralInfo> IterateAnimationStatesGeneralDataForExport(PersoAccessor persoAccessor)
         {
-            var persoBehaviourAnimationStatesHelper = new PersoBehaviourAnimationStatesHelper(GetPersoBehaviourFor(persoAccessor));
-
-            persoBehaviourAnimationStatesHelper.DisablePlayingAnimationsAutomatically();
+            var persoBehaviourAnimationStatesHelper = new PersoAccessorAnimationStatesHelper(persoAccessor);
 
             persoBehaviourAnimationStatesHelper.SwitchToFirstAnimationState();
             while (persoBehaviourAnimationStatesHelper.AreValidPersoAnimationStatesLeftIncludingCurrentOne())
@@ -31,27 +29,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public SubobjectsLibraryModel GetSubobjectsLibrary(PersoAccessor persoAccessor)
         {
-            var persoBehaviour = GetPersoBehaviourFor(persoAccessor);
-            return persoBehaviour.GetSubobjectsLibrary();
-        }
-
-        private PersoBehaviourInterface GetPersoBehaviourFor(PersoAccessor persoAccessor)
-        {
-            return new PersoBehaviourInterface(persoAccessor);
-            /* * /
-            if (persoGameObject.GetComponent<PersoBehaviour>() != null)
-            {
-                return new PersoBehaviourInterface(persoGameObject.GetComponent<PersoBehaviour>());
-            }
-            else if (persoGameObject.GetComponent<ROMPersoBehaviour>() != null)
-            {
-                return new PersoBehaviourInterface(persoGameObject.GetComponent<ROMPersoBehaviour>());
-            }
-            else
-            {
-                throw new InvalidOperationException("This game object does not have any Perso Behaviour component!");
-            }
-            /* */
-        }   
+            return persoAccessor.GetSubobjectsLibrary();
+        }  
     }
 }

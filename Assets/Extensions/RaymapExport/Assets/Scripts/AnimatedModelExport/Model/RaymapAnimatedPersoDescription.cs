@@ -10,7 +10,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     public class RaymapAnimatedPersoDescription : IExportModel
     {
         public string name;
-        public SubobjectsLibraryModel submeshesLibrary = new SubobjectsLibraryModel();
+        public SubobjectsLibraryModel subobjectsLibrary = new SubobjectsLibraryModel();
         public ChannelHierarchies channelHierarchies = new ChannelHierarchies();
         public Dictionary<string, SubobjectsChannelsAssociation> subobjectsChannelsAssociations = new Dictionary<string, SubobjectsChannelsAssociation>();
         public AnimationClipsModel animationClipsModel = new AnimationClipsModel();

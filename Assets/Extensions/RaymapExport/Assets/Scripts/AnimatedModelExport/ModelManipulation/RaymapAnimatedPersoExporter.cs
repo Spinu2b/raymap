@@ -19,7 +19,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
             var exportData = GetDataFromPersoAnimationStates(persoAccessor);
             result.animationClipsModel = exportData.Item1;
-            result.submeshesLibrary = exportData.Item2;
+            result.subobjectsLibrary = exportData.Item2;
             result.channelHierarchies = exportData.Item3;
             result.subobjectsChannelsAssociations = exportData.Item4;
             return result;

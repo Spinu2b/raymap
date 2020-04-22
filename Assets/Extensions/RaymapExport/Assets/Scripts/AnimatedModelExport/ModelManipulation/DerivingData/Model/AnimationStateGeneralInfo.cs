@@ -14,14 +14,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     public class AnimationStateGeneralInfo
     {
         public int animationClipId;
-        private PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper;
+        private PersoAccessorAnimationStatesHelper persoBehaviourAnimationStatesHelper;
 
         private AnimationClipModel animationClipModel;
         private ChannelHierarchies channelHierarchiesInfo;
 
         private Dictionary<string, SubobjectsChannelsAssociation> subobjectsChannelsAssociations;
 
-        public AnimationStateGeneralInfo(PersoBehaviourAnimationStatesHelper persoBehaviourAnimationStatesHelper)
+        public AnimationStateGeneralInfo(PersoAccessorAnimationStatesHelper persoBehaviourAnimationStatesHelper)
         {
             this.persoBehaviourAnimationStatesHelper = persoBehaviourAnimationStatesHelper;
         }
