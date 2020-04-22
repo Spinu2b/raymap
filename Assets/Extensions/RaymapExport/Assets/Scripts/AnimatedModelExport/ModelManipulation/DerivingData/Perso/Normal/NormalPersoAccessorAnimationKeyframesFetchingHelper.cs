@@ -1,4 +1,5 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.RaymapWrappers.Normal;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using OpenSpace.Animation.Component;
 using System;
@@ -10,9 +11,11 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Normal
 {
-    public class NormalPersoBehaviourAnimationKeyframesFetchingHelper : NormalPersoBehaviourAnimationDataFetchingHelper
+    public class NormalPersoAccessorAnimationKeyframesFetchingHelper : NormalPersoAccessorAnimationDataFetchingHelper
     {
-        public NormalPersoBehaviourAnimationKeyframesFetchingHelper(PersoBehaviour persoBehaviour) : base(persoBehaviour) {}
+        public NormalPersoAccessorAnimationKeyframesFetchingHelper(NormalPersoAccessor normalPersoAccessor) : base(normalPersoAccessor)
+        {
+        }
 
         public Dictionary<int, ChannelTransformModel> GetPersoBehaviourChannelsKeyframeDataForFrame(int frameNumber)
         {
@@ -47,20 +50,20 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             Func<int, ChannelTransformModel> GetChannelAbsoluteTransform = (int channelIndex) =>
             {
                 return ChannelTransformModel.FromUnityAbsoluteTransform(
-                    persoBehaviour.channelObjects[channelIndex].transform);
+                    normalPersoAccessor.channelObjects[channelIndex].transform);
             };
 
             var result = new Dictionary<int, ChannelTransformModel>();
 
-            for (int i = 0; i < persoBehaviour.a3d.num_channels; i++)
+            for (int i = 0; i < normalPersoAccessor.a3d.num_channels; i++)
             {
-                AnimChannel ch = persoBehaviour.a3d.channels[persoBehaviour.a3d.start_channels + i];
-                AnimFramesKFIndex kfi = persoBehaviour.a3d.framesKFIndex[persoBehaviour.currentFrame + ch.framesKF];
-                AnimKeyframe kf = persoBehaviour.a3d.keyframes[kfi.kf];
-                int framesSinceKF = (int)persoBehaviour.currentFrame - (int)kf.frame;
+                AnimChannel ch = normalPersoAccessor.a3d.channels[normalPersoAccessor.a3d.start_channels + i];
+                AnimFramesKFIndex kfi = normalPersoAccessor.a3d.framesKFIndex[normalPersoAccessor.currentFrame + ch.framesKF];
+                AnimKeyframe kf = normalPersoAccessor.a3d.keyframes[kfi.kf];
+                int framesSinceKF = (int)normalPersoAccessor.currentFrame - (int)kf.frame;
                 if (framesSinceKF == 0)
                 {
-                    result.Add(GetChannelId(persoBehaviour.channelObjects[i].name), GetChannelAbsoluteTransform(i));
+                    result.Add(GetChannelId(normalPersoAccessor.channelObjects[i].name), GetChannelAbsoluteTransform(i));
                 }
             }
             return result;

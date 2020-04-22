@@ -1,6 +1,7 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.RaymapModelFetching;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.RaymapWrappers.Normal;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.Model;
 using OpenSpace.Animation.Component;
 using OpenSpace.Object;
@@ -29,13 +30,15 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         }
     }
 
-    public class NormalPersoBehaviourAnimationSubobjectsChannelsAssociationFetchingHelper : NormalPersoBehaviourAnimationDataFetchingHelper
+    public class NormalPersoAccessorAnimationSubobjectsChannelsAssociationFetchingHelper : NormalPersoAccessorAnimationDataFetchingHelper
     {
-        public NormalPersoBehaviourAnimationSubobjectsChannelsAssociationFetchingHelper(PersoBehaviour persoBehaviour) : base(persoBehaviour) {}
+        public NormalPersoAccessorAnimationSubobjectsChannelsAssociationFetchingHelper(NormalPersoAccessor normalPersoAccessor) : base(normalPersoAccessor)
+        {
+        }
 
         private SubobjectsChannelsAssociation GetSubobjectsChannelsAssociationForNormalFrame()
         {
-            return NormalPersoNormalFrameSubobjectsChannelsAssociationDataFetcher.DeriveFor(persoBehaviour);
+            return NormalPersoNormalFrameSubobjectsChannelsAssociationDataFetcher.DeriveFor(normalPersoAccessor);
         }
 
         private SubobjectsChannelsAssociation GetSubobjectsChannelsAssociationForLargoFrame()

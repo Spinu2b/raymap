@@ -1,4 +1,5 @@
-﻿using OpenSpace.Animation.Component;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.RaymapWrappers.Normal;
+using OpenSpace.Animation.Component;
 using OpenSpace.Object;
 using OpenSpace.Visual;
 using System;
@@ -9,9 +10,11 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Normal
 {
-    public class NormalPersoBehaviourMorphFetchingHelper : NormalPersoBehaviourAnimationDataFetchingHelper
+    public class NormalPersoAccessorMorphFetchingHelper : NormalPersoAccessorAnimationDataFetchingHelper
     {
-        public NormalPersoBehaviourMorphFetchingHelper(PersoBehaviour persoBehaviour) : base(persoBehaviour) {}
+        public NormalPersoAccessorMorphFetchingHelper(NormalPersoAccessor normalPersoAccessor) : base(normalPersoAccessor)
+        {
+        }
 
         public List<Tuple<int, int, int>> GetPersoBehaviourMorphDataForFrame(int frameNumber)
         {
@@ -47,21 +50,21 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         private List<Tuple<int, int, int>> GetMorphDataForNormalAnimation()
         {
             var result = new List<Tuple<int, int, int>>();
-            AnimOnlyFrame of = persoBehaviour.a3d.onlyFrames[persoBehaviour.a3d.start_onlyFrames + persoBehaviour.currentFrame];
-            for (int i = 0; i < persoBehaviour.a3d.num_channels; i++)
+            AnimOnlyFrame of = normalPersoAccessor.a3d.onlyFrames[normalPersoAccessor.a3d.start_onlyFrames + normalPersoAccessor.currentFrame];
+            for (int i = 0; i < normalPersoAccessor.a3d.num_channels; i++)
             {
-                AnimChannel ch = persoBehaviour.a3d.channels[persoBehaviour.a3d.start_channels + i];
-                AnimNumOfNTTO numOfNTTO = persoBehaviour.a3d.numOfNTTO[ch.numOfNTTO + of.numOfNTTO];
-                int poNum = numOfNTTO.numOfNTTO - persoBehaviour.a3d.start_NTTO;
-                PhysicalObject physicalObject = persoBehaviour.subObjects[i][poNum];
+                AnimChannel ch = normalPersoAccessor.a3d.channels[normalPersoAccessor.a3d.start_channels + i];
+                AnimNumOfNTTO numOfNTTO = normalPersoAccessor.a3d.numOfNTTO[ch.numOfNTTO + of.numOfNTTO];
+                int poNum = numOfNTTO.numOfNTTO - normalPersoAccessor.a3d.start_NTTO;
+                PhysicalObject physicalObject = normalPersoAccessor.subObjects[i][poNum];
 
-                if (physicalObject != null && persoBehaviour.a3d.num_morphData > 0 && persoBehaviour.morphDataArray != null
-                    && i < persoBehaviour.morphDataArray.GetLength(0) && persoBehaviour.currentFrame < persoBehaviour.morphDataArray.GetLength(1))
+                if (physicalObject != null && normalPersoAccessor.a3d.num_morphData > 0 && normalPersoAccessor.morphDataArray != null
+                    && i < normalPersoAccessor.morphDataArray.GetLength(0) && normalPersoAccessor.currentFrame < normalPersoAccessor.morphDataArray.GetLength(1))
                 {
-                    AnimMorphData morphData = persoBehaviour.morphDataArray[i, persoBehaviour.currentFrame];
+                    AnimMorphData morphData = normalPersoAccessor.morphDataArray[i, normalPersoAccessor.currentFrame];
                     if (morphData != null && ((morphData.morphProgress != 0 && morphData.morphProgress != 100) || morphData.morphProgress == 100))
                     {
-                        PhysicalObject morphToPO = persoBehaviour.perso.p3dData.objectList[morphData.objectIndexTo].po;
+                        PhysicalObject morphToPO = normalPersoAccessor.perso.p3dData.objectList[morphData.objectIndexTo].po;
 
                         for (int j = 0; j < physicalObject.visualSet.Length; j++)
                         {
@@ -76,7 +79,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                                 continue;
                             }
 
-                            AnimNTTO ntto_link = persoBehaviour.a3d.ntto[numOfNTTO.numOfNTTO];
+                            AnimNTTO ntto_link = normalPersoAccessor.a3d.ntto[numOfNTTO.numOfNTTO];
 
                             int physicalObjectNumberMorphTo = morphData.objectIndexTo;
                             int physicalObjectNumberMorphFrom = ntto_link.object_index;

@@ -1,4 +1,5 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.RaymapWrappers.Rom;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Rom
 {
-    public class RomPersoBehaviourSubobjectsLibraryFetchingHelper : RomPersoBehaviourAnimationDataFetchingHelper
+    public class RomPersoAccessorSubobjectsLibraryFetchingHelper : RomPersoAccessorAnimationDataFetchingHelper
     {
-        public RomPersoBehaviourSubobjectsLibraryFetchingHelper(ROMPersoBehaviour romPersoBehaviour) : base(romPersoBehaviour) { }
+        public RomPersoAccessorSubobjectsLibraryFetchingHelper(RomPersoAccessor romPersoAccessor) : base(romPersoAccessor)
+        {
+        }
 
         public SubobjectsLibraryModel GetPersoBehaviourSubobjectsLibrary()
         {

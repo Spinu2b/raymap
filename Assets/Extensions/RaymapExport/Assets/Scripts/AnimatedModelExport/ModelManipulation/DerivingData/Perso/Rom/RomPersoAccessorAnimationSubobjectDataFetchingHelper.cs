@@ -1,5 +1,6 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.RaymapWrappers.Rom;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +9,13 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Rom
 {
-    public class RomPersoBehaviourAnimationSubobjectDataFetchingHelper : RomPersoBehaviourAnimationDataFetchingHelper
+    public class RomPersoAccessorAnimationSubobjectDataFetchingHelper : RomPersoAccessorAnimationDataFetchingHelper
     {
-        public RomPersoBehaviourAnimationSubobjectDataFetchingHelper(ROMPersoBehaviour romPersoBehaviour) : base(romPersoBehaviour) {}
-
-        public SubobjectsChannelsAssociation GetPersoBehaviourSubobjectsChannelsAssociationForFrame(int frameNumber)
+        public RomPersoAccessorAnimationSubobjectDataFetchingHelper(RomPersoAccessor romPersoAccessor) : base(romPersoAccessor)
         {
-            throw new NotImplementedException();
         }
 
-        public VisualData GetVisualDataForFrame(int frameNumber)
+        public SubobjectsChannelsAssociation GetPersoBehaviourSubobjectsChannelsAssociationForFrame(int frameNumber)
         {
             throw new NotImplementedException();
         }

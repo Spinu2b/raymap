@@ -14,9 +14,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
         public abstract int statesCount { get; }
         public abstract int currentAnimationStateFramesCount { get; }
 
-        public abstract int currentFrame { get; }
+        public int currentFrame { get; set; }
 
-        public abstract string name { get; }
+        public string name { get; set; }
 
         public abstract void SetState(int stateIndex);
 

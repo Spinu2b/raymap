@@ -1,4 +1,5 @@
-﻿using OpenSpace;
+﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.RaymapWrappers.Normal;
+using OpenSpace;
 using OpenSpace.Object.Properties;
 using System;
 using System.Collections.Generic;
@@ -8,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Normal
 {
-    public class NormalPersoBehaviourStateHelper
+    public class NormalPersoAccessorStateHelper
     {
-        private PersoBehaviour persoBehaviour;
+        private NormalPersoAccessor normalPersoAccessor;
 
-        public NormalPersoBehaviourStateHelper(PersoBehaviour persoBehaviour)
+        public NormalPersoAccessorStateHelper(NormalPersoAccessor normalPersoAccessor)
         {
-            this.persoBehaviour = persoBehaviour;
+            this.normalPersoAccessor = normalPersoAccessor;
         }
 
         public bool IsValidAnimationState(int animationStateIndex)
         {
-			if (animationStateIndex < 0 || animationStateIndex >= persoBehaviour.perso.p3dData.family.states.Count) return false;
-			State state = persoBehaviour.perso.p3dData.family.states[animationStateIndex];
+			if (animationStateIndex < 0 || animationStateIndex >= normalPersoAccessor.perso.p3dData.family.states.Count) return false;
+			State state = normalPersoAccessor.perso.p3dData.family.states[animationStateIndex];
 			State s = state;
 
 			MapLoader l = MapLoader.Loader;
@@ -29,7 +30,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 			if (state.anim_ref != null)
 			{
 				anim_index = state.anim_ref.anim_index;
-				bank_index = persoBehaviour.perso.p3dData.family.animBank;
+				bank_index = normalPersoAccessor.perso.p3dData.family.animBank;
 			}
 			if (state.anim_refMontreal != null)
 			{

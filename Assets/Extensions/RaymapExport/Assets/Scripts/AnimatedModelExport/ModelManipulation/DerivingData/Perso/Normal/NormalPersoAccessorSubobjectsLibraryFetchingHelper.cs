@@ -2,6 +2,7 @@
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model.OpenSpace;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.RaymapWrappers.Normal;
 using OpenSpace;
 using OpenSpace.Object.Properties;
 using System;
@@ -12,11 +13,14 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Normal
 {
-    public class NormalPersoBehaviourSubobjectsLibraryFetchingHelper : NormalPersoBehaviourAnimationDataFetchingHelper
+    public class NormalPersoAccessorSubobjectsLibraryFetchingHelper : NormalPersoAccessorAnimationDataFetchingHelper
     {
-        public NormalPersoBehaviourSubobjectsLibraryFetchingHelper(PersoBehaviour persoBehaviour) : base(persoBehaviour) { }
 
         private PhysicalObjectToSubobjectModelConverter physicalObjectToSubobjectModelConverter = new PhysicalObjectToSubobjectModelConverter();
+
+        public NormalPersoAccessorSubobjectsLibraryFetchingHelper(NormalPersoAccessor normalPersoAccessor) : base(normalPersoAccessor)
+        {
+        }
 
         public SubobjectsLibraryModel GetPersoBehaviourSubobjectsLibrary()
         {
@@ -52,24 +56,24 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             //we should wait some interval after level loading for logic in PersoBehaviour-kind classes to properly assign objectList to that game entity
             // logic for that is being handled in Update() Unity method (currentPOList, poListIndex)
             MapLoader l = MapLoader.Loader;
-            if (persoBehaviour.perso.p3dData != null)
+            if (normalPersoAccessor.perso.p3dData != null)
             {
-                if (persoBehaviour.poListIndex > 0 && persoBehaviour.poListIndex < persoBehaviour.perso.p3dData.family.objectLists.Count + 1)
+                if (normalPersoAccessor.poListIndex > 0 && normalPersoAccessor.poListIndex < normalPersoAccessor.perso.p3dData.family.objectLists.Count + 1)
                 {
                     //currentPOList = poListIndex;
                     //perso.p3dData.objectList = perso.p3dData.family.objectLists[currentPOList - 1];
                     //return ConvertObjectListToPhysicalObjectWrappersDict(persoBehaviour.perso.p3dData.family.objectLists[persoBehaviour.currentPOList - 1]); 
                     return ConvertObjectListToPhysicalObjectWrappersDict(
-                        persoBehaviour.perso.p3dData.family.objectLists[persoBehaviour.poListIndex - 1]);
+                        normalPersoAccessor.perso.p3dData.family.objectLists[normalPersoAccessor.poListIndex - 1]);
                 }
-                else if (persoBehaviour.poListIndex >= persoBehaviour.perso.p3dData.family.objectLists.Count + 1 &&
-                    persoBehaviour.poListIndex < persoBehaviour.perso.p3dData.family.objectLists.Count + 1 + l.uncategorizedObjectLists.Count)
+                else if (normalPersoAccessor.poListIndex >= normalPersoAccessor.perso.p3dData.family.objectLists.Count + 1 &&
+                    normalPersoAccessor.poListIndex < normalPersoAccessor.perso.p3dData.family.objectLists.Count + 1 + l.uncategorizedObjectLists.Count)
                 {
                     //currentPOList = poListIndex;
                     //perso.p3dData.objectList = l.uncategorizedObjectLists[currentPOList - perso.p3dData.family.objectLists.Count - 1];
                     //return ConvertObjectListToPhysicalObjectWrappersDict(l.uncategorizedObjectLists[currentPOList - perso.p3dData.family.objectLists.Count - 1]);
                     return ConvertObjectListToPhysicalObjectWrappersDict(
-                        l.uncategorizedObjectLists[persoBehaviour.poListIndex - persoBehaviour.perso.p3dData.family.objectLists.Count - 1]);
+                        l.uncategorizedObjectLists[normalPersoAccessor.poListIndex - normalPersoAccessor.perso.p3dData.family.objectLists.Count - 1]);
                 }
                 else
                 {
