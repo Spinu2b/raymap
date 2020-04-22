@@ -24,16 +24,19 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         protected bool IsLargoAnimation()
         {
+            //throw new NotImplementedException();
             return normalPersoAccessor.isLoaded && normalPersoAccessor.animLargo != null && normalPersoAccessor.channelObjects != null && normalPersoAccessor.subObjects != null;
         }
 
         protected bool IsMontrealAnimation()
         {
+            //throw new NotImplementedException();
             return normalPersoAccessor.isLoaded && normalPersoAccessor.animMontreal != null && normalPersoAccessor.channelObjects != null & normalPersoAccessor.subObjects != null;
         }
 
         protected bool IsNormalAnimation()
         {
+            //throw new NotImplementedException();
             return normalPersoAccessor.isLoaded && normalPersoAccessor.a3d != null && normalPersoAccessor.channelObjects != null & normalPersoAccessor.subObjects != null;
         }
     }

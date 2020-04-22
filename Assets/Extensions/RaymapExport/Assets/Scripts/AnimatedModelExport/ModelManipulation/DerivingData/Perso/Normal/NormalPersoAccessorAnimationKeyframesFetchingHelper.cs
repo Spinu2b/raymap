@@ -49,8 +49,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         {
             Func<int, ChannelTransformModel> GetChannelAbsoluteTransform = (int channelIndex) =>
             {
-                return ChannelTransformModel.FromUnityAbsoluteTransform(
-                    normalPersoAccessor.channelObjects[channelIndex].transform);
+                throw new NotImplementedException();
+                //return ChannelTransformModel.FromUnityAbsoluteTransform(
+                //    normalPersoAccessor.channelObjects[channelIndex].transform);
             };
 
             var result = new Dictionary<int, ChannelTransformModel>();
@@ -63,15 +64,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 int framesSinceKF = (int)normalPersoAccessor.currentFrame - (int)kf.frame;
                 if (framesSinceKF == 0)
                 {
-                    result.Add(GetChannelId(normalPersoAccessor.channelObjects[i].name), GetChannelAbsoluteTransform(i));
+                    result.Add(ch.id, GetChannelAbsoluteTransform(i));
                 }
             }
             return result;
-        }
-
-        private int GetChannelId(string channelName)
-        {
-            return ChannelHelper.GetChannelId(channelName);
         }
     }
 }

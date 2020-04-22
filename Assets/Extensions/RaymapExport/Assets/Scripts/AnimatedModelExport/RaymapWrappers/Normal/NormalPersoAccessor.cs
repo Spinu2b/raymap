@@ -1,6 +1,11 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.AnimationClipsModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model.UnityWrappers;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Perso.Normal;
+using OpenSpace.Animation;
+using OpenSpace.Animation.Component;
+using OpenSpace.Animation.ComponentLargo;
+using OpenSpace.Object;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +16,40 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
 {
     public class NormalPersoAccessor : PersoAccessor
     {
+        #region NormalPerso definition 
+        public bool isLoaded { get; private set; } = false;
+        public Perso perso;
+
+        public AnimA3DLargo animLargo = null;
+        public AnimationMontreal animMontreal = null;
+        public AnimA3DGeneral a3d = null;
+
+        public PhysicalObject[][] subObjects { get; private set; } = null; // [channel][ntto]
+
+        public ActualManifestableUnityGameObject[] channelObjects { get; private set; }
+
+        public int poListIndex = 0;
+        public AnimMorphData[,] morphDataArray;
+
+        public bool hasBones = false; // We can optimize a tiny bit if this object doesn't have bones
+
+        public Dictionary<short, List<int>> channelIDDictionary = new Dictionary<short, List<int>>();
+
+
+        public List<int> GetChannelByID(short id)
+        {
+            if (channelIDDictionary.ContainsKey(id))
+            {
+                return channelIDDictionary[id];
+            }
+            else return new List<int>();
+        }
+
+
+        #endregion
+
+
+        #region Base PersoAccessor interface
         public override int statesCount => throw new NotImplementedException();
 
         public override int currentAnimationStateFramesCount => throw new NotImplementedException();
@@ -54,5 +93,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }

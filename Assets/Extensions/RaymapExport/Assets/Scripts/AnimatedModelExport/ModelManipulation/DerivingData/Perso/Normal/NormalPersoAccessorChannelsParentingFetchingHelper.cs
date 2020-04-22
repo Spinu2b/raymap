@@ -65,19 +65,15 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 }
                 else
                 {
-                    Dictionary<short, List<int>> channelIDDictionary = 
-                        (Dictionary<short, List<int>>) typeof(PersoBehaviour).GetField(
-                            "channelIDDictionary", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(normalPersoAccessor);
+                    Dictionary<short, List<int>> channelIDDictionary = normalPersoAccessor.channelIDDictionary;
 
                     if (!channelIDDictionary.ContainsKey(h.childChannelID) || !channelIDDictionary.ContainsKey(h.parentChannelID))
                     {
                         continue;
                     }
 
-                    var getChannelByIDMethod = typeof(PersoBehaviour).GetMethod("GetChannelByID", BindingFlags.NonPublic | BindingFlags.Instance);
-
-                    List<int> ch_child_list = (List<int>) getChannelByIDMethod.Invoke(normalPersoAccessor, new object[] { h.childChannelID });
-                    List<int> ch_parent_list = (List<int>)getChannelByIDMethod.Invoke(normalPersoAccessor, new object[] { h.parentChannelID });
+                    List<int> ch_child_list = normalPersoAccessor.GetChannelByID(h.childChannelID);
+                    List<int> ch_parent_list = normalPersoAccessor.GetChannelByID(h.parentChannelID);
                     result.Add(h.childChannelID, h.parentChannelID);
                 }
             }
