@@ -1,5 +1,6 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model.UnityWrappers;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.RaymapWrappers.Extensions;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.RaymapWrappers.Extensions.Object;
 using OpenSpace.Object;
 using System;
 using System.Collections.Generic;
@@ -77,7 +78,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
                     } else
                     {
                         result[sublistIndex][physicalObjectNumber] = null;
-                        throw new InvalidOperationException("Physical object is null when creating Normal Perso Accessor!");
+                        //throw new InvalidOperationException("Physical object is null when creating Normal Perso Accessor!");
                     }
                     physicalObjectNumber++;
                 }

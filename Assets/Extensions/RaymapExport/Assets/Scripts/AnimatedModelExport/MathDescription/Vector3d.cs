@@ -21,6 +21,13 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Math
             this.z = z;
         }
 
+        public static Vector3d zero { 
+            get
+            {
+                return new Vector3d(0.0f, 0.0f, 0.0f);
+            }
+        }
+
         public static Vector3d FromUnityVector3(Vector3 vector)
         {
             return new Vector3d(vector.x, vector.y, vector.z);

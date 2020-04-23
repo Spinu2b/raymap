@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.RaymapWrappers.Extensions
+namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.RaymapWrappers.Extensions.Visual
 {
     public static class DeformSetCloner
     {
@@ -36,7 +36,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
         public static IGeometricObjectElement ForExportClone(
             GeometricObjectElementSprites geometricObjectElement, GeometricObject geometricObject)
         {
-            throw new NotImplementedException();
+            GeometricObjectElementSprites sm = (GeometricObjectElementSprites)ObjectHelper.MemberwiseClone(geometricObjectElement);
+            sm.geo = geometricObject;
+            sm.Reset();
+            return sm;
         }
     }
 
@@ -45,7 +48,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
         public static IGeometricObjectElement ForExportClone(
             GeometricObjectElementTriangles geometricObjectElement, GeometricObject geometricObject)
         {
-            throw new NotImplementedException();
+            GeometricObjectElementTriangles sm = (GeometricObjectElementTriangles)ObjectHelper.MemberwiseClone(geometricObjectElement);
+            sm.geo = geometricObject;
+            sm.Reset();
+            return sm;
         }
     }
 

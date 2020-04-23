@@ -10,6 +10,16 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public string name = "";
         public ManifestableObjectTransform transform = new ManifestableObjectTransform();
+        public string tag = "";
+
+        public ActualManifestableUnityGameObject(string name)
+        {
+        }
+
+        public ActualManifestableUnityGameObject()
+        {
+
+        }
 
         public void SetActive(bool active)
         {
