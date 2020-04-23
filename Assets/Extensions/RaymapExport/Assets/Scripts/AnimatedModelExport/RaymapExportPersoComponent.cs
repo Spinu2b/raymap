@@ -18,6 +18,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport
         {
             var exporter = new RaymapAnimatedPersoExporter();
 
+
             PersoAccessor persoAccessor = GetPersoAccessor(gameObject);
 
             RaymapAnimatedPersoDescription result = exporter.Export(persoAccessor);

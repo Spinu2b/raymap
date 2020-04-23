@@ -17,16 +17,16 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
     public class NormalPersoAccessor : PersoAccessor
     {
         #region NormalPerso definition 
-        public bool isLoaded { get; private set; } = false;
+        public bool isLoaded { get; set; } = false;
         public Perso perso;
 
         public AnimA3DLargo animLargo = null;
         public AnimationMontreal animMontreal = null;
         public AnimA3DGeneral a3d = null;
 
-        public PhysicalObject[][] subObjects { get; private set; } = null; // [channel][ntto]
+        public PhysicalObject[][] subObjects { get; set; } = null; // [channel][ntto]
 
-        public ActualManifestableUnityGameObject[] channelObjects { get; private set; }
+        public ActualManifestableUnityGameObject[] channelObjects { get; set; }
 
         public int poListIndex = 0;
         public AnimMorphData[,] morphDataArray;

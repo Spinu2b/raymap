@@ -19,5 +19,10 @@ namespace Assets.Extensions.Api
                 yield return persoGameObject;
             }
         }
+
+        public static Controller GetController()
+        {
+            return (Controller)UnityEngine.Object.FindObjectOfType(typeof(Controller));
+        }
     }
 }

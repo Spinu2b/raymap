@@ -36,6 +36,11 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts
 
         protected override void OnMapLoaded()
         {
+            Controller raymapController = RaymapSceneHelper.GetController();
+
+            raymapController.playTextureAnimations = false;
+            raymapController.playAnimations = false;
+
             InjectIntoPersos();
             injected = true;
 
