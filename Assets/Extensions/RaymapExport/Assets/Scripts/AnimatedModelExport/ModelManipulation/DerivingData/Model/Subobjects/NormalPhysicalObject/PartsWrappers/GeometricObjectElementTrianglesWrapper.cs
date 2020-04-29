@@ -1,5 +1,6 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.MathDescription;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc;
+using OpenSpace.Visual;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,11 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class GeometricObjectElementTrianglesWrapper
     {
-        public bool IsVisible()
+        private GeometricObjectElementTriangles geometricObjectElementTriangles;
+
+        public GeometricObjectElementTrianglesWrapper(GeometricObjectElementTriangles geometricObjectElementTriangles)
         {
-            throw new NotImplementedException();
+            this.geometricObjectElementTriangles = geometricObjectElementTriangles;
         }
 
         public bool IsAlphaTransparencyObject()

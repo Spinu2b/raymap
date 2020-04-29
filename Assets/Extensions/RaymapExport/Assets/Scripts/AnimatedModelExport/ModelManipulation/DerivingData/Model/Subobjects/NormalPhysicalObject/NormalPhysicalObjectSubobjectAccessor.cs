@@ -38,7 +38,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                         {
                             GeometricObjectElementTrianglesWrapper geometricObjectElementTriangles =
                                 interfaceGeometricObjectElement.Item2.GetGeometricObjectElementTriangles();
-                            if (geometricObjectElementTriangles.IsVisible() && !geometricObjectElementTriangles.IsAlphaTransparencyObject())
+                            if (!geometricObjectElementTriangles.IsAlphaTransparencyObject())
                             {
                                 return GetSubobjectModel(geometricObjectElementTriangles);
                             }

@@ -1,4 +1,5 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model.Subobjects.NormalPhysicalObject.PartsWrappers.InterfaceWrappers;
+using OpenSpace.Visual;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,24 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class GeometricObjectWrapper
     {
+        private GeometricObject geometricObject;
+
+        public GeometricObjectWrapper(GeometricObject geometricObject)
+        {
+            this.geometricObject = geometricObject;
+        }
+
         public IEnumerable<Tuple<int, IGeometricObjectElementWrapper>> IterateIGeometricObjectElements()
         {
-            throw new NotImplementedException();
+            int index = 0;
+            foreach (var geometricObjectElement in geometricObject.elements)
+            {
+                if (geometricObjectElement != null)
+                {
+                    yield return new Tuple<int, IGeometricObjectElementWrapper>(index, new IGeometricObjectElementWrapper(geometricObjectElement));
+                }
+                index++;
+            }
         }
     }
 }

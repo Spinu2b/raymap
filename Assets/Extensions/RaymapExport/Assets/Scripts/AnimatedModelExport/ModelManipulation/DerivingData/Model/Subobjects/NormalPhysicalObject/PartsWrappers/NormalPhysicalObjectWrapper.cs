@@ -18,7 +18,16 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public IEnumerable<Tuple<int, IGeometricObjectWrapper>> IterateIGeometricObjects()
         {
-            throw new NotImplementedException();
+            int index = 0;
+            foreach (var visualSetLOD in physicalObject.visualSet)
+            {
+                if (visualSetLOD.obj != null)
+                {
+                    yield return new Tuple<int, IGeometricObjectWrapper>(
+                        index, new IGeometricObjectWrapper(visualSetLOD.obj));
+                }                
+                index++;
+            }
         }
     }
 }

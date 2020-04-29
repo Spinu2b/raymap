@@ -23,7 +23,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             }
         }
 
-        internal void SetParent(ManifestableObjectTransform transform)
+        public void SetParent(ManifestableObjectTransform transform)
         {
             throw new NotImplementedException();
         }

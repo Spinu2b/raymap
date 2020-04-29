@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenSpace.Visual;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +9,21 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 {
     public class IGeometricObjectElementWrapper
     {
+        private IGeometricObjectElement geometricObjectElement;
+
+        public IGeometricObjectElementWrapper(IGeometricObjectElement geometricObjectElement)
+        {
+            this.geometricObjectElement = geometricObjectElement;
+        }
+
         public bool IsGeometricObjectElementTriangles()
         {
-            throw new NotImplementedException();
+            return geometricObjectElement is GeometricObjectElementTriangles;
         }
 
         public GeometricObjectElementTrianglesWrapper GetGeometricObjectElementTriangles()
         {
-            throw new NotImplementedException();
+            return new GeometricObjectElementTrianglesWrapper(geometricObjectElement as GeometricObjectElementTriangles);
         }
     }
 }
