@@ -13,6 +13,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public string materialDescriptionHash;
         public List<string> textures = new List<string>();
+        public bool isTransparent;
 
         public bool EqualsToAnother(Material other)
         {

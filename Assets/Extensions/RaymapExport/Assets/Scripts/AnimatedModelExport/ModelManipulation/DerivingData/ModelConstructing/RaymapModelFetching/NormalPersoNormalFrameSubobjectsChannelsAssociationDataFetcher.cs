@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.RaymapModelFetching
 {
-    public class NormalPersoNormalFrameSubobjectsChannelsAssociationDataFetcher
+    public static class NormalPersoNormalFrameSubobjectsChannelsAssociationDataFetcher
     {
         public static SubobjectsChannelsAssociation DeriveFor(NormalPersoAccessor normalPersoAccessor)
         {

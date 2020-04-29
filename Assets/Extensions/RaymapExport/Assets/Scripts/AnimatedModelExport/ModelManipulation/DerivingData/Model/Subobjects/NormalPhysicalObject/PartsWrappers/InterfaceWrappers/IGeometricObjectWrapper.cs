@@ -16,14 +16,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             this.obj = obj;
         }
 
-        public bool IsGeometricObject()
+        public bool IsNormalGeometricObject()
         {
             return obj is GeometricObject;
         }
 
-        public GeometricObjectWrapper GetGeometricObject()
+        public NormalGeometricObjectWrapper GetNormalGeometricObject()
         {
-            return new GeometricObjectWrapper(obj as GeometricObject);
+            return new NormalGeometricObjectWrapper(obj as GeometricObject);
         }
     }
 }

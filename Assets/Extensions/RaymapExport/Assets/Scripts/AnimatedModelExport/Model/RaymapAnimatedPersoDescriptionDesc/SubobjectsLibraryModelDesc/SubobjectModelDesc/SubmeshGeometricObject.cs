@@ -15,7 +15,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         public List<Vector3d> normals = new List<Vector3d>();
         public List<int> triangles = new List<int>();
         public List<List<Vector2d>> uvMaps = new List<List<Vector2d>>();
-        public List<string> materials = new List<string>();
+        public string material;
 
         public Dictionary<int, BoneBindPose> bindBonePoses = new Dictionary<int, BoneBindPose>();
         public Dictionary<int, Dictionary<int, float>> boneWeights = new Dictionary<int, Dictionary<int, float>>();
@@ -32,7 +32,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 .Concat(normals.SelectMany(x => x.SerializeToBytes()))
                 .Concat(triangles.SelectMany(x => BitConverter.GetBytes(x)))
                 .Concat(uvMaps.SelectMany(x => x.Select(y => y.SerializeToBytes())).SelectMany(x => x))
-                .Concat(materials.SelectMany(x => Encoding.ASCII.GetBytes(x)))
+                .Concat(Encoding.ASCII.GetBytes(material))
                 .Concat(bindBonePoses.Keys.OrderBy(x => x).SelectMany(x => BitConverter.GetBytes(x).Concat(bindBonePoses[x].SerializeToBytes())))
                 .Concat(boneWeights.Keys
                     .OrderBy(x => x)

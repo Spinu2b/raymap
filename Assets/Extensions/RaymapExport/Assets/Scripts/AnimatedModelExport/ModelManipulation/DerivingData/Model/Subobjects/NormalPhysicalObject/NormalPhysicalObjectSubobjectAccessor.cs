@@ -28,16 +28,16 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         {
             foreach (Tuple<int, IGeometricObjectWrapper> interfaceGeometricObject in physicalObject.IterateIGeometricObjects())
             {
-                if (interfaceGeometricObject.Item2.IsGeometricObject())
+                if (interfaceGeometricObject.Item2.IsNormalGeometricObject())
                 {
-                    GeometricObjectWrapper geometricObject = interfaceGeometricObject.Item2.GetGeometricObject();
+                    NormalGeometricObjectWrapper geometricObject = interfaceGeometricObject.Item2.GetNormalGeometricObject();
                     foreach (Tuple<int, IGeometricObjectElementWrapper> interfaceGeometricObjectElement
                         in geometricObject.IterateIGeometricObjectElements())
                     {
-                        if (interfaceGeometricObjectElement.Item2.IsGeometricObjectElementTriangles())
+                        if (interfaceGeometricObjectElement.Item2.IsNormalGeometricObjectElementTriangles())
                         {
-                            GeometricObjectElementTrianglesWrapper geometricObjectElementTriangles =
-                                interfaceGeometricObjectElement.Item2.GetGeometricObjectElementTriangles();
+                            NormalGeometricObjectElementTrianglesWrapper geometricObjectElementTriangles =
+                                interfaceGeometricObjectElement.Item2.GetNormalGeometricObjectElementTriangles();
                             if (!geometricObjectElementTriangles.IsAlphaTransparencyObject())
                             {
                                 return GetSubobjectModel(geometricObjectElementTriangles);
@@ -50,7 +50,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 "any legitimate data that can be turned into subobject model for export!");
         }
 
-        private SubobjectModel GetSubobjectModel(GeometricObjectElementTrianglesWrapper geometricObjectElementTriangles)
+        private SubobjectModel GetSubobjectModel(NormalGeometricObjectElementTrianglesWrapper geometricObjectElementTriangles)
         {
             return GeometricObjectElementTrianglesToSubobjectModelConverter.Convert(objectNumber, geometricObjectElementTriangles);
         }

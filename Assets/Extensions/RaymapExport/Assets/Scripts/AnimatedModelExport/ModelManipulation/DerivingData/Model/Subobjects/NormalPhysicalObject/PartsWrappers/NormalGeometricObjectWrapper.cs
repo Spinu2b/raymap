@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model.Subobjects.NormalPhysicalObject.PartsWrappers
 {
-    public class GeometricObjectWrapper
+    public class NormalGeometricObjectWrapper
     {
         private GeometricObject geometricObject;
 
-        public GeometricObjectWrapper(GeometricObject geometricObject)
+        public NormalGeometricObjectWrapper(GeometricObject geometricObject)
         {
             this.geometricObject = geometricObject;
         }

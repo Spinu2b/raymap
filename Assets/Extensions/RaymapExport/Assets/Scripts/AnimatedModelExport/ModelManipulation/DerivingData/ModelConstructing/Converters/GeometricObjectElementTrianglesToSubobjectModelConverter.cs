@@ -12,7 +12,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     public static class GeometricObjectElementTrianglesToSubobjectModelConverter
     {
         public static SubobjectModel Convert(
-            int objectNumber, GeometricObjectElementTrianglesWrapper geometricObjectElementTriangles)
+            int objectNumber, NormalGeometricObjectElementTrianglesWrapper geometricObjectElementTriangles)
         {
             var result = new SubobjectModel();
             result.objectNumber = objectNumber;
@@ -20,7 +20,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             return result;
         }
 
-        private static SubmeshGeometricObject GetGeometricObject(GeometricObjectElementTrianglesWrapper geometricObjectElementTriangles)
+        private static SubmeshGeometricObject GetGeometricObject(NormalGeometricObjectElementTrianglesWrapper geometricObjectElementTriangles)
         {
             var result = new SubmeshGeometricObject();
             result.vertices = geometricObjectElementTriangles.GetVertices();

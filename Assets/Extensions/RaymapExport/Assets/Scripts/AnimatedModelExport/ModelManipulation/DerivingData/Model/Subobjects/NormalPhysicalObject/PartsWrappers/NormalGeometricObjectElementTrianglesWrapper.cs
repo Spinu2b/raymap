@@ -1,5 +1,7 @@
 ﻿using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.MathDescription;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.RaymapModelFetching.GeometricObjectElementTriangles;
 using OpenSpace.Visual;
 using System;
 using System.Collections.Generic;
@@ -9,11 +11,12 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.Model.Subobjects.NormalPhysicalObject.PartsWrappers
 {
-    public class GeometricObjectElementTrianglesWrapper
+    public class NormalGeometricObjectElementTrianglesWrapper
     {
         private GeometricObjectElementTriangles geometricObjectElementTriangles;
+        private VisualData visualData;
 
-        public GeometricObjectElementTrianglesWrapper(GeometricObjectElementTriangles geometricObjectElementTriangles)
+        public NormalGeometricObjectElementTrianglesWrapper(GeometricObjectElementTriangles geometricObjectElementTriangles)
         {
             this.geometricObjectElementTriangles = geometricObjectElementTriangles;
         }
@@ -35,7 +38,17 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public List<string> GetMaterialsHashes()
         {
+            VisualData visualData = GetVisualData();
             throw new NotImplementedException();
+        }
+
+        public VisualData GetVisualData()
+        {
+            if (visualData == null)
+            {
+                visualData = NormalGeometricObjectElementTrianglesVisualDataFetcher.DeriveFor(geometricObjectElementTriangles);
+            }
+            return visualData;
         }
 
         public Dictionary<int, Dictionary<int, float>> GetBoneWeights()
