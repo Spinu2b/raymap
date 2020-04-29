@@ -24,21 +24,10 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
 
         public bool hasStates = false;
 
-        public float animationSpeed = 15f;
-
         public State state { get; private set; } = null;
         public int currentState { get; private set; } = 0;
         public int stateIndex = 0;
 
-        public PhysicalObject[][] subObjects { get; set; } = null; // [channel][ntto]
-
-        public ActualManifestableUnityGameObject[] channelObjects { get; set; }
-
         public int poListIndex = 0;
-        public AnimMorphData[,] morphDataArray;
-
-        public bool hasBones = false; // We can optimize a tiny bit if this object doesn't have bones
-
-        public Dictionary<short, List<int>> channelIDDictionary = new Dictionary<short, List<int>>();
     }
 }

@@ -44,7 +44,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
 
         public override SubobjectsLibraryModel GetSubobjectsLibrary()
         {
-            throw new NotImplementedException();
+            return normalPersoAccessorSubobjectsLibraryFetchingHelper.GetPersoSubobjectsLibrary();
         }
 
         public override bool IsValidAnimationState(int animationStateIndex)
@@ -59,6 +59,17 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
             this.currentState = stateIndex;
             state = perso.p3dData.family.states[stateIndex];
             SetState(state);
+        }
+
+        public NormalPersoAccessor() : base()
+        {
+            this.normalPersoAccessorAnimationKeyframesFetchingHelper = new NormalPersoAccessorAnimationKeyframesFetchingHelper(this);
+            this.normalPersoAccessorAnimationSubobjectsChannelsAssociationFetchingHelper =
+                new NormalPersoAccessorAnimationSubobjectsChannelsAssociationFetchingHelper(this);
+            this.normalPersoAccessorChannelsParentingFetchingHelper = new NormalPersoAccessorChannelsParentingFetchingHelper(this);
+            this.normalPersoAccessorMorphFetchingHelper = new NormalPersoAccessorMorphFetchingHelper(this);
+            this.normalPersoAccessorStateHelper = new NormalPersoAccessorStateHelper(this);
+            this.normalPersoAccessorSubobjectsLibraryFetchingHelper = new NormalPersoAccessorSubobjectsLibraryFetchingHelper(this); 
         }
     }
 }
