@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc
 {
-    public class SubmeshGeometricObjectDescription : IExportModel, ISerializableToBytes, IHashableModel
+    public class SubmeshGeometricObject : IExportModel, ISerializableToBytes, IHashableModel
     {
         public List<Vector3d> vertices = new List<Vector3d>();
         public List<Vector3d> normals = new List<Vector3d>();
@@ -40,18 +40,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                         .OrderBy(y => y)
                         .SelectMany(y => BitConverter.GetBytes(x).Concat(BitConverter.GetBytes(y)).Concat(BitConverter.GetBytes(boneWeights[x][y])))))
                 .ToArray();
-        }
-    }
-
-    public class SubmeshGeometricObject : IExportModel, IComparableModel<SubmeshGeometricObject>
-    {
-        public int id;
-        public string elementDescriptionHash;
-        public SubmeshGeometricObjectDescription elementDescription = new SubmeshGeometricObjectDescription();
-
-        public bool EqualsToAnother(SubmeshGeometricObject other)
-        {
-            return (id == other.id) && elementDescriptionHash.Equals(other.elementDescriptionHash);
         }
     }
 }
