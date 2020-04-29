@@ -25,15 +25,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             return result;
         }
 
-        public static BoneBindPose FromUnityAbsoluteTransform(Transform transform)
-        {
-            var result = new BoneBindPose();
-            result.position = Vector3d.FromUnityVector3(transform.position);
-            result.rotation = MathDescription.Quaternion.FromUnityQuaternion(transform.rotation);
-            result.scale = Vector3d.FromUnityVector3(transform.lossyScale);
-            return result;
-        }
-
         public bool RoundEquals(BoneBindPose other)
         {
             return position.RoundEquals(other.position) && rotation.RoundEquals(other.rotation) && scale.RoundEquals(other.scale);

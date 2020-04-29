@@ -27,7 +27,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
                 if (po.visualSet[i].obj is GeometricObject)
                 {
                     GeometricObject m = ((GeometricObject)po.visualSet[i].obj);
-                    //if (m.name != "Mesh") po.Gao.name = "[PO] " + m.name;
                     if (m.name != "Mesh") po.GetRaymapExportGao().name = "[PO] " + m.name;
                     m.GetRaymapExportGao().transform.parent = po.GetRaymapExportGao().transform;
                 }

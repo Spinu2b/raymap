@@ -34,9 +34,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
                     child.transform.localPosition = Vector3d.zero;
                 }
             }
-            //m.SetVisualsActive(false); // Invisible by default
+            m.ForExportSetVisualsActive(false); // Invisible by default
             //m.gao.SetActive(false); // Invisible by default
             return m;
+        }
+
+        public static void ForExportSetVisualsActive(this GeometricObjectCollide geometricObjectCollide, bool active)
+        {
+
         }
 
         public static void SetRaymapExportGao(this GeometricObjectCollide geometricObjectCollide, ActualManifestableUnityGameObject gameObject)
