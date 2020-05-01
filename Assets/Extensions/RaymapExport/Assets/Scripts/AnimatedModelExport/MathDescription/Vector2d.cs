@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.MathDescription
 {
-    public struct Vector2d : IExportModel, ISerializableToBytes
+    public struct Vector2d : IExportModel, ISerializableToBytes, Vector
     {
         public float x, y;
         public Vector2d(float x, float y)

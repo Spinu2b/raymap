@@ -52,7 +52,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         private SubobjectModel GetSubobjectModel(NormalGeometricObjectElementTrianglesWrapper geometricObjectElementTriangles)
         {
-            return GeometricObjectElementTrianglesToSubobjectModelConverter.Convert(objectNumber, geometricObjectElementTriangles);
+            return NormalGeometricObjectElementTrianglesToSubobjectModelConverter.Convert(objectNumber, geometricObjectElementTriangles);
         }
 
         public override VisualData GetVisualData()

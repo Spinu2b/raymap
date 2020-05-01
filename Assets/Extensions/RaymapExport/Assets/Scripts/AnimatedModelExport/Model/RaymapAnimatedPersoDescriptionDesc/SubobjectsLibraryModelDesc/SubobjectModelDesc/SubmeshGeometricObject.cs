@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.SubobjectModelDesc
 {
-    public class SubmeshGeometricObject : IExportModel, ISerializableToBytes, IHashableModel
+    public class SubmeshGeometricObject : IExportModel
     {
         public List<Vector3d> vertices = new List<Vector3d>();
         public List<Vector3d> normals = new List<Vector3d>();
@@ -19,27 +19,5 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public Dictionary<int, BoneBindPose> bindBonePoses = new Dictionary<int, BoneBindPose>();
         public Dictionary<int, Dictionary<int, float>> boneWeights = new Dictionary<int, Dictionary<int, float>>();
-
-        public string ComputeHash()
-        {
-            var bytes = SerializeToBytes();
-            return BytesHashHelper.GetHashHexStringFor(bytes);
-        }
-
-        public byte[] SerializeToBytes()
-        {
-            return vertices.SelectMany(x => x.SerializeToBytes())
-                .Concat(normals.SelectMany(x => x.SerializeToBytes()))
-                .Concat(triangles.SelectMany(x => BitConverter.GetBytes(x)))
-                .Concat(uvMaps.SelectMany(x => x.Select(y => y.SerializeToBytes())).SelectMany(x => x))
-                .Concat(Encoding.ASCII.GetBytes(material))
-                .Concat(bindBonePoses.Keys.OrderBy(x => x).SelectMany(x => BitConverter.GetBytes(x).Concat(bindBonePoses[x].SerializeToBytes())))
-                .Concat(boneWeights.Keys
-                    .OrderBy(x => x)
-                    .SelectMany(x => boneWeights[x].Keys
-                        .OrderBy(y => y)
-                        .SelectMany(y => BitConverter.GetBytes(x).Concat(BitConverter.GetBytes(y)).Concat(BitConverter.GetBytes(boneWeights[x][y])))))
-                .ToArray();
-        }
     }
 }

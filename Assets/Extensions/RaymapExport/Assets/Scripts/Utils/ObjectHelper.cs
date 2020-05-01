@@ -15,5 +15,11 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.Utils
 
             return memberwiseCloneMethod.Invoke(obj, new object[] { });
         }
+
+        public static object GetNonPublicInstanceFieldValue(object obj, string fieldName)
+        {
+            return obj.GetType().
+                GetField(fieldName, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(obj);
+        }
     }
 }

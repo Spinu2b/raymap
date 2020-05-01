@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelManipulation.DerivingData.ModelConstructing.Converters
 {
-    public static class GeometricObjectElementTrianglesToSubobjectModelConverter
+    public static class NormalGeometricObjectElementTrianglesToSubobjectModelConverter
     {
         public static SubobjectModel Convert(
             int objectNumber, NormalGeometricObjectElementTrianglesWrapper geometricObjectElementTriangles)
@@ -25,7 +25,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             var result = new SubmeshGeometricObject();
             result.vertices = geometricObjectElementTriangles.GetVertices();
             result.normals = geometricObjectElementTriangles.GetNormals();
-            result.materials = geometricObjectElementTriangles.GetMaterialsHashes();
+            result.material = geometricObjectElementTriangles.GetMaterialHash();
             result.boneWeights = geometricObjectElementTriangles.GetBoneWeights();
             result.bindBonePoses = geometricObjectElementTriangles.GetBindBonePoses();
             result.triangles = geometricObjectElementTriangles.GetTriangles();
