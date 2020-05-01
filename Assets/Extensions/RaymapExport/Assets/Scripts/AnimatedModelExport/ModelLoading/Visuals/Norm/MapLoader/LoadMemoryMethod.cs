@@ -12,7 +12,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public static bool IsForExportDerivedFromMapLoaderLoadMemoryMethod(TextureInfo textureInfo)
         {
-            throw new NotImplementedException();
+            return OpenSpace.MapLoader.Loader.lvlName.EndsWith(".exe");
         }
 
         public static VisualData DeriveFor(TextureInfo textureInfo)

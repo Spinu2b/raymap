@@ -2,6 +2,7 @@
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Model.RaymapAnimatedPersoDescriptionDesc.SubobjectsLibraryModelDesc.VisualDataDesc;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelLoading.Visuals.Norm.MapLoader;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils.BoolExpressions;
+using OpenSpace.FileFormat;
 using OpenSpace.Loader;
 using OpenSpace.Visual;
 using System;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelLoading.Visuals.Norm
 {
-    public static class MapLoaderDeterminer
+    public static class MapLoaderHelper
     {
         public static bool IsR2Loader()
         {
@@ -28,48 +29,54 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         {
             return OpenSpace.MapLoader.Loader is LWLoader;
         }
+
+        public static SNA GetR2LoaderSNA()
+        {
+            SNA sna = (SNA)(OpenSpace.MapLoader.Loader as R2Loader).files_array[OpenSpace.MapLoader.Mem.Lvl];
+            return sna;
+        }
     }
 
     public static class NormalTextureInfoTexture2DMapLoaderDerivingDeterminer
     {
         public static bool IsDerivedFromLoadMemoryMethodR2Loader(TextureInfo textureInfo)
         {
-            return MapLoaderDeterminer.IsR2Loader();
+            return MapLoaderHelper.IsR2Loader();
         }
 
         public static bool IsDerivedFromLoadMemoryMethodR3Loader(TextureInfo textureInfo)
         {
-            return MapLoaderDeterminer.IsR3Loader();
+            return MapLoaderHelper.IsR3Loader();
         }
 
         public static bool IsDerivedFromLoadMemoryMethodLWLoader(TextureInfo textureInfo)
         {
-            return MapLoaderDeterminer.IsLWLoader();
+            return MapLoaderHelper.IsLWLoader();
         }
 
         public static bool IsDerivedFromReadTexturesFixMethodR2Loader(TextureInfo textureInfo)
         {
-            return MapLoaderDeterminer.IsR2Loader();
+            return MapLoaderHelper.IsR2Loader();
         }
 
         public static bool IsDerivedFromReadTexturesFixMethodR3Loader(TextureInfo textureInfo)
         {
-            return MapLoaderDeterminer.IsR3Loader();
+            return MapLoaderHelper.IsR3Loader();
         }
 
         public static bool IsDerivedFromReadTexturesLvlMethodLWLoader(TextureInfo textureInfo)
         {
-            return MapLoaderDeterminer.IsLWLoader();
+            return MapLoaderHelper.IsLWLoader();
         }
 
         public static bool IsDerivedFromReadTexturesLvlMethodR2Loader(TextureInfo textureInfo)
         {
-            return MapLoaderDeterminer.IsR2Loader();
+            return MapLoaderHelper.IsR2Loader();
         }
 
         public static bool IsDerivedFromReadTexturesLvlMethodR3Loader(TextureInfo textureInfo)
         {
-            return MapLoaderDeterminer.IsR3Loader();
+            return MapLoaderHelper.IsR3Loader();
         }
     }
 
