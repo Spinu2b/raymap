@@ -20,7 +20,8 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             return result;
         }
 
-        private static SubmeshGeometricObject GetGeometricObject(NormalGeometricObjectElementTrianglesWrapper geometricObjectElementTriangles)
+        private static SubmeshGeometricObject GetGeometricObject(
+            NormalGeometricObjectElementTrianglesWrapper geometricObjectElementTriangles)
         {
             var result = new SubmeshGeometricObject();
             result.vertices = geometricObjectElementTriangles.GetVertices();

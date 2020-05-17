@@ -30,9 +30,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         private GeometricObjectElementTriangles geometricObjectElementTriangles;
         private VisualData visualData;
 
-        public NormalGeometricObjectElementTrianglesWrapper(GeometricObjectElementTriangles geometricObjectElementTriangles)
+        private EnvironmentContext environmentContext;
+
+        public NormalGeometricObjectElementTrianglesWrapper(GeometricObjectElementTriangles geometricObjectElementTriangles, EnvironmentContext environmentContext)
         {
             this.geometricObjectElementTriangles = geometricObjectElementTriangles;
+            this.environmentContext = environmentContext;
         }
 
         public bool IsAlphaTransparencyObject()
@@ -61,7 +64,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         {
             if (visualData == null)
             {
-                visualData = NormalGeometricObjectElementTrianglesVisualDataFetcher.DeriveFor(geometricObjectElementTriangles);
+                visualData = NormalGeometricObjectElementTrianglesVisualDataFetcher.DeriveFor(geometricObjectElementTriangles, environmentContext);
             }
             return visualData;
         }

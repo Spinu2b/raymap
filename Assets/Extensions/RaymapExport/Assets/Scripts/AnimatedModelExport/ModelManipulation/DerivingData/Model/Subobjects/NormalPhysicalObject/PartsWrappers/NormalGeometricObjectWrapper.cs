@@ -11,10 +11,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     public class NormalGeometricObjectWrapper
     {
         private GeometricObject geometricObject;
+        private EnvironmentContext environmentContext;
 
-        public NormalGeometricObjectWrapper(GeometricObject geometricObject)
+        public NormalGeometricObjectWrapper(GeometricObject geometricObject, EnvironmentContext environmentContext)
         {
             this.geometricObject = geometricObject;
+            this.environmentContext = environmentContext;
         }
 
         public IEnumerable<Tuple<int, IGeometricObjectElementWrapper>> IterateIGeometricObjectElements()
@@ -24,7 +26,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
             {
                 if (geometricObjectElement != null)
                 {
-                    yield return new Tuple<int, IGeometricObjectElementWrapper>(index, new IGeometricObjectElementWrapper(geometricObjectElement));
+                    yield return new Tuple<int, IGeometricObjectElementWrapper>(index, new IGeometricObjectElementWrapper(geometricObjectElement, environmentContext));
                 }
                 index++;
             }

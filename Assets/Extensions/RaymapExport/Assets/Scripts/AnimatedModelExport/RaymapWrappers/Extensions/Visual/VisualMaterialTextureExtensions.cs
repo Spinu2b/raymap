@@ -18,9 +18,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
             return (UnityEngine.Texture2D)ObjectHelper.GetNonPublicInstanceFieldValue(visualMaterialTexture, "texture2D");
         }
 
-        public static VisualData ForExportTexture(this VisualMaterialTexture visualMaterialTexture)
+        public static VisualData ForExportTexture(this VisualMaterialTexture visualMaterialTexture, EnvironmentContext environmentContext)
         {
-            VisualData resultTexture = visualMaterialTexture.texture.ForExportTexture();
+            VisualData resultTexture = visualMaterialTexture.texture.ForExportTexture(environmentContext);
 
             if (Settings.s.engineVersion < Settings.EngineVersion.R3)
             {

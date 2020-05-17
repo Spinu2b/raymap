@@ -14,21 +14,26 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport
 {
     public class RaymapExportPersoComponent : MonoBehaviour
     {
+        private EnvironmentContext environmentContext;
+
         public void ExportModelWithAnimations(string outputFilePath)
         {
             var exporter = new RaymapAnimatedPersoExporter();
-
-
-            PersoAccessor persoAccessor = GetPersoAccessor(gameObject);
+            PersoAccessor persoAccessor = GetPersoAccessor(gameObject, environmentContext);
 
             RaymapAnimatedPersoDescription result = exporter.Export(persoAccessor);
             var fileContent = JsonConvert.SerializeObject(result);
             File.WriteAllText(outputFilePath, fileContent);
         }
 
-        private PersoAccessor GetPersoAccessor(GameObject persoGameObject)
+        private PersoAccessor GetPersoAccessor(GameObject persoGameObject, EnvironmentContext environmentContext)
         {
-            return PersoAccessorFactory.FromPersoGameObject(persoGameObject);
+            return PersoAccessorFactory.FromPersoGameObject(persoGameObject, environmentContext);
+        }
+
+        public void SetEnvironmentContext(EnvironmentContext environmentContext)
+        {
+            this.environmentContext = environmentContext;
         }
     }
 }

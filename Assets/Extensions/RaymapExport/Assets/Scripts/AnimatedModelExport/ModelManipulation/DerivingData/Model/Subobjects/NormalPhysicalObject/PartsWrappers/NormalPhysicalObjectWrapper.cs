@@ -10,10 +10,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     public class NormalPhysicalObjectWrapper
     {
         private OpenSpace.Object.PhysicalObject physicalObject;
+        private EnvironmentContext environmentContext;
 
-        public NormalPhysicalObjectWrapper(OpenSpace.Object.PhysicalObject physicalObject)
+        public NormalPhysicalObjectWrapper(OpenSpace.Object.PhysicalObject physicalObject, EnvironmentContext environmentContext)
         {
             this.physicalObject = physicalObject;
+            this.environmentContext = environmentContext;
         }
 
         public IEnumerable<Tuple<int, IGeometricObjectWrapper>> IterateIGeometricObjects()
@@ -24,7 +26,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 if (visualSetLOD.obj != null)
                 {
                     yield return new Tuple<int, IGeometricObjectWrapper>(
-                        index, new IGeometricObjectWrapper(visualSetLOD.obj));
+                        index, new IGeometricObjectWrapper(visualSetLOD.obj, environmentContext));
                 }                
                 index++;
             }

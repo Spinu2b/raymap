@@ -18,9 +18,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
         private NormalPhysicalObjectWrapper physicalObject;
         private int objectNumber;
 
-        public NormalPhysicalObjectSubobjectAccessor(int objectNumber, OpenSpace.Object.PhysicalObject physicalObject)
+        public NormalPhysicalObjectSubobjectAccessor(int objectNumber, OpenSpace.Object.PhysicalObject physicalObject, EnvironmentContext environmentContext)
         {
-            this.physicalObject = new NormalPhysicalObjectWrapper(physicalObject);
+            this.physicalObject = new NormalPhysicalObjectWrapper(physicalObject, environmentContext);
             this.objectNumber = objectNumber;
         }
 

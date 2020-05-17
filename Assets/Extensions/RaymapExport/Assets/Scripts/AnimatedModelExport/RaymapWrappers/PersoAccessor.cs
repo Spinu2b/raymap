@@ -10,6 +10,8 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
 {
     public abstract class PersoAccessor
     {
+        public EnvironmentContext environmentContext;
+
         public abstract int statesCount { get; }
         public abstract int currentAnimationStateFramesCount { get; }
 

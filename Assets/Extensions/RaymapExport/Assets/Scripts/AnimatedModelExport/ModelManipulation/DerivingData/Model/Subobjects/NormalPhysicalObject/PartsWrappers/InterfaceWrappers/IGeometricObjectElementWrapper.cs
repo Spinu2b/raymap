@@ -10,10 +10,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     public class IGeometricObjectElementWrapper
     {
         private IGeometricObjectElement geometricObjectElement;
+        private EnvironmentContext environmentContext;
 
-        public IGeometricObjectElementWrapper(IGeometricObjectElement geometricObjectElement)
+        public IGeometricObjectElementWrapper(IGeometricObjectElement geometricObjectElement, EnvironmentContext environmentContext)
         {
             this.geometricObjectElement = geometricObjectElement;
+            this.environmentContext = environmentContext;
         }
 
         public bool IsNormalGeometricObjectElementTriangles()
@@ -23,7 +25,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public NormalGeometricObjectElementTrianglesWrapper GetNormalGeometricObjectElementTriangles()
         {
-            return new NormalGeometricObjectElementTrianglesWrapper(geometricObjectElement as GeometricObjectElementTriangles);
+            return new NormalGeometricObjectElementTrianglesWrapper(geometricObjectElement as GeometricObjectElementTriangles, environmentContext);
         }
     }
 }

@@ -72,7 +72,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
                 // we're trying to add only legitimately valid objects
                 if (objectList[objectIndex].po != null)
                 {
-                    result.Add(objectIndex, new NormalPhysicalObjectSubobjectAccessor(objectIndex, objectList[objectIndex].po));
+                    result.Add(objectIndex, new NormalPhysicalObjectSubobjectAccessor(objectIndex, objectList[objectIndex].po, normalPersoAccessor.environmentContext));
                 }
             }
             return result;

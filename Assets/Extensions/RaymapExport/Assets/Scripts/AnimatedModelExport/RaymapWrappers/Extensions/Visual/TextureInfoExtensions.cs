@@ -12,9 +12,11 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
 {
     public static class TextureInfoExtensions
     {
-        public static VisualData ForExportTexture(this TextureInfo textureInfo)
+        public static VisualData ForExportTexture(this TextureInfo textureInfo, EnvironmentContext environmentContext)
         {
-            return NormalTextureInfoTexture2DFetcher.DeriveFor(textureInfo);
+            TextureInfoWrapper textureInfoWrapper = TextureInfoWrapper.FromNormalTextureInfo(textureInfo, environmentContext);
+            return textureInfoWrapper.GetVisualData();
+            //return NormalTextureInfoTexture2DFetcher.DeriveFor(textureInfo);
         }
     }
 }

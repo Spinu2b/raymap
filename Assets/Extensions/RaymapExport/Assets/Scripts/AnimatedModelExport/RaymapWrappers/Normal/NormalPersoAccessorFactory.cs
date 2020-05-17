@@ -14,12 +14,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
 {
     public class NormalPersoAccessorFactory
     {
-        public static NormalPersoAccessor FromPersoGameObject(GameObject persoGameObject)
+        public static NormalPersoAccessor FromPersoGameObject(GameObject persoGameObject, EnvironmentContext environmentContext)
         {
             var result = new NormalPersoAccessor();
             result.name = persoGameObject.name;
 
             PersoBehaviour persoBehaviour = persoGameObject.GetComponent<PersoBehaviour>();
+
+            result.environmentContext = environmentContext;
 
             result.isLoaded = persoBehaviour.isLoaded;
             result.perso = persoBehaviour.perso;

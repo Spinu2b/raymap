@@ -10,10 +10,12 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     public class IGeometricObjectWrapper
     {
         private IGeometricObject obj;
+        private EnvironmentContext environmentContext;
 
-        public IGeometricObjectWrapper(IGeometricObject obj)
+        public IGeometricObjectWrapper(IGeometricObject obj, EnvironmentContext environmentContext)
         {
             this.obj = obj;
+            this.environmentContext = environmentContext;
         }
 
         public bool IsNormalGeometricObject()
@@ -23,7 +25,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
 
         public NormalGeometricObjectWrapper GetNormalGeometricObject()
         {
-            return new NormalGeometricObjectWrapper(obj as GeometricObject);
+            return new NormalGeometricObjectWrapper(obj as GeometricObject, environmentContext);
         }
     }
 }

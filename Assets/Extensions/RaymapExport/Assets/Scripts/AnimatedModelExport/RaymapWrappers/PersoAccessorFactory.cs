@@ -11,14 +11,14 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
 {
     public static class PersoAccessorFactory
     {
-        public static PersoAccessor FromPersoGameObject(GameObject persoGameObject)
+        public static PersoAccessor FromPersoGameObject(GameObject persoGameObject, EnvironmentContext environmentContext)
         {
             if (persoGameObject.GetComponent<PersoBehaviour>() != null)
             {
-                return NormalPersoAccessorFactory.FromPersoGameObject(persoGameObject);
+                return NormalPersoAccessorFactory.FromPersoGameObject(persoGameObject, environmentContext);
             } else if (persoGameObject.GetComponent<ROMPersoBehaviour>() != null)
             {
-                return RomPersoAccessorFactory.FromPersoGameObject(persoGameObject);
+                return RomPersoAccessorFactory.FromPersoGameObject(persoGameObject, environmentContext);
             } else
             {
                 throw new InvalidOperationException("This gameobject has neither normal nor rom perso behaviour component!");

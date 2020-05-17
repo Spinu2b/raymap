@@ -16,7 +16,8 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
 {
     public static class VisualMaterialExtensions
     {
-        public static VisualData ForExportGetMaterial(this VisualMaterial visualMaterial, Hint hints = Hint.None)
+        public static VisualData ForExportGetMaterial(
+            this VisualMaterial visualMaterial, EnvironmentContext environmentContext, Hint hints = Hint.None)
         {
             bool billboard = (hints & Hint.Billboard) == Hint.Billboard;// || (flags & flags_isBillboard) == flags_isBillboard;
             MapLoader l = MapLoader.Loader;
@@ -52,9 +53,9 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Raym
                 for (int i = 0; i < visualMaterial.num_textures; i++)
                 {
                     string textureName = BaseMaterialFields.GetMaterialTextureFieldName(i);
-                    if (visualMaterial.textures[i].ForExportTexture() != null)
+                    if (visualMaterial.textures[i].ForExportTexture(environmentContext) != null)
                     {
-                        materialVisualDataBuilder.SetTexture(textureName, visualMaterial.textures[i].ForExportTexture());
+                        materialVisualDataBuilder.SetTexture(textureName, visualMaterial.textures[i].ForExportTexture(environmentContext));
 
                         materialVisualDataBuilder.SetVector(
                                 BaseMaterialFields.GetTextureParamsFieldName(textureName), 

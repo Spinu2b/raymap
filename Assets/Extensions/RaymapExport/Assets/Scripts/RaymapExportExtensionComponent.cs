@@ -4,35 +4,20 @@ using System.IO;
 using System.Linq;
 using Assets.Extensions.Api;
 using Assets.Extensions.EditorActions.Assets.Scripts;
+using Assets.Extensions.RaymapExport.Assets.Scripts.ActionsHandling;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport;
+using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ResourcesHandling;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using UnityEngine;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts
 {
-    public static class RaymapExportActions
-    {
-        public static string exportAllPersos = "EXPORT_ALL_PERSOS";
-        public static string exportPerso = "EXPORT_PERSO";
-
-        public static class ExportAllPersosArguments
-        {
-            public static string outputDirectory = "OUTPUT_DIRECTORY";
-        }
-
-        public static class ExportPersoArguments
-        {
-            public static string persoName = "PERSO_NAME";
-            public static string outputFile = "OUTPUT_FILE";
-        }
-    }
-
     public class RaymapExportExtensionComponent : RaymapExtensionComponent, IEditorActionListenerComponent
     {
-        private Queue<Tuple<string, Dictionary<string, string>>> actionsToPerform = new Queue<Tuple<string, Dictionary<string, string>>>();
         private bool injected = false;
+        private RaymapExportActionsHandler raymapExportActionsHandler;
 
-        private EditorActionsExtensionComponent editorActionsExtensionComponent;
+        private EnvironmentContext environmentContext = new EnvironmentContext();
 
         protected override void OnMapLoaded()
         {
@@ -41,83 +26,41 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts
             raymapController.playTextureAnimations = false;
             raymapController.playAnimations = false;
 
-            InjectIntoPersos();
-            injected = true;
+            environmentContext.Init();
+            InjectIntoPersos(environmentContext);
 
-            if (actionsToPerform.Count != 0)
-            {
-                PerformScheduledActions(editorActionsExtensionComponent);
-            }
+            injected = true;
+            raymapExportActionsHandler.PerformScheduledActionsIfAny();
         }
 
-        private void InjectIntoPersos()
+        private void InjectIntoPersos(EnvironmentContext environmentContext)
         {
             foreach (var persoGameObject in RaymapSceneHelper.IteratePersoGameObjects())
             {
-                OnPersoInject(persoGameObject);
+                OnPersoInject(persoGameObject, environmentContext);
             }
         }
 
-        protected void OnPersoInject(GameObject persoGameObject)
+        protected void OnPersoInject(GameObject persoGameObject, EnvironmentContext environmentContext)
         {
             persoGameObject.AddComponent<RaymapExportPersoComponent>();
+            persoGameObject.GetComponent<RaymapExportPersoComponent>().SetEnvironmentContext(environmentContext);
         }
 
         public void OnEditorAction(EditorActionsExtensionComponent editorActionsExtensionComponent, 
             string actionName, Dictionary<string, string> actionArguments)
         {
-            actionsToPerform.Enqueue(new Tuple<string, Dictionary<string, string>>(actionName, actionArguments));
+            raymapExportActionsHandler.ScheduleAction(actionName, actionArguments);
             if (injected)
             {
-                PerformScheduledActions(editorActionsExtensionComponent);
+                raymapExportActionsHandler.PerformScheduledActionsIfAny();
             }
         }
 
         public void RegisterForActions(EditorActionsExtensionComponent editorActionsExtensionComponent)
         {
-            editorActionsExtensionComponent.SetActionListener(RaymapExportActions.exportAllPersos, this);
-            editorActionsExtensionComponent.SetActionListener(RaymapExportActions.exportPerso, this);
-            this.editorActionsExtensionComponent = editorActionsExtensionComponent;
-        }
-
-        private void PerformScheduledActions(EditorActionsExtensionComponent editorActionsExtensionComponent)
-        {
-            while (actionsToPerform.Count != 0)
-            {
-                var actionInfo = actionsToPerform.Dequeue();
-                PerformAction(actionInfo.Item1, actionInfo.Item2);
-                editorActionsExtensionComponent.SetActionCompleted(this, actionInfo.Item1);
-            }            
-        }
-
-        private void PerformAction(string actionName, Dictionary<string, string> actionArgs)
-        {
-            if (actionName.Equals(RaymapExportActions.exportAllPersos))
-            {
-                ExportAllPersosToDirectory(actionArgs[RaymapExportActions.ExportAllPersosArguments.outputDirectory]);
-            } else if (actionName.Equals(RaymapExportActions.exportPerso))
-            {
-                ExportPerso(actionArgs[RaymapExportActions.ExportPersoArguments.persoName],
-                    actionArgs[RaymapExportActions.ExportPersoArguments.outputFile]);
-            } else
-            {
-                throw new InvalidOperationException("Invalid action for RaymapExport!");
-            }
-        }
-
-        private void ExportPerso(string persoName, string outputFile)
-        {
-            RaymapSceneHelper.IteratePersoGameObjects()
-                .Where(x => x.name.Equals(persoName)).First().GetComponent<RaymapExportPersoComponent>().ExportModelWithAnimations(outputFile);
-        }
-
-        private void ExportAllPersosToDirectory(string outputDirectory)
-        {
-            foreach (var persoGameObject in RaymapSceneHelper.IteratePersoGameObjects())
-            {
-                persoGameObject.GetComponent<RaymapExportPersoComponent>().ExportModelWithAnimations(
-                    Path.Combine(outputDirectory, FileNamesHelper.RemoveInvalidCharacters(persoGameObject.name) + ".raymapexport"));
-            }
-        }
+            raymapExportActionsHandler = new RaymapExportActionsHandler(this);
+            raymapExportActionsHandler.RegisterForActions(editorActionsExtensionComponent);
+        }    
     }
 }

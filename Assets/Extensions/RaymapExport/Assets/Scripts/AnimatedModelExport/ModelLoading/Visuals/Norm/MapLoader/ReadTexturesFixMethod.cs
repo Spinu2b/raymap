@@ -9,14 +9,9 @@ using System.Threading.Tasks;
 
 namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ModelLoading.Visuals.Norm.MapLoader
 {
-    public static class NormalTextureInfoTexture2DMapLoaderReadTexturesFixMethodDerivingDeterminer
+    public static class ReadTexturesFixMethodTexturesOffsetsHolder
     {
-        public static bool IsDerivedFromR2LoaderLoadFIXSNAMethod(TextureInfo textureInfo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static bool IsDerivedFromR3LoaderLoadFIXMethod(TextureInfo textureInfo)
+        public static bool ContainsTextureOffset(TextureInfo textureInfo)
         {
             throw new NotImplementedException();
         }
@@ -26,12 +21,7 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     {
         public static bool IsForExportDerivedFromMapLoaderReadTexturesFixMethod(TextureInfo textureInfo)
         {
-            return new LogicalAlternativeConclusionValueBuilder()
-                .Or(args => NormalTextureInfoTexture2DMapLoaderReadTexturesFixMethodDerivingDeterminer.
-                    IsDerivedFromR2LoaderLoadFIXSNAMethod((TextureInfo)args[0]))
-                .Or(args => NormalTextureInfoTexture2DMapLoaderReadTexturesFixMethodDerivingDeterminer.
-                    IsDerivedFromR3LoaderLoadFIXMethod((TextureInfo)args[0]))
-                .ConcludeFor(new object[] { textureInfo });
+            return ReadTexturesFixMethodTexturesOffsetsHolder.ContainsTextureOffset(textureInfo);
         }
 
         public static VisualData DeriveFor(TextureInfo textureInfo)
