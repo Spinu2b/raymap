@@ -19,7 +19,7 @@ namespace Assets.Extensions.Api
             return raymapController.LoadState == Controller.State.Finished;
         }
 
-        protected void Awake()
+        private void Awake()
         {
             raymapController = (Controller)FindObjectOfType(typeof(Controller));
         }

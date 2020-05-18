@@ -12,11 +12,32 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.Mode
     public class SubobjectModel : IExportModel, IComparableModel<SubobjectModel>
     {
         public int objectNumber;
-        public SubmeshGeometricObject geometricObject = new SubmeshGeometricObject();
+        public Dictionary<int, SubmeshGeometricObject> geometricObjects = new Dictionary<int, SubmeshGeometricObject>();
 
         public bool EqualsToAnother(SubobjectModel other)
         {
-            throw new NotImplementedException();
+            if (objectNumber != other.objectNumber)
+            {
+                return false;
+            }
+
+            if (geometricObjects.Count != other.geometricObjects.Count)
+            {
+                return false;
+            }
+
+            foreach (var geometricObjectId in geometricObjects.Keys)
+            {
+                if (!other.geometricObjects.ContainsKey(geometricObjectId))
+                {
+                    return false;
+                }
+                if (!geometricObjects[geometricObjectId].EqualsToAnother(other.geometricObjects[geometricObjectId]))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
