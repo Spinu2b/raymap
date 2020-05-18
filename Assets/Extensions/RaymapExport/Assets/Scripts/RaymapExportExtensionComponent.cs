@@ -6,7 +6,6 @@ using Assets.Extensions.Api;
 using Assets.Extensions.EditorActions.Assets.Scripts;
 using Assets.Extensions.RaymapExport.Assets.Scripts.ActionsHandling;
 using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport;
-using Assets.Extensions.RaymapExport.Assets.Scripts.AnimatedModelExport.ResourcesHandling;
 using Assets.Extensions.RaymapExport.Assets.Scripts.Utils;
 using UnityEngine;
 
@@ -17,8 +16,6 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts
         private bool injected = false;
         private RaymapExportActionsHandler raymapExportActionsHandler;
 
-        private EnvironmentContext environmentContext = new EnvironmentContext();
-
         protected override void OnMapLoaded()
         {
             Controller raymapController = RaymapSceneHelper.GetController();
@@ -26,25 +23,23 @@ namespace Assets.Extensions.RaymapExport.Assets.Scripts
             raymapController.playTextureAnimations = false;
             raymapController.playAnimations = false;
 
-            environmentContext.Init();
-            InjectIntoPersos(environmentContext);
+            InjectIntoPersos();
 
             injected = true;
-            raymapExportActionsHandler.PerformScheduledActionsIfAny();
+            raymapExportActionsHandler?.PerformScheduledActionsIfAny();
         }
 
-        private void InjectIntoPersos(EnvironmentContext environmentContext)
+        private void InjectIntoPersos()
         {
             foreach (var persoGameObject in RaymapSceneHelper.IteratePersoGameObjects())
             {
-                OnPersoInject(persoGameObject, environmentContext);
+                OnPersoInject(persoGameObject);
             }
         }
 
-        protected void OnPersoInject(GameObject persoGameObject, EnvironmentContext environmentContext)
+        protected void OnPersoInject(GameObject persoGameObject)
         {
             persoGameObject.AddComponent<RaymapExportPersoComponent>();
-            persoGameObject.GetComponent<RaymapExportPersoComponent>().SetEnvironmentContext(environmentContext);
         }
 
         public void OnEditorAction(EditorActionsExtensionComponent editorActionsExtensionComponent, 
