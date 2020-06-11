@@ -99,7 +99,15 @@ public class PersoBehaviourEditor : Editor {
 
         if (GUILayout.Button("Print Animation Debug Info")) pb.PrintAnimationDebugInfo();
         if (GUILayout.Button("Next Frame Of Animation")) pb.NextFrameOfAnimation();
-        if (GUILayout.Button("Export Animations Data")) pb.ExportAnimationsData();
+		if (GUILayout.Button("Export Animations Data"))
+		{
+			string filePath = FileUtilsHelper.ChooseFilePathToSave(extension: "json", description: "Exported Perso States");
+			if (filePath != null)
+            {
+				var animationsModel = pb.ExportAnimationsData();
+			}
+			
+		}
     }
 
 	IList<StateTransitionsTreeElement> GetData() {

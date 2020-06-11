@@ -14,15 +14,15 @@ namespace Assets.Scripts.Unity.ModelDataExporting.R3.PersoStatesArmatureAnimatio
     public class PersoAnimationsDataExporter
     {
         private PersoAnimationStatesDataManipulator persoAnimationStatesDataManipulator;
-        private JSONAnimationDataFileWriter jsonAnimationDataFileWriter;
+        //private JSONAnimationDataFileWriter jsonAnimationDataFileWriter;
 
         public PersoAnimationsDataExporter(PersoBehaviour persoBehaviour)
         {
             this.persoAnimationStatesDataManipulator = new PersoAnimationStatesDataManipulator(persoBehaviour);
-            this.jsonAnimationDataFileWriter = new JSONAnimationDataFileWriter();
+            //this.jsonAnimationDataFileWriter = new JSONAnimationDataFileWriter();
         }
 
-        public void ExportPersoStatesAnimations()
+        public AnimationsModel ExportPersoStatesAnimations()
         {
             AnimationsModel animationsModel = new AnimationsModel();
             foreach (var animationClip in persoAnimationStatesDataManipulator.IterateAnimationClips())
@@ -34,7 +34,8 @@ namespace Assets.Scripts.Unity.ModelDataExporting.R3.PersoStatesArmatureAnimatio
                         animationClip.Name, animationKeyframe.GetAnimationFrameModel(), animationKeyframe.FrameNumber);
                 }
             }
-            jsonAnimationDataFileWriter.writeAnimationModel(animationsModel);
+            return animationsModel;
+            //jsonAnimationDataFileWriter.writeAnimationModel(animationsModel);
         }
     }
 }

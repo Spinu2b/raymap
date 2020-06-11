@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Unity;
 using Assets.Scripts.Unity.ModelDataExporting.R3.PersoStatesArmatureAnimationsExporting;
+using Assets.Scripts.Unity.ModelDataExporting.R3.PersoStatesArmatureAnimationsExporting.Model;
 using OpenSpace;
 using OpenSpace.AI;
 using OpenSpace.Animation;
@@ -343,9 +344,13 @@ public class PersoBehaviour : MonoBehaviour {
         currentFrame += 1;
     }
 
-    public void ExportAnimationsData()
+    public AnimationsModel ExportAnimationsData()
     {
-        persoAnimationsDataExporter.ExportPersoStatesAnimations();
+		string filePath = FileUtilsHelper.ChooseFilePathToSave(extension: "json", description: "Exported Perso States");
+		if (filePath != null)
+        {
+			return persoAnimationsDataExporter.ExportPersoStatesAnimations();
+		}        
     }
     #endregion
 
