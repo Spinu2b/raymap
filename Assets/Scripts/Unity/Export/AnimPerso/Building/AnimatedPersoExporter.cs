@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Unity.Export.AnimPerso.Model;
+using Assets.Scripts.Unity.Export.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,17 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Building
             result.name = GetPersoName(persoAccessor);
 
             var exportData = GetDataFromPersoAnimationStates(persoAccessor);
+            throw new NotImplementedException();
+        }
+
+        private string GetPersoName(PersoAccessor persoAccessor)
+        {
+            throw new NotImplementedException();
+        }
+
+        private Tuple<AnimationClips, SubobjectsLibrary, ChannelHierarchies, SubobjectsChannelsAssociations>
+            GetDataFromPersoAnimationStates(PersoAccessor persoAccessor)
+        {
             throw new NotImplementedException();
         }
     }

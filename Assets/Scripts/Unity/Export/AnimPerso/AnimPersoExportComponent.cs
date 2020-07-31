@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Unity.Export.AnimPerso.Building;
 using Assets.Scripts.Unity.Export.AnimPerso.Model;
+using Assets.Scripts.Unity.Export.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Assets.Scripts.Unity.Export.AnimPerso
             return result;
         }
 
-        private PersoAccessor GetPersoAccessor(GameObject gameObject)
+        private PersoAccessor GetPersoAccessor(GameObject persoGameObject)
         {
             return PersoAccessorFactory.FromPersoGameObject(persoGameObject);
         }
