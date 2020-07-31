@@ -16,7 +16,13 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Building
             result.name = GetPersoName(persoAccessor);
 
             var exportData = GetDataFromPersoAnimationStates(persoAccessor);
-            throw new NotImplementedException();
+
+            result.animationClips = exportData.Item1;
+            result.subobjectsLibrary = exportData.Item2;
+            result.channelHierarchies = exportData.Item3;
+            result.subobjectsChannelsAssociations = exportData.Item4;
+
+            return result;
         }
 
         private string GetPersoName(PersoAccessor persoAccessor)
@@ -27,7 +33,7 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Building
         private Tuple<AnimationClips, SubobjectsLibrary, ChannelHierarchies, SubobjectsChannelsAssociations>
             GetDataFromPersoAnimationStates(PersoAccessor persoAccessor)
         {
-            throw new NotImplementedException();
+            return new AnimationClipsGeneralDataExtractor().DeriveFor(persoAccessor);
         }
     }
 }
