@@ -13,5 +13,10 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Building
         {
             throw new NotImplementedException();
         }
+
+        public void Consolidate(ChannelHierarchies channelHierarchies)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Unity.Export.AnimPerso.Model;
+﻿using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Perso;
+using Assets.Scripts.Unity.Export.AnimPerso.Model;
 using Assets.Scripts.Unity.Export.AnimPerso.Model.AnimClipsDesc;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,38 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Model
         private PersoAccessorAnimationStatesHelper persoAccessorAnimationStatesHelper;
 
         private AnimationClip animationClipModel;
-        private ConsolidatedChannelHierarchiesBuilder channelHierarchiesInfo;
+        private ChannelHierarchies channelHierarchiesInfo;
 
         private SubobjectsChannelsAssociations subobjectsChannelsAssociations;
+        private PersoAccessorAnimationStatesHelper persoBehaviourAnimationStatesHelper;
+
+        public AnimationStateGeneralInfo(PersoAccessorAnimationStatesHelper persoBehaviourAnimationStatesHelper)
+        {
+            this.persoBehaviourAnimationStatesHelper = persoBehaviourAnimationStatesHelper;
+        }
+
+        public AnimationClip GetAnimationClipObj()
+        {
+            return animationClipModel;
+        }
+
+        public ChannelHierarchies GetChannelHierarchiesInfo()
+        {
+            return channelHierarchiesInfo;
+        }
+
+        public void BuildData()
+        {
+            animationClipModel = new AnimationClipModelFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
+            animationClipId = animationClipModel.id;
+
+            subobjectsChannelsAssociations = new SubobjectsChannelsAssociationsInfoFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
+            channelHierarchiesInfo = new ChannelHierarchiesFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
+        }
+
+        public SubobjectsChannelsAssociations GetSubobjectsChannelsAssociationsInfo()
+        {
+            return subobjectsChannelsAssociations;
+        }
     }
 }

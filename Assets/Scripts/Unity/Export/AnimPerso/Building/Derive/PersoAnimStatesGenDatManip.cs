@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Model;
+using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Perso;
 using Assets.Scripts.Unity.Export.AnimPerso.Model;
 using Assets.Scripts.Unity.Export.Wrappers;
 using System;
@@ -13,12 +14,21 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Building.Derive
     {
         public SubobjectsLibrary GetSubobjectsLibrary(PersoAccessor persoAccessor)
         {
-            throw new NotImplementedException();
+            return persoAccessor.GetSubobjectsLibrary();
         }
 
         public IEnumerable<AnimationStateGeneralInfo> IterateAnimationStatesGeneralDataForExport(PersoAccessor persoAccessor)
         {
-            throw new NotImplementedException();
+            var persoAccessorAnimationStatesHelper = new PersoAccessorAnimationStatesHelper(persoAccessor);
+            persoAccessorAnimationStatesHelper.SwitchToFirstAnimationState();
+
+            while (persoAccessorAnimationStatesHelper.AreValidPersoAnimationStatesLeftIncludingCurrentOne())
+            {
+                var result = new AnimationStateGeneralInfo(persoAccessorAnimationStatesHelper);
+                result.BuildData();
+                yield return result;
+                persoAccessorAnimationStatesHelper.AcquireNextValidPersoAnimationState();
+            }
         }
     }
 }
