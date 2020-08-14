@@ -17,5 +17,15 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Model.AnimClipsDesc
             this.morphSubobjectStart = morphSubobjectStart;
             this.morphSubobjectEnd = morphSubobjectEnd;
         }
+
+        public int GetMinimalKeyframeNumber()
+        {
+            return morphProgressKeyframes.Keys.Min();
+        }
+
+        public int GetMaxKeyframeNumber()
+        {
+            return morphProgressKeyframes.Keys.Max();
+        }
     }
 }

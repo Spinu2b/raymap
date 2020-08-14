@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Unity.Export.AnimPerso.Model;
+﻿using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.ModelConstr.AnimFrameAssoc;
+using Assets.Scripts.Unity.Export.AnimPerso.Model;
 using Assets.Scripts.Unity.Export.AnimPerso.Model.AnimClipsDesc;
 using Assets.Scripts.Unity.Export.Wrappers;
 using System;
@@ -13,6 +14,8 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Perso
     {
         private PersoAccessor persoAccessor;
 
+        private int currentPersoAnimationStateIndex = 0;
+
         public PersoAccessorAnimationStatesHelper(PersoAccessor persoAccessor)
         {
             this.persoAccessor = persoAccessor;
@@ -20,42 +23,111 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Perso
 
         public void SwitchToFirstAnimationState()
         {
-            throw new NotImplementedException();
+            SwitchContextToAnimationStateOfIndex(GetFirstPersoStateIndex());
+            currentPersoAnimationStateIndex = GetFirstPersoStateIndex();
+        }
+
+        private void SwitchContextToAnimationStateOfIndex(int stateIndex)
+        {
+            persoAccessor.SetState(stateIndex);
+            currentPersoAnimationStateIndex = stateIndex;
+        }
+
+        private int GetFirstPersoStateIndex()
+        {
+            return 0;
         }
 
         public bool AreValidPersoAnimationStatesLeftIncludingCurrentOne()
         {
-            throw new NotImplementedException();
+            return currentPersoAnimationStateIndex < persoAccessor.statesCount;
         }
 
         public void AcquireNextValidPersoAnimationState()
         {
-            throw new NotImplementedException();
+            int currentStateIndex = currentPersoAnimationStateIndex;
+            currentStateIndex++;
+
+            while (!IsValidPersoAnimationState(currentStateIndex))
+            {
+                currentStateIndex++;
+                if (currentStateIndex >= persoAccessor.statesCount)
+                {
+                    currentPersoAnimationStateIndex = currentStateIndex;
+                    return;
+                }
+            }
+            SwitchContextToAnimationStateOfIndex(currentStateIndex);
+        }
+
+        private bool IsValidPersoAnimationState(int animationStateIndex)
+        {
+            return persoAccessor.IsValidAnimationState(animationStateIndex);
         }
 
         public int GetCurrentPersoStateIndex()
         {
-            throw new NotImplementedException();
+            return currentPersoAnimationStateIndex;
         }
 
         public List<SubobjectUsedMorphAssociationInfo> GetMorphDataForThisAnimationState()
         {
-            throw new NotImplementedException();
+            int frameNumber = GetFirstValidStateAnimationKeyframeFrameNumber();
+            var subobjectUsedMorphAssociationInfoListBuilder = new SubobjectUsedMorphAssociationInfoListBuilder();
+            while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
+            {
+                subobjectUsedMorphAssociationInfoListBuilder.Consider(frameNumber, persoAccessor.GetMorphDataForAnimationFrame(frameNumber));
+                frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
+            }
+            return subobjectUsedMorphAssociationInfoListBuilder.Build();
         }
 
         public IEnumerable<Tuple<int, SubobjectsChannelsAssociation>> IterateChannelSubobjectsAssociationsDataForThisAnimationState()
         {
-            throw new NotImplementedException();
+            int frameNumber = GetFirstValidStateAnimationKeyframeFrameNumber();
+            while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
+            {
+                yield return new Tuple<int, SubobjectsChannelsAssociation>(
+                    frameNumber, persoAccessor.GetSubobjectsChannelsAssociationsForAnimationFrame(frameNumber));
+                frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
+            }
         }
 
         public IEnumerable<Tuple<int, Dictionary<int, int>>> IterateChannelParentingInfosForThisAnimationState()
         {
-            throw new NotImplementedException();
+            int frameNumber = GetFirstValidStateAnimationKeyframeFrameNumber();
+            while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
+            {
+                yield return new Tuple<int, Dictionary<int, int>>(
+                    frameNumber, persoAccessor.GetChannelParentingInfosForAnimationFrame(frameNumber));
+                frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
+            }
         }
 
         public IEnumerable<Tuple<int, Dictionary<int, ChannelTransform>>> IterateKeyframeDataForThisAnimationState()
         {
-            throw new NotImplementedException();
+            int frameNumber = GetFirstValidStateAnimationKeyframeFrameNumber();
+            while (AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(frameNumber))
+            {
+                yield return new Tuple<int, Dictionary<int, ChannelTransform>>(
+                    frameNumber, persoAccessor.GetChannelsKeyframeDataForAnimationFrame(frameNumber));
+                frameNumber = GetStateAnimationNextFrameNumberAfter(frameNumber);
+            }
+        }
+
+        public int GetFirstValidStateAnimationKeyframeFrameNumber()
+        {
+            return 0;
+        }
+
+        public bool AreFramesLeftForCurrentAnimationStateStartingWithFrameNumber(int currentFrameNumber)
+        {
+            return currentFrameNumber < persoAccessor.currentAnimationStateFramesCount;
+        }
+
+        public int GetStateAnimationNextFrameNumberAfter(int currentFrameNumber)
+        {
+            return currentFrameNumber + 1;
         }
     }
 }

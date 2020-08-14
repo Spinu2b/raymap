@@ -19,9 +19,8 @@ namespace Assets.Scripts.Unity.Export.Wrappers
         public abstract SubobjectsLibrary GetSubobjectsLibrary();
         public abstract Dictionary<int, ChannelTransform> GetChannelsKeyframeDataForAnimationFrame(int frameNumber);
         public abstract List<Tuple<int, int, int>> GetMorphDataForAnimationFrame(int frameNumber);
-        public abstract SubobjectsChannelsAssociations GetSubobjectsChannelsAssociationsForAnimationFrame(int frameNumber);
+        public abstract SubobjectsChannelsAssociation GetSubobjectsChannelsAssociationsForAnimationFrame(int frameNumber);
         public abstract Dictionary<int, int> GetChannelParentingInfosForAnimationFrame(int frameNumber);
         public abstract bool IsValidAnimationState(int animationStateIndex);
-
     }
 }
