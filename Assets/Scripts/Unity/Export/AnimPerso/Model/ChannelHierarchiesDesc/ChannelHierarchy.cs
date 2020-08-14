@@ -14,7 +14,7 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Model.ChannelHierarchiesDesc
 
     public class ChannelHierarchy
     {
-        public string channelHierarchyIdentifier;
+        public string channelHierarchyDescriptionIdentifier;
         public ChannelHierarchyDescription channelHierarchy = new ChannelHierarchyDescription();
 
         public static ChannelHierarchy FromChannelsParenting(Dictionary<int, int> channelsParenting)

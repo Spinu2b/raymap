@@ -10,9 +10,19 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.ModelConstr
 {
     public class SubobjectsChannelsAssociationsInfoFactory
     {
-        public SubobjectsChannelsAssociations DeriveFor(PersoAccessorAnimationStatesHelper persoBehaviourAnimationStatesHelper)
+        public SubobjectsChannelsAssociations DeriveFor(PersoAccessorAnimationStatesHelper persoAccessorAnimationStatesHelper)
         {
-            throw new NotImplementedException();
+            var subobjectsChannelsAssociationsInfoBuilder = new SubobjectsChannelsAssociationsInfoBuilder();
+            foreach (Tuple<int, SubobjectsChannelsAssociation> subobjectsChannelsAssociationForFrame in 
+                persoAccessorAnimationStatesHelper.IterateChannelSubobjectsAssociationsDataForThisAnimationState())
+            {
+                var subobjectsChannelsAssociationDict = new Dictionary<string, SubobjectsChannelsAssociation>();
+                subobjectsChannelsAssociationDict.Add(subobjectsChannelsAssociationForFrame.Item2.subobjectsChannelsAssociationIdentifier,
+                    subobjectsChannelsAssociationForFrame.Item2);
+                subobjectsChannelsAssociationsInfoBuilder.Consolidate(
+                    SubobjectsChannelsAssociations.FromSubobjectsChannelsAssociationDict(subobjectsChannelsAssociationDict));
+            }
+            return subobjectsChannelsAssociationsInfoBuilder.Build();
         }
     }
 }

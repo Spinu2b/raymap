@@ -14,7 +14,7 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.ModelConstr.Anim
         protected override string GetKey(Dictionary<int, int> channelsParenting)
         {
             ChannelHierarchy channelHierarchy = ChannelHierarchy.FromChannelsParenting(channelsParenting);
-            return channelHierarchy.channelHierarchyIdentifier;
+            return channelHierarchy.channelHierarchyDescriptionIdentifier;
         }
     }
 }

@@ -21,5 +21,11 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Model
     public class SubobjectsChannelsAssociations
     {
         public Dictionary<string, SubobjectsChannelsAssociation> subobjectsChannelsAssociations = new Dictionary<string, SubobjectsChannelsAssociation>();
+
+        public static SubobjectsChannelsAssociations 
+            FromSubobjectsChannelsAssociationDict(Dictionary<string, SubobjectsChannelsAssociation> subobjectsChannelsAssociationDict)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
