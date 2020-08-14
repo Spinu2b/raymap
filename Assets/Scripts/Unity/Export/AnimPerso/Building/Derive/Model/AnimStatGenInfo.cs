@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Perso;
+﻿using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.ModelConstr;
+using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Perso;
 using Assets.Scripts.Unity.Export.AnimPerso.Model;
 using Assets.Scripts.Unity.Export.AnimPerso.Model.AnimClipsDesc;
 using System;
@@ -37,7 +38,7 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Model
 
         public void BuildData()
         {
-            animationClipModel = new AnimationClipModelFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
+            animationClipModel = new AnimationClipFactory().DeriveFor(persoBehaviourAnimationStatesHelper);
             animationClipId = animationClipModel.id;
 
             subobjectsChannelsAssociations = new SubobjectsChannelsAssociationsInfoFactory().DeriveFor(persoBehaviourAnimationStatesHelper);

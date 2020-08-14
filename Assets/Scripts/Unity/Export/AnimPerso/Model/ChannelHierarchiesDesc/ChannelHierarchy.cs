@@ -16,5 +16,10 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Model.ChannelHierarchiesDesc
     {
         public string channelHierarchyIdentifier;
         public ChannelHierarchyDescription channelHierarchy = new ChannelHierarchyDescription();
+
+        public static ChannelHierarchy FromChannelsParenting(Dictionary<int, int> channelsParenting)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
