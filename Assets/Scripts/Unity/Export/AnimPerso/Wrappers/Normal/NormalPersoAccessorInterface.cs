@@ -37,7 +37,7 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Normal
 
         public override SubobjectsLibrary GetSubobjectsLibrary()
         {
-            throw new NotImplementedException();
+            return normalPersoAccessorSubobjectsLibraryFetchingHelper.GetPersoSubobjectsLibrary();
         }
 
         public override bool IsValidAnimationState(int animationStateIndex)
@@ -48,6 +48,16 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Normal
         public override void SetState(int stateIndex)
         {
             throw new NotImplementedException();
+        }
+
+        public NormalPersoAccessor() : base()
+        {
+            this.normalPersoAccessorAnimationKeyframesFetchingHelper = new NormalPersoAccessorAnimationKeyframesFetchingHelper(this);
+            this.normalPersoAccessorAnimationSubobjectsChannelsAssociationFetchingHelper = new NormalPersoAccessorAnimationSubobjectsChannelsAssociationsFetchingHelper();
+            this.normalPersoAccessorChannelsParentingFetchingHelper = new NormalPersoAccessorChannelsParentingFetchingHelper(this);
+            this.normalPersoAccessorMorphFetchingHelper = new NormalPersoAccessorMorphFetchingHelper(this);
+            this.normalPersoAccessorStateHelper = new NormalPersoAccessorStateHelper(this);
+            this.normalPersoAccessorSubobjectsLibraryFetchingHelper = new NormalPersoAccessorSubobjectsLibraryFetchingHelper(this);
         }
     }
 }

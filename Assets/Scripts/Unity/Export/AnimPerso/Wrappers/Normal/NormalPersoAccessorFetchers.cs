@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Normal
 {
-    class NormalPersoAccessorFetchers
+    public partial class NormalPersoAccessor
     {
+        private NormalPersoAccessorAnimationKeyframesFetchingHelper normalPersoAccessorAnimationKeyframesFetchingHelper;
+        private NormalPersoAccessorAnimationSubobjectsChannelsAssociationFetchingHelper
+            normalPersoAccessorAnimationSubobjectsChannelsAssociationFetchingHelper;
+        private NormalPersoAccessorChannelsParentingFetchingHelper normalPersoAccessorChannelsParentingFetchingHelper;
+        private NormalPersoAccessorMorphFetchingHelper normalPersoAccessorMorphFetchingHelper;
+        private NormalPersoAccessorStateHelper normalPersoAccessorStateHelper;
+        private NormalPersoAccessorSubobjectsLibraryFetchingHelper normalPersoAccessorSubobjectsLibraryFetchingHelper;
     }
 }
