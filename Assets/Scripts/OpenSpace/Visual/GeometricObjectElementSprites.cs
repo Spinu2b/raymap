@@ -248,6 +248,16 @@ namespace OpenSpace.Visual {
         }
 
         public IGeometricObjectElement Clone(GeometricObject mesh) {
+            return ActualClone(mockUnityApi: false, mesh: mesh);
+        }
+
+        public IGeometricObjectElement CloneWithMockedUnityApi(GeometricObject mesh)
+        {
+            return ActualClone(mockUnityApi: true, mesh: mesh);
+        }
+
+        private IGeometricObjectElement ActualClone(bool mockUnityApi, GeometricObject mesh)
+        {
             GeometricObjectElementSprites sm = (GeometricObjectElementSprites)MemberwiseClone();
             sm.geo = mesh;
             sm.Reset();

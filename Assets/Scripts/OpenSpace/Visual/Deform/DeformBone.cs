@@ -55,6 +55,16 @@ namespace OpenSpace.Visual.Deform {
         }
 
         public DeformBone Clone() {
+            return ActualClone(mockUnityApi: false);
+        }
+
+        public DeformBone CloneWithMockedUnityApi()
+        {
+            return ActualClone(mockUnityApi: true);
+        }
+
+        private DeformBone ActualClone(bool mockUnityApi)
+        {
             DeformBone b = (DeformBone)MemberwiseClone();
             b.Reset();
             return b;

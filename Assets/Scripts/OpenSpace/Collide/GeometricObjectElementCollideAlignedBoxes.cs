@@ -114,6 +114,16 @@ namespace OpenSpace.Collide {
         }
 
         public IGeometricObjectElementCollide Clone(GeometricObjectCollide mesh) {
+            return ActualClone(mockUnityApi: false, mesh: mesh);
+        }
+
+        public IGeometricObjectElementCollide CloneWithMockedUnityApi(GeometricObjectCollide mesh)
+        {
+            return ActualClone(mockUnityApi: true, mesh: mesh);
+        }
+
+        private IGeometricObjectElementCollide ActualClone(bool mockUnityApi, GeometricObjectCollide mesh)
+        {
             GeometricObjectElementCollideAlignedBoxes sm = (GeometricObjectElementCollideAlignedBoxes)MemberwiseClone();
             sm.geo = mesh;
             sm.Reset();

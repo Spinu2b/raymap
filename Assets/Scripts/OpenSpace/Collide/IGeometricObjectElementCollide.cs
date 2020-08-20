@@ -7,7 +7,7 @@ namespace OpenSpace.Collide {
     public interface IGeometricObjectElementCollide {
         GameObject Gao { get; }
         IGeometricObjectElementCollide Clone(GeometricObjectCollide mesh);
-        IGeometricObjectElementCollide CloneWithMockedUnityApi(GeometricObjectCollide m);
+        IGeometricObjectElementCollide CloneWithMockedUnityApi(GeometricObjectCollide mesh);
         GameMaterial GetMaterial(int? index);
     }
 }

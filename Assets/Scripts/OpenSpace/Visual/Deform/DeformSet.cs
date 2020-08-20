@@ -155,16 +155,37 @@ namespace OpenSpace.Visual.Deform {
         }
 
         public IGeometricObjectElement Clone(GeometricObject mesh) {
+            return ActualClone(mockUnityApi: false, mesh: mesh);
+        }
+
+        public IGeometricObjectElement CloneWithMockedUnityApi(GeometricObject mesh)
+        {
+            return ActualClone(mockUnityApi: true, mesh: mesh);
+        }
+
+        private IGeometricObjectElement ActualClone(bool mockUnityApi, GeometricObject mesh)
+        {
             DeformSet d = (DeformSet)MemberwiseClone();
             d.Reset();
             d.mesh = mesh;
             d.r3bones = new DeformBone[r3bones.Length];
-            for (int i = 0; i < r3bones.Length; i++) {
-                d.r3bones[i] = r3bones[i].Clone();
+            for (int i = 0; i < r3bones.Length; i++)
+            {
+                if (mockUnityApi)
+                {
+                    d.r3bones[i] = r3bones[i].CloneWithMockedUnityApi();
+                } else {
+                    d.r3bones[i] = r3bones[i].Clone();
+                }                
             }
             d.r3weights = new DeformVertexWeights[r3weights.Length];
-            for (int i = 0; i < r3weights.Length; i++) {
-                d.r3weights[i] = r3weights[i].Clone();
+            for (int i = 0; i < r3weights.Length; i++)
+            {
+                if (mockUnityApi) {
+                    d.r3weights[i] = r3weights[i].CloneWithMockedUnityApi();
+                } else {
+                    d.r3weights[i] = r3weights[i].Clone();
+                }                
             }
             return d;
         }

@@ -6,6 +6,7 @@ namespace OpenSpace.Visual {
     /// </summary>
     public interface IGeometricObjectElement {
         IGeometricObjectElement Clone(GeometricObject mesh);
+        IGeometricObjectElement CloneWithMockedUnityApi(GeometricObject mesh);
         GameObject Gao {
             get;
         }

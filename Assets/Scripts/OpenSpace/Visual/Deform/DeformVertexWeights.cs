@@ -65,6 +65,16 @@ namespace OpenSpace.Visual.Deform {
         }
 
         public DeformVertexWeights Clone() {
+            return ActualClone(mockUnityApi: false);
+        }
+
+        public DeformVertexWeights CloneWithMockedUnityApi()
+        {
+            return ActualClone(mockUnityApi: true);
+        }
+
+        private DeformVertexWeights ActualClone(bool mockUnityApi)
+        {
             DeformVertexWeights w = (DeformVertexWeights)MemberwiseClone();
             w.Reset();
             return w;

@@ -61,6 +61,15 @@ namespace OpenSpace.Visual {
         }
 
         public IGeometricObject Clone() {
+            return ActualClone(mockUnityApi: false);
+        }
+
+        public IGeometricObject CloneWithMockedUnityApi()
+        {
+            return ActualClone(mockUnityApi: true);
+        }
+
+        private IGeometricObject ActualClone(bool mockUnityApi) {
             PatchGeometricObject lodObj = (PatchGeometricObject)MemberwiseClone();
             return lodObj;
         }

@@ -1086,13 +1086,23 @@ namespace OpenSpace.Visual {
         }
 
         public IGeometricObjectElement Clone(GeometricObject geo) {
-            GeometricObjectElementTriangles sm = (GeometricObjectElementTriangles)MemberwiseClone();
-            sm.geo = geo;
-            sm.Reset();
-            return sm;
+			return ActualClone(mockUnityApi: false, geo: geo);
         }
 
-        private Mesh CopyMesh(Mesh mesh) {
+		public IGeometricObjectElement CloneWithMockedUnityApi(GeometricObject geo)
+		{
+			return ActualClone(mockUnityApi: true, geo: geo);
+		}
+
+		private IGeometricObjectElement ActualClone(bool mockUnityApi, GeometricObject geo)
+        {
+			GeometricObjectElementTriangles sm = (GeometricObjectElementTriangles)MemberwiseClone();
+			sm.geo = geo;
+			sm.Reset();
+			return sm;
+		}
+
+		private Mesh CopyMesh(Mesh mesh) {
             uint num_textures = visualMaterial != null ? visualMaterial.num_textures : 0;
             Mesh newmesh = new Mesh();
             newmesh.vertices = mesh.vertices;

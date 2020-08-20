@@ -476,17 +476,32 @@ namespace OpenSpace.Visual {
         }
 
         public IGeometricObject Clone() {
-            GeometricObject m = (GeometricObject)MemberwiseClone();
-            m.Reset();
-            m.elements = new IGeometricObjectElement[num_elements];
-            for (uint i = 0; i < m.num_elements; i++) {
-                if (elements[i] != null) {
-                    m.elements[i] = elements[i].Clone(m);
-                    if (m.elements[i] is DeformSet) m.bones = (DeformSet)m.elements[i];
-                }
-            }
-			m.MorphedVertices = null;
-            return m;
+			return ActualClone(mockUnityApi: false);
+		}
+
+        public IGeometricObject CloneWithMockedUnityApi()
+        {
+			return ActualClone(mockUnityApi: true);
         }
+
+		private IGeometricObject ActualClone(bool mockUnityApi)
+        {
+			GeometricObject m = (GeometricObject)MemberwiseClone();
+			m.Reset();
+			m.elements = new IGeometricObjectElement[num_elements];
+			for (uint i = 0; i < m.num_elements; i++)
+			{
+				if (elements[i] != null) {
+					if (mockUnityApi) {
+						m.elements[i] = elements[i].CloneWithMockedUnityApi(m);
+                    } else {
+						m.elements[i] = elements[i].Clone(m);
+					}					
+					if (m.elements[i] is DeformSet) m.bones = (DeformSet)m.elements[i];
+				}
+			}
+			m.MorphedVertices = null;
+			return m;
+		}
     }
 }
