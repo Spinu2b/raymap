@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Normal
+namespace Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Normal.Anim
 {
-    public class NormalPersoAccessor
+    class AnimGovernMethods
     {
     }
 }

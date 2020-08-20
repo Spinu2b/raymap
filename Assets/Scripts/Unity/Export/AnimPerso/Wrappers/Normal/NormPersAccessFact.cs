@@ -1,7 +1,10 @@
-﻿using Assets.Scripts.Unity.Export.Wrappers;
+﻿using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Model.Unity;
+using Assets.Scripts.Unity.Export.Wrappers;
+using OpenSpace.Object;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -34,9 +37,39 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Normal
                 "hasBones", System.Reflection.BindingFlags.NonPublic | BindingFlags.Instance).GetValue(persoBehaviour);
 
             result.channelIDDictionary = CloneChannelIDDictionary(persoBehaviour);
+            return result;
+        }
 
+        private static ActualManifestableUnityGameObject[] GetChannelObjects(PersoBehaviour persoBehaviour)
+        {
+            return persoBehaviour.channelObjects.Select(x => new ActualManifestableUnityGameObject()).ToArray();
+        }
 
-            throw new NotImplementedException();
+        private static PhysicalObject[][] GetSubobjects(PersoBehaviour persoBehaviour)
+        {
+            var result = new List<List<PhysicalObject>>();
+            int sublistIndex = 0;
+
+            foreach (var physicalObjectsArray in persoBehaviour.subObjects)
+            {
+                result.Add(new List<PhysicalObject>());
+                int physicalObjectNumber = 0;
+                foreach (var physicalObject in physicalObjectsArray)
+                {
+                    result[sublistIndex].Add(null);
+                    if (physicalObject != null)
+                    {
+                        result[sublistIndex][physicalObjectNumber] = physicalObject.CloneWithMockedUnityApi();
+                    } else
+                    {
+                        result[sublistIndex][physicalObjectNumber] = null;
+                    }
+                    physicalObjectNumber++;
+                }
+                sublistIndex++;
+            }
+
+            return result.Select(x => x.ToArray()).ToArray();
         }
 
         private static Dictionary<short, List<int>> CloneChannelIDDictionary(PersoBehaviour persoBehaviour)
