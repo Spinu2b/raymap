@@ -4,6 +4,7 @@ using Assets.Scripts.Unity.Export.AnimPerso;
 using Assets.Scripts.Unity.Export.AnimPerso.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,13 +24,10 @@ namespace Assets.Scripts.Editor.Export.AnimPerso
             GUILayout.BeginVertical();
             if (GUILayout.Button("Export animated perso"))
             {
-                string filePath = FilesHelper.GetFilePathToSave(
-                    extension: "animPerso", label: "Choose file path to export animated perso model to", description: "Animated perso description");
-                if (filePath != null)
-                {
-                    AnimatedPersoDescription animatedPersoDescription = animPersoExportComponent.ExportAnimatedPerso();
-                    JsonModelFileWriter.WriteTofile(filePath, animatedPersoDescription);
-                }                
+                AnimatedPersoDescription animatedPersoDescription = animPersoExportComponent.ExportAnimatedPerso();
+                string filePath = Path.Combine(UnitySettings.ExportPath, "PersoModelExport",
+                    FilesHelper.AvoidNotAllowedCharsInFilepath(animatedPersoDescription.name) + ".animperso");
+                JsonModelFileWriter.WriteTofile(filePath, animatedPersoDescription);               
             }
             GUILayout.EndVertical();
         }

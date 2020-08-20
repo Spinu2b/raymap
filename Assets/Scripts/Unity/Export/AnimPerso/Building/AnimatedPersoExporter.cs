@@ -27,7 +27,7 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Building
 
         private string GetPersoName(PersoAccessor persoAccessor)
         {
-            throw new NotImplementedException();
+            return persoAccessor.name;
         }
 
         private Tuple<AnimationClips, SubobjectsLibrary, ChannelHierarchies, SubobjectsChannelsAssociations>

@@ -8,7 +8,7 @@ namespace Assets.Scripts.Editor.Util
 {
     public static class FilesHelper
     {
-        public static string GetFilePathToSave(string extension, string label, string description)
+        public static string AvoidNotAllowedCharsInFilepath(string filePath)
         {
             throw new NotImplementedException();
         }
