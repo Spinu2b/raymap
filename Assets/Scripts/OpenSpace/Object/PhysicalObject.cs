@@ -74,7 +74,7 @@ namespace OpenSpace.Object {
             }
         }
 
-		private SuperObject superObject;
+        private SuperObject superObject;
 		public SuperObject SuperObject {
 			get { return superObject; }
 		}
@@ -219,16 +219,34 @@ namespace OpenSpace.Object {
         }
 
         public PhysicalObject Clone() {
+            return ActualClone(mockUnityApi: false);
+        }
+
+        public PhysicalObject CloneWithMockedUnityApi() {
+            return ActualClone(mockUnityApi: true);
+        }
+
+        private PhysicalObject ActualClone(bool mockUnityApi)
+        {
             PhysicalObject po = (PhysicalObject)MemberwiseClone();
             po.visualSet = new VisualSetLOD[visualSet.Length];
             po.Reset();
-            for (int i = 0; i < visualSet.Length; i++) {
+            for (int i = 0; i < visualSet.Length; i++)
+            {
                 po.visualSet[i].LODdistance = visualSet[i].LODdistance;
                 po.visualSet[i].off_data = visualSet[i].off_data;
-                po.visualSet[i].obj = visualSet[i].obj.Clone();
+                if (mockUnityApi) {
+                    po.visualSet[i].obj = visualSet[i].obj.CloneWithMockedUnityApi();
+                } else {
+                    po.visualSet[i].obj = visualSet[i].obj.Clone();
+                }                
             }
             if (collideMesh != null) {
-                po.collideMesh = collideMesh.Clone();
+                if (mockUnityApi) {
+                    po.collideMesh = collideMesh.CloneWithMockedUnityApi();
+                } else {
+                    po.collideMesh = collideMesh.Clone();
+                }                
             }
             return po;
         }

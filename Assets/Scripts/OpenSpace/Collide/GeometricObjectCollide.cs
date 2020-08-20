@@ -286,10 +286,23 @@ namespace OpenSpace.Collide {
         }
 
         public GeometricObjectCollide Clone() {
+            return ActualClone(mockUnityApi: false);
+        }
+
+        public GeometricObjectCollide CloneWithMockedUnityApi() {
+            return ActualClone(mockUnityApi: true);
+        }
+
+        private GeometricObjectCollide ActualClone(bool mockUnityApi)
+        {
             GeometricObjectCollide m = (GeometricObjectCollide)MemberwiseClone();
             for (uint i = 0; i < m.num_elements; i++) {
                 if (elements[i] != null) {
-                    m.elements[i] = elements[i].Clone(m);
+                    if (mockUnityApi) {
+                        m.elements[i] = elements[i].CloneWithMockedUnityApi(m);
+                    } else {
+                        m.elements[i] = elements[i].Clone(m);
+                    }                    
                 }
             }
             return m;
