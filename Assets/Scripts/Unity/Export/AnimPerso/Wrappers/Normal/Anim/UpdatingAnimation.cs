@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Normal.Anim
+namespace Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Normal
 {
-    class UpdatingAnimation
+    public partial class NormalPersoAccessor
     {
+        public void UpdateAnimation()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

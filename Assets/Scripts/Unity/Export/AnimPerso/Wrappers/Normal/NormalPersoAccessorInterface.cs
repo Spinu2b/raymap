@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Unity.Export.AnimPerso.Model;
+﻿using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Perso.Norm;
+using Assets.Scripts.Unity.Export.AnimPerso.Model;
 using Assets.Scripts.Unity.Export.AnimPerso.Model.AnimClipsDesc;
 using Assets.Scripts.Unity.Export.Wrappers;
 using System;
@@ -53,7 +54,7 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Normal
         public NormalPersoAccessor() : base()
         {
             this.normalPersoAccessorAnimationKeyframesFetchingHelper = new NormalPersoAccessorAnimationKeyframesFetchingHelper(this);
-            this.normalPersoAccessorAnimationSubobjectsChannelsAssociationFetchingHelper = new NormalPersoAccessorAnimationSubobjectsChannelsAssociationsFetchingHelper();
+            this.normalPersoAccessorAnimationSubobjectsChannelsAssociationFetchingHelper = new NormalPersoAccessorAnimationSubobjectsChannelsAssociationFetchingHelper(this);
             this.normalPersoAccessorChannelsParentingFetchingHelper = new NormalPersoAccessorChannelsParentingFetchingHelper(this);
             this.normalPersoAccessorMorphFetchingHelper = new NormalPersoAccessorMorphFetchingHelper(this);
             this.normalPersoAccessorStateHelper = new NormalPersoAccessorStateHelper(this);

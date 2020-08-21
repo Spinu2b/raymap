@@ -10,6 +10,11 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Model
     {
         public Dictionary<int, List<int>> channelsForSubobjectsParenting = new Dictionary<int, List<int>>();
         public Dictionary<int, Dictionary<int, List<int>>> channelsForSubobjectsBonesParenting = new Dictionary<int, Dictionary<int, List<int>>>();
+
+        public string ComputeHash()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class SubobjectsChannelsAssociation
