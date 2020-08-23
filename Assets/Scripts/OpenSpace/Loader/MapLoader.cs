@@ -21,6 +21,7 @@ using OpenSpace.Animation.ComponentLargo;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Cysharp.Threading.Tasks;
+using Assets.Scripts.Unity.Export.Resources;
 
 namespace OpenSpace {
     public class MapLoader {
@@ -114,6 +115,8 @@ namespace OpenSpace {
         public List<SearchableString> searchableStrings = new List<SearchableString>();
 		public Dictionary<Pointer, Pointer.PointerTrace> pointerTraces = new Dictionary<Pointer, Pointer.PointerTrace>();
 
+		
+
         public static class Mem {
             public const int Fix = 0;
             public const int Lvl = 1;
@@ -128,7 +131,8 @@ namespace OpenSpace {
         public Reader livePreviewReader;
 
         private static MapLoader loader = null;
-        public static MapLoader Loader {
+		private static VisualDataHolder visualDataHolder = null;
+		public static MapLoader Loader {
             get {
                 if (loader == null) {
                     if (Settings.s == null) return null;
@@ -150,13 +154,30 @@ namespace OpenSpace {
 							loader = new R3Loader();
 						}
                     }
-                    //loader = new MapLoader();
+					//loader = new MapLoader();
+					visualDataHolder = new VisualDataHolder();
                 }
                 return loader;
             }
         }
+
+		public static VisualDataHolder VisDataHolder
+        {
+			get
+            {
+				if (visualDataHolder == null)
+                {
+					throw new InvalidOperationException("Something is wrong. visualDataHolder reference should not be null in here");
+                } else
+                {
+					return visualDataHolder;
+                }
+            }
+        }
+
 		public static void Reset() {
 			loader = null;
+			visualDataHolder = null;
 		}
 
         public MapLoader() {

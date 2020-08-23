@@ -1,4 +1,6 @@
 ﻿using Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc;
+using Assets.Scripts.Unity.Export.Resources;
+using OpenSpace;
 using OpenSpace.Visual;
 using System;
 using System.Collections.Generic;
@@ -10,17 +12,22 @@ namespace Assets.Scripts.Unity.Export.Wrappers.Visual
 {
     public class TextureInfoWrapper
     {
-        private TextureInfoWrapper() { }
+        private TextureInfo textureInfo;
+
+        private TextureInfoWrapper(TextureInfo textureInfo) {
+            this.textureInfo = textureInfo;
+        }
 
         public static TextureInfoWrapper FromNormalTextureInfo(TextureInfo textureInfo)
         {
-            var result = new TextureInfoWrapper();
-            throw new NotImplementedException();
+            var result = new TextureInfoWrapper(textureInfo);
+            return result;
         }
 
         public VisualData GetVisualData()
         {
-            throw new NotImplementedException();
+            VisualDataHolder visualDataHolder = MapLoader.VisDataHolder;
+            return visualDataHolder.GetVisualDataForVisualTextureInfo(textureInfo);
         }
     }
 }
