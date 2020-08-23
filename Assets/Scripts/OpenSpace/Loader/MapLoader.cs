@@ -347,6 +347,7 @@ namespace OpenSpace {
                     GF gf = cnt.GetGFByTGAName(texInfo.name);
                     texInfo.Texture = gf != null ? gf.GetTexture() : null;
                     textureInfos.Add(texInfo);
+					visualDataHolder.AddVisualDataForVisualTextureInfo(texInfo, gf.GetTextureInExportModel());
                     Pointer.Goto(ref reader, off_current);
                 }
             }
@@ -635,6 +636,7 @@ MonoBehaviour.print(str);
 								Util.ByteArrayToFile(gameDataBinFolder + "textures/" + tex.name.Substring(0, tex.name.LastIndexOf('.')) + ".png", menuTPL.textures[i].EncodeToPNG());
 							}*/
 							tex.Texture = menuTPL.textures[i];
+							visualDataHolder.AddVisualDataForVisualTextureInfo(tex, menuTPL.texturesInExportModel[i]);
 						}
 					}
 					for (int i = 0, j = 0; i < num_textures; i++, j++) {
@@ -646,6 +648,7 @@ MonoBehaviour.print(str);
 						Texture2D tex = null;
 						if (file_texture == 0) {
 							tex = fixTPL.textures[texturesSeenFile[file_texture]];
+							visualDataHolder.AddVisualDataForVisualTextureInfo(textures[i], fixTPL.texturesInExportModel[texturesSeenFile[file_texture]]);
 						}
 						// if it's 8, it's menu and has already been assigned
 						if (exportTextures) {

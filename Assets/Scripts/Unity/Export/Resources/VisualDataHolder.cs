@@ -14,5 +14,10 @@ namespace Assets.Scripts.Unity.Export.Resources
         {
             throw new NotImplementedException();
         }
+
+        internal void AddVisualDataForVisualTextureInfo(TextureInfo textureInfo, VisualData visualData)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using LibGC.Texture;
+﻿using Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc;
+using LibGC.Texture;
 using System;
 using System.IO;
 using UnityEngine;
@@ -16,6 +17,8 @@ namespace OpenSpace.FileFormat.Texture {
 		public string path;
 
         public Texture2D[] textures = null;
+        public VisualData[] texturesInExportModel = null;
+
         public TPL(string path) {
 			this.path = path;
             Stream fs = FileSystem.GetFileReadStream(path);
@@ -23,6 +26,7 @@ namespace OpenSpace.FileFormat.Texture {
                 reader.ReadUInt32();
                 count = reader.ReadUInt32();
                 textures = new Texture2D[count];
+                texturesInExportModel = new VisualData[count];
                 uint off_imtable = reader.ReadUInt32();
                 for (uint i = 0; i < count; i++) {
                     fs.Seek(off_imtable + 8 * i, SeekOrigin.Begin);
@@ -46,17 +50,21 @@ namespace OpenSpace.FileFormat.Texture {
                     switch (format) {
                         case 0x01:
                             textures[i] = ReadTexture(fs, reader, (int)height, (int)width, GcTextureFormat.I8);
+                            texturesInExportModel[i] = ReadTextureInExportModel(fs, reader, (int)height, (int)width, GcTextureFormat.I8);
                             break;
                         case 0x02:
                             textures[i] = ReadTexture(fs, reader, (int)height, (int)width, GcTextureFormat.IA4);
+                            texturesInExportModel[i] = ReadTextureInExportModel(fs, reader, (int)height, (int)width, GcTextureFormat.IA4);
                             break;
                         case 0x06:
                             // RGBA32 (RGBA8)
                             textures[i] = ReadTexture(fs, reader, (int)height, (int)width, GcTextureFormat.RGBA8);
+                            texturesInExportModel[i] = ReadTextureInExportModel(fs, reader, (int)height, (int)width, GcTextureFormat.RGBA8);
                             break;
                         case 0x0E:
                             // CMPR
                             textures[i] = ReadTexture(fs, reader, (int)height, (int)width, GcTextureFormat.CMPR);
+                            texturesInExportModel[i] = ReadTextureInExportModel(fs, reader, (int)height, (int)width, GcTextureFormat.CMPR);
                             break;
                         default:
                             throw new FormatException("Format not implemented: " + format);
@@ -77,6 +85,11 @@ namespace OpenSpace.FileFormat.Texture {
             tex.LoadRawTextureData(destData);
             tex.Apply();
             return tex;
+        }
+
+        private VisualData ReadTextureInExportModel(Stream fs, Reader reader, int height, int width, LibGC.Texture.GcTextureFormat format)
+        {
+            throw new NotImplementedException();
         }
     }
 }
