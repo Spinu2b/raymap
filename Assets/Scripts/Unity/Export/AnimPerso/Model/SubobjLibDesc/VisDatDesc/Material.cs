@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Unity.Export.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,9 +30,22 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc
         public MaterialBaseClass materialBaseClass;
     }
 
-    public class Material
+    public class Material : IExportModel, IComparableModel<Material>
     {
         public string identifier;
         public MaterialDescription description;
+
+        public MaterialBaseClass materialBaseClass
+        {
+            get
+            {
+                return description.materialBaseClass;
+            }
+        }
+
+        public bool EqualsToAnother(Material other)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
