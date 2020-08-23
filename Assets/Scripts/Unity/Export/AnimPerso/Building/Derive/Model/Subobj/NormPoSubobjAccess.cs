@@ -1,4 +1,7 @@
-﻿using Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc;
+﻿using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Model.Subobj.NormPo.Parts;
+using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Model.Subobj.NormPo.Parts.IWrap;
+using Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc;
+using OpenSpace.Object;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +15,7 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Model.Subobj
         private NormalPhysicalObjectWrapper physicalObject;
         private int objectNumber;
 
-        public NormalPhysicalObjectSubobjectAccessor(int objectNumber, PhysicalObjectComponent physicalObject)
+        public NormalPhysicalObjectSubobjectAccessor(int objectNumber, PhysicalObject physicalObject)
         {
             this.physicalObject = new NormalPhysicalObjectWrapper(physicalObject);
             this.objectNumber = objectNumber;
@@ -30,16 +33,23 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Model.Subobj
                     {
                         if (interfaceGeometricObjectElement.Item2.IsNormalGeometricObjectElementTriangles())
                         {
-                            NormalGeometricObjectElementTrianglesWrapper geometricObjectElementTrianglesWrapper =
+                            NormalGeometricObjectElementTrianglesWrapper geometricObjectElementTriangles =
                                 interfaceGeometricObjectElement.Item2.GetNormalGeometricObjectElementTriangles();
-                            if (!geometricObjectElementTrianglesWrapper.IsAlphaTransparencyObject())
+                            if (!geometricObjectElementTriangles.IsAlphaTransparencyObject())
                             {
-                                return GetSubobjectModel(geometricObjectElementTriangles);
+                                return GetSubobjectModelFromElementTriangles(geometricObjectElementTriangles);
                             }
                         }
                     }
                 }
             }
+            throw new InvalidOperationException("This physical object does not contain any " +
+                "legitimate data that can be turned into subobject model for export!");
+        }
+
+        private Subobject GetSubobjectModelFromElementTriangles(NormalGeometricObjectElementTrianglesWrapper geometricObjectElementTriangles)
+        {
+            throw new NotImplementedException();
         }
 
         public override VisualData GetVisualData()

@@ -1,4 +1,5 @@
-﻿using OpenSpace.Object;
+﻿using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Model.Subobj.NormPo.Parts.IWrap;
+using OpenSpace.Object;
 using System;
 using System.Collections.Generic;
 using System.Linq;

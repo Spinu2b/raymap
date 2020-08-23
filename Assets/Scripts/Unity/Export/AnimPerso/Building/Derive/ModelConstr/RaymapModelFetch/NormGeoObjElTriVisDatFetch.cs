@@ -1,4 +1,6 @@
-﻿using OpenSpace.Visual;
+﻿using Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc;
+using Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Extensions.Visual;
+using OpenSpace.Visual;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.ModelConstr.Raym
 {
     public static class NormalGeometricObjectElementTrianglesVisualDataFetcher
     {
-        public static VisualDataHelper DeriveFor(
+        public static VisualData DeriveFor(
             GeometricObjectElementTriangles geometricObjectElementTriangles)
         {
             if (geometricObjectElementTriangles.visualMaterial != null)

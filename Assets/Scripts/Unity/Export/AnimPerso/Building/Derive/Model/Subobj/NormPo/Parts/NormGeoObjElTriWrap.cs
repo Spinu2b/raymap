@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc;
+﻿using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.ModelConstr.RaymapModelFetch;
+using Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc;
 using Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc.GeoObjDesc;
 using Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc;
 using Assets.Scripts.Unity.Export.Math;

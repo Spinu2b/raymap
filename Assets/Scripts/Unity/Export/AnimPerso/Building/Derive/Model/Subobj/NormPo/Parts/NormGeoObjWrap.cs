@@ -1,4 +1,5 @@
-﻿using OpenSpace.Visual;
+﻿using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Model.Subobj.NormPo.Parts.IWrap;
+using OpenSpace.Visual;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Model.Subobj.Nor
             this.geometricObject = geometricObject;
         }
 
-        public IEnumerable<Tuple<int, IGeometricObjectElementWrapper>> IterateGeometricObjectElements()
+        public IEnumerable<Tuple<int, IGeometricObjectElementWrapper>> IterateIGeometricObjectElements()
         {
             int index = 0;
             foreach (var geometricObjectElement in geometricObject.elements)

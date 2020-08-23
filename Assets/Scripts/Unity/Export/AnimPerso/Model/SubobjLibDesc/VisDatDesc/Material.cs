@@ -21,6 +21,21 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc
         public const string billboard = "Billboard";
 
         private const string textureNameCore = "Texture_";
+
+        public static string GetMaterialTextureFieldName(int textureIndex)
+        {
+            return textureNameCore + textureIndex;
+        }
+
+        public static string GetTextureParamsFieldName(string textureName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static string GetTextureParams2FieldName(string textureName)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class MaterialDescription
@@ -33,7 +48,7 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc
     public class Material : IExportModel, IComparableModel<Material>
     {
         public string identifier;
-        public MaterialDescription description;
+        public MaterialDescription description = new MaterialDescription();
 
         public MaterialBaseClass materialBaseClass
         {
@@ -44,6 +59,16 @@ namespace Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc
         }
 
         public bool EqualsToAnother(Material other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetFloat(string floatName, float floatValue)
+        {
+            description.floats[floatName] = floatValue;
+        }
+
+        public void AddTexture(string textureName, Texture2D textureData)
         {
             throw new NotImplementedException();
         }
