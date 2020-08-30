@@ -1,5 +1,5 @@
-﻿using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Model.Unity;
-using Assets.Scripts.Unity.Export.Wrappers;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Model.Unity;
+using Assets.Scripts.StandaloneAppCapacities.Export.Wrappers;
 using OpenSpace.Object;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Normal
+namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Normal
 {
     public class NormalPersoAccessorFactory
     {

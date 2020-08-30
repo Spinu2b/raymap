@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Model.Unity;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Model.Unity;
 using OpenSpace.Animation.Component;
 using OpenSpace.Object;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Normal
+namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Normal
 {
     public partial class NormalPersoAccessor
     {

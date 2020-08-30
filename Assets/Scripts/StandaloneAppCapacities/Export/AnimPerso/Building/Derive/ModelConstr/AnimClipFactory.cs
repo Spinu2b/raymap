@@ -1,14 +1,14 @@
-﻿using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.ModelConstr.AnimFrameAssoc;
-using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Perso;
-using Assets.Scripts.Unity.Export.AnimPerso.Model;
-using Assets.Scripts.Unity.Export.AnimPerso.Model.AnimClipsDesc;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr.AnimFrameAssoc;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Perso;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.AnimClipsDesc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.ModelConstr
+namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr
 {
     public class AnimationClipFactory
     {

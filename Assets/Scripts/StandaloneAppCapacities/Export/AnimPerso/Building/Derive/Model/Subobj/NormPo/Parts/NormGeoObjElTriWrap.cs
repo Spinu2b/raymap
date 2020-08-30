@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.ModelConstr.RaymapModelFetch;
-using Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc;
-using Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc.GeoObjDesc;
-using Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc;
-using Assets.Scripts.Unity.Export.Math;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr.RaymapModelFetch;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc.GeoObjDesc;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc;
+using Assets.Scripts.StandaloneAppCapacities.Export.Math;
 using OpenSpace.Visual;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Model.Subobj.NormPo.Parts
+namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Model.Subobj.NormPo.Parts
 {
     public class NormalGeometricObjectElementTrianglesWrapper
     {

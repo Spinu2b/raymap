@@ -1,7 +1,7 @@
-﻿using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.ModelConstr.Build.Visuals;
-using Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc;
-using Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc;
-using Assets.Scripts.Unity.Export.Math;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr.Build.Visuals;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc;
+using Assets.Scripts.StandaloneAppCapacities.Export.Math;
 using OpenSpace;
 using OpenSpace.Visual;
 using System;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static OpenSpace.Visual.VisualMaterial;
 
-namespace Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Extensions.Visual
+namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Extensions.Visual
 {
     public static class VisualMaterialExtensions
     {

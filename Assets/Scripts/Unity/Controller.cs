@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 using OpenSpace.Loader;
 using System.Text.RegularExpressions;
 using Cysharp.Threading.Tasks;
-using Assets.Scripts.Unity.Export.AnimPerso;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso;
 
 public class Controller : MonoBehaviour {
 	public Material baseMaterial;

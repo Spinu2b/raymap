@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Unity.Export.Math
+namespace Assets.Scripts.StandaloneAppCapacities.Export.Math
 {
     public interface Vector
     {

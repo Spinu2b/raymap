@@ -1,11 +1,11 @@
-﻿using Assets.Scripts.Unity.Export.Model;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Unity.Export.Utils
+namespace Assets.Scripts.StandaloneAppCapacities.Export.Utils
 {
     public static class ComparableModelDictionariesMerger
     {

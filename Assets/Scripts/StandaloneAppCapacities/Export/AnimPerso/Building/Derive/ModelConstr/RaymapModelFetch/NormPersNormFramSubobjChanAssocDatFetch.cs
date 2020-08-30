@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Editor.Util;
-using Assets.Scripts.Unity.Export.AnimPerso.Model;
-using Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Normal;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Normal;
 using OpenSpace.Animation.Component;
 using OpenSpace.Object;
 using OpenSpace.Visual.Deform;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.ModelConstr.RaymapModelFetch
+namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr.RaymapModelFetch
 {
     public static class NormalPersoNormalFrameSubobjectsChannelsAssociationDataFetcher
     {

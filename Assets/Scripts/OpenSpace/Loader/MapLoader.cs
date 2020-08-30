@@ -21,7 +21,7 @@ using OpenSpace.Animation.ComponentLargo;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Cysharp.Threading.Tasks;
-using Assets.Scripts.Unity.Export.Resources;
+using Assets.Scripts.StandaloneAppCapacities.Export.Resources;
 
 namespace OpenSpace {
     public class MapLoader {

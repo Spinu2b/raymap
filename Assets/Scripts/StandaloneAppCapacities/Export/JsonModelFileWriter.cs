@@ -1,11 +1,11 @@
-﻿using Assets.Scripts.Unity.Export.AnimPerso.Model;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Unity.Export
+namespace Assets.Scripts.StandaloneAppCapacities.Export
 {
     public static class JsonModelFileWriter
     {

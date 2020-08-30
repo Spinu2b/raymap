@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Normal;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Normal;
 using OpenSpace.Animation.Component;
 using OpenSpace.Object;
 using OpenSpace.Visual;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Unity.Export.AnimPerso.Building.Derive.Perso.Norm
+namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Perso.Norm
 {
     public class NormalPersoAccessorMorphFetchingHelper : NormalPersoAccessorAnimationDataFetchingHelper
     {

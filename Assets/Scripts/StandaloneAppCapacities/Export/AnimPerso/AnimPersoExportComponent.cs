@@ -1,6 +1,6 @@
-﻿using Assets.Scripts.Unity.Export.AnimPerso.Building;
-using Assets.Scripts.Unity.Export.AnimPerso.Model;
-using Assets.Scripts.Unity.Export.Wrappers;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model;
+using Assets.Scripts.StandaloneAppCapacities.Export.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Scripts.Unity.Export.AnimPerso
+namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso
 {
     public class AnimPersoExportComponent : MonoBehaviour
     {

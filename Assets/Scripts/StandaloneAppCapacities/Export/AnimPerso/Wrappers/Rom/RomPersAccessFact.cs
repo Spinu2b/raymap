@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Unity.Export.Wrappers;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Rom
+namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Rom
 {
     public class RomPersoAccessorFactory
     {

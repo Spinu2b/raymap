@@ -1,5 +1,5 @@
-﻿using Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc;
-using Assets.Scripts.Unity.Export.Resources;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc;
+using Assets.Scripts.StandaloneAppCapacities.Export.Resources;
 using OpenSpace;
 using OpenSpace.Visual;
 using System;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Unity.Export.Wrappers.Visual
+namespace Assets.Scripts.StandaloneAppCapacities.Export.Wrappers.Visual
 {
     public class TextureInfoWrapper
     {

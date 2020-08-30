@@ -1,7 +1,7 @@
 ﻿// Adapted from Rayman2Lib by szymski
 // https://github.com/szymski/Rayman2Lib/blob/master/d_tools/rayman2lib/source/formats/gf.d
 
-using Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc;
 using System;
 using System.IO;
 using UnityEngine;
@@ -47,7 +47,7 @@ namespace OpenSpace.FileFormat.Texture {
         public byte[] palette = null;
         public Color[] pixels;
         
-        public Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc.Color[] pixelsInExportModel;
+        public Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc.Color[] pixelsInExportModel;
 
         public GF(byte[] bytes) : this(new MemoryStream(bytes)) {}
         /*public GF(byte[] bytes) {
@@ -111,7 +111,7 @@ namespace OpenSpace.FileFormat.Texture {
             }
 
             pixels = new Color[width * height];
-            pixelsInExportModel = new Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc.Color[width * height];
+            pixelsInExportModel = new Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc.Color[width * height];
             if (Settings.s.engineVersion == Settings.EngineVersion.R3 && channels == 1) {
                 paletteBytesPerColor = 4;
                 paletteNumColors = 256;
@@ -129,12 +129,12 @@ namespace OpenSpace.FileFormat.Texture {
                     if (channels == 4) {
                         byte a = pixelData[pos + 3];
                         pixels[i] = new Color(r / 255f, g / 255f, b / 255f, a / 255f);
-                        pixelsInExportModel[i] = new Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc.Color(r / 255f, g / 255f, b / 255f, a / 255f);
+                        pixelsInExportModel[i] = new Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc.Color(r / 255f, g / 255f, b / 255f, a / 255f);
                     } else {
                         float alphaValue = 1f;
                         //if (red_channel[i] == 0 && green_channel[i] == 0 && blue_channel[i] == 0) alphaValue = 0f;
                         pixels[i] = new Color(r / 255f, g / 255f, b / 255f, alphaValue);
-                        pixelsInExportModel[i] = new Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc.Color(r / 255f, g / 255f, b / 255f, alphaValue);
+                        pixelsInExportModel[i] = new Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc.Color(r / 255f, g / 255f, b / 255f, alphaValue);
                     }
                     pos += channels;
                 }
@@ -152,7 +152,7 @@ namespace OpenSpace.FileFormat.Texture {
                                 pixelData[pos] / 255,
                                 pixelData[pos] / 255,
                                 pixelData[pos + 1] / 255);
-                            pixelsInExportModel[i] = new Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc.Color(
+                            pixelsInExportModel[i] = new Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc.Color(
                                 pixelData[pos] / 255,
                                 pixelData[pos] / 255,
                                 pixelData[pos] / 255,
@@ -188,7 +188,7 @@ namespace OpenSpace.FileFormat.Texture {
                                 (g / 31.0f),
                                 (b / 31.0f),
                                 a);
-                            pixelsInExportModel[i] = new Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc.Color(
+                            pixelsInExportModel[i] = new Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc.Color(
                                 (r / 31.0f),
                                 (g / 31.0f),
                                 (b / 31.0f),
@@ -205,7 +205,7 @@ namespace OpenSpace.FileFormat.Texture {
                                 (g / 63.0f),
                                 (b / 31.0f),
                                 1f);
-                            pixelsInExportModel[i] = new Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc.Color(
+                            pixelsInExportModel[i] = new Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc.Color(
                                 (r / 31.0f),
                                 (g / 63.0f),
                                 (b / 31.0f),
@@ -232,7 +232,7 @@ namespace OpenSpace.FileFormat.Texture {
                         b = pixelData[i];
                     }
                     pixels[i] = new Color(r / 255f, g / 255f, b / 255f, a / 255f);
-                    pixelsInExportModel[i] = new Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc.Color(r / 255f, g / 255f, b / 255f, a / 255f);
+                    pixelsInExportModel[i] = new Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc.Color(r / 255f, g / 255f, b / 255f, a / 255f);
                 }
             }
 

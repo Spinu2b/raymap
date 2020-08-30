@@ -1,13 +1,13 @@
-﻿using Assets.Scripts.Unity.Export.AnimPerso.Building.Derive;
-using Assets.Scripts.Unity.Export.AnimPerso.Model;
-using Assets.Scripts.Unity.Export.Wrappers;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model;
+using Assets.Scripts.StandaloneAppCapacities.Export.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Unity.Export.AnimPerso.Building
+namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building
 {
     public class AnimationClipsGeneralDataExtractor
     {

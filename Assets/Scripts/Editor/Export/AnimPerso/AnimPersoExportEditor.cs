@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Editor.Util;
-using Assets.Scripts.Unity.Export;
-using Assets.Scripts.Unity.Export.AnimPerso;
-using Assets.Scripts.Unity.Export.AnimPerso.Model;
+using Assets.Scripts.StandaloneAppCapacities.Export;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;

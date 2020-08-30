@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Unity.Export.AnimPerso.Model.SubobjLibDesc;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc;
 using LibGC.Texture;
 using System;
 using System.IO;

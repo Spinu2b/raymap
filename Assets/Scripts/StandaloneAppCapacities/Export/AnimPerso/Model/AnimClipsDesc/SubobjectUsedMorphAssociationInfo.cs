@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Unity.Export.AnimPerso.Model.AnimClipsDesc
+namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.AnimClipsDesc
 {
     public class SubobjectUsedMorphAssociationInfo
     {

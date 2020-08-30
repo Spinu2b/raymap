@@ -1,7 +1,7 @@
-﻿using Assets.Scripts.Unity.Export.AnimPerso.Wrappers;
-using Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Normal;
-using Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Ps1;
-using Assets.Scripts.Unity.Export.AnimPerso.Wrappers.Rom;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Normal;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Ps1;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Rom;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Scripts.Unity.Export.Wrappers
+namespace Assets.Scripts.StandaloneAppCapacities.Export.Wrappers
 {
     public class PersoAccessorFactory
     {
