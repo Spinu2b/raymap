@@ -26,8 +26,9 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.Wrappers.Visual
 
         public VisualData GetVisualData()
         {
-            VisualDataHolder visualDataHolder = MapLoader.VisDataHolder;
-            return visualDataHolder.GetVisualDataForVisualTextureInfo(textureInfo);
+            throw new NotImplementedException();
+            //VisualDataHolder visualDataHolder = MapLoader.VisDataHolder;
+           // return visualDataHolder.GetVisualDataForVisualTextureInfo(textureInfo);
         }
     }
 }

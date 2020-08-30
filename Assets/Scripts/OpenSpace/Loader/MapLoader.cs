@@ -35,7 +35,8 @@ namespace OpenSpace {
         public Material collideTransparentMaterial;
 
         public bool allowDeadPointers = false;
-        public bool forceDisplayBackfaces = false;
+		public bool loadUnityIndependentResourcesModel = false;
+		public bool forceDisplayBackfaces = false;
         public bool blockyMode = false;
 		public bool exportTextures = false;
 

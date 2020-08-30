@@ -198,6 +198,7 @@ public class UnityWindowSettings : UnityWindow {
 		DrawHeader(ref yPos, "Miscellaneous Settings");
 		UnitySettings.ScreenshotPath = DirectoryField(GetNextRect(ref yPos), "Screenshot Path", UnitySettings.ScreenshotPath);
 		UnitySettings.AllowDeadPointers = EditorGUI.Toggle(GetNextRect(ref yPos), new GUIContent("Allow Dead Pointers"), UnitySettings.AllowDeadPointers);
+		UnitySettings.LoadUnityIndependentResourcesModel = EditorGUI.Toggle(GetNextRect(ref yPos), new GUIContent("Load Unity Independent Resources Model"), UnitySettings.LoadUnityIndependentResourcesModel);
 		UnitySettings.ForceDisplayBackfaces = EditorGUI.Toggle(GetNextRect(ref yPos), new GUIContent("Force Display Backfaces"), UnitySettings.ForceDisplayBackfaces);
 		UnitySettings.BlockyMode = EditorGUI.Toggle(GetNextRect(ref yPos), new GUIContent("Blocky Mode"), UnitySettings.BlockyMode);
 		UnitySettings.TracePointers = EditorGUI.Toggle(GetNextRect(ref yPos), new GUIContent("Trace Pointers (slow!)"), UnitySettings.TracePointers);

@@ -168,6 +168,9 @@ public class Controller : MonoBehaviour {
 				case "--allowDeadPointers":
 					UnitySettings.AllowDeadPointers = true;
 					break;
+				case "--loadUnityIndependentResourcesModel":
+					UnitySettings.LoadUnityIndependentResourcesModel = true;
+					break;
             }
 		}
 		Application.logMessageReceived += Log;
@@ -225,6 +228,7 @@ public class Controller : MonoBehaviour {
 		loader.baseLightMaterial = baseLightMaterial;
 		
 		loader.allowDeadPointers = UnitySettings.AllowDeadPointers;
+		loader.loadUnityIndependentResourcesModel = UnitySettings.LoadUnityIndependentResourcesModel;
 		loader.forceDisplayBackfaces = UnitySettings.ForceDisplayBackfaces;
 		loader.blockyMode = UnitySettings.BlockyMode;
 		loader.exportTextures = UnitySettings.SaveTextures;

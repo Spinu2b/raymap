@@ -30,6 +30,7 @@ public class UnitySettings {
 	public static string ScreenshotPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "/Raymap/";
 	public static bool LoadFromMemory { get; set; }
 	public static bool AllowDeadPointers { get; set; }
+	public static bool LoadUnityIndependentResourcesModel { get; set; }
 	public static bool ForceDisplayBackfaces { get; set; }
 	public static bool BlockyMode { get; set; }
 	public static bool UseLevelTranslation { get; set; } = true;
@@ -93,6 +94,7 @@ public class UnitySettings {
         // Misc
         ScreenshotPath = s.SerializeString("ScreenshotPath", ScreenshotPath);
 		AllowDeadPointers = s.SerializeBool("AllowDeadPointers", AllowDeadPointers);
+		LoadUnityIndependentResourcesModel = s.SerializeBool("LoadUnityIndependentResourcesModel", LoadUnityIndependentResourcesModel);
 		ForceDisplayBackfaces = s.SerializeBool("ForceDisplayBackfaces", ForceDisplayBackfaces);
 		BlockyMode = s.SerializeBool("BlockyMode", BlockyMode);
 		TracePointers = s.SerializeBool("TracePointers", TracePointers);
