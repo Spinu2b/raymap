@@ -21,7 +21,6 @@ using OpenSpace.Animation.ComponentLargo;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Cysharp.Threading.Tasks;
-using Assets.Scripts.StandaloneAppCapacities.Export.Resources;
 
 namespace OpenSpace {
     public class MapLoader {
@@ -115,8 +114,6 @@ namespace OpenSpace {
         public List<SearchableString> searchableStrings = new List<SearchableString>();
 		public Dictionary<Pointer, Pointer.PointerTrace> pointerTraces = new Dictionary<Pointer, Pointer.PointerTrace>();
 
-		
-
         public static class Mem {
             public const int Fix = 0;
             public const int Lvl = 1;
@@ -131,8 +128,7 @@ namespace OpenSpace {
         public Reader livePreviewReader;
 
         private static MapLoader loader = null;
-		private static VisualDataHolder visualDataHolder = null;
-		public static MapLoader Loader {
+        public static MapLoader Loader {
             get {
                 if (loader == null) {
                     if (Settings.s == null) return null;
@@ -154,30 +150,13 @@ namespace OpenSpace {
 							loader = new R3Loader();
 						}
                     }
-					//loader = new MapLoader();
-					visualDataHolder = new VisualDataHolder();
+                    //loader = new MapLoader();
                 }
                 return loader;
             }
         }
-
-		public static VisualDataHolder VisDataHolder
-        {
-			get
-            {
-				if (visualDataHolder == null)
-                {
-					throw new InvalidOperationException("Something is wrong. visualDataHolder reference should not be null in here");
-                } else
-                {
-					return visualDataHolder;
-                }
-            }
-        }
-
 		public static void Reset() {
 			loader = null;
-			visualDataHolder = null;
 		}
 
         public MapLoader() {
@@ -347,7 +326,6 @@ namespace OpenSpace {
                     GF gf = cnt.GetGFByTGAName(texInfo.name);
                     texInfo.Texture = gf != null ? gf.GetTexture() : null;
                     textureInfos.Add(texInfo);
-					visualDataHolder.AddVisualDataForVisualTextureInfo(texInfo, gf.GetTextureInExportModel());
                     Pointer.Goto(ref reader, off_current);
                 }
             }
@@ -636,7 +614,6 @@ MonoBehaviour.print(str);
 								Util.ByteArrayToFile(gameDataBinFolder + "textures/" + tex.name.Substring(0, tex.name.LastIndexOf('.')) + ".png", menuTPL.textures[i].EncodeToPNG());
 							}*/
 							tex.Texture = menuTPL.textures[i];
-							visualDataHolder.AddVisualDataForVisualTextureInfo(tex, menuTPL.texturesInExportModel[i]);
 						}
 					}
 					for (int i = 0, j = 0; i < num_textures; i++, j++) {
@@ -648,7 +625,6 @@ MonoBehaviour.print(str);
 						Texture2D tex = null;
 						if (file_texture == 0) {
 							tex = fixTPL.textures[texturesSeenFile[file_texture]];
-							visualDataHolder.AddVisualDataForVisualTextureInfo(textures[i], fixTPL.texturesInExportModel[texturesSeenFile[file_texture]]);
 						}
 						// if it's 8, it's menu and has already been assigned
 						if (exportTextures) {

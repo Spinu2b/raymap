@@ -17,7 +17,6 @@ using Newtonsoft.Json;
 using OpenSpace.Loader;
 using System.Text.RegularExpressions;
 using Cysharp.Threading.Tasks;
-using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso;
 
 public class Controller : MonoBehaviour {
 	public Material baseMaterial;
@@ -443,7 +442,6 @@ public class Controller : MonoBehaviour {
 				await WaitIfNecessary();
 				Perso p = loader.persos[i];
 				PersoBehaviour unityBehaviour = p.Gao.AddComponent<PersoBehaviour>();
-				p.Gao.AddComponent<AnimPersoExportComponent>();
 				persos.Add(unityBehaviour);
 				unityBehaviour.controller = this;
 				if (loader.globals != null && loader.globals.spawnablePersos != null) {

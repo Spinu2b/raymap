@@ -2,6 +2,7 @@
 using Assets.Scripts.StandaloneAppCapacities.Export;
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso;
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model;
+using Assets.Scripts.StandaloneAppCapacities.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
