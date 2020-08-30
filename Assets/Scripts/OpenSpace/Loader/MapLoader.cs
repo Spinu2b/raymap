@@ -21,6 +21,7 @@ using OpenSpace.Animation.ComponentLargo;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Cysharp.Threading.Tasks;
+using Assets.Scripts.ResourcesModel;
 
 namespace OpenSpace {
     public class MapLoader {
@@ -129,6 +130,7 @@ namespace OpenSpace {
         public Reader livePreviewReader;
 
         private static MapLoader loader = null;
+		private static MapResources mapResources = null; 
         public static MapLoader Loader {
             get {
                 if (loader == null) {
@@ -151,13 +153,35 @@ namespace OpenSpace {
 							loader = new R3Loader();
 						}
                     }
-                    //loader = new MapLoader();
+					//loader = new MapLoader();
+					if (loader.loadUnityIndependentResourcesModel)
+                    {
+						mapResources = new MapResources();
+					}					
                 }
-                return loader;
+				if (mapResources == null && loader != null && loader.loadUnityIndependentResourcesModel)
+				{
+					throw new InvalidOperationException("Something has gone wrong with objects lifecycle for MapResources and MapLoader!");
+				}
+				return loader;
             }
         }
+
+		public static MapResources LoaderMapResources
+        {
+			get
+            {
+				if (LoaderMapResources == null)
+                {
+					throw new InvalidOperationException("LoaderMapResources should not be null here! Are you sure you set the flag LoadUnityIndependentResourcesModel?");
+                }
+				return mapResources;
+            }
+        }
+
 		public static void Reset() {
 			loader = null;
+			mapResources = null;
 		}
 
         public MapLoader() {
