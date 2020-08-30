@@ -8,7 +8,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Util
 {
     public static class FilesHelper
     {
-        public static string AvoidNotAllowedCharsInFilepath(string filePath)
+        public static string AskForFilepath(string caption, string extension, string extensionLabel)
         {
             throw new NotImplementedException();
         }

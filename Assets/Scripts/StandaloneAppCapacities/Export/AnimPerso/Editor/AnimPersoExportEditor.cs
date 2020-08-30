@@ -26,8 +26,8 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Editor
             if (GUILayout.Button("Export animated perso"))
             {
                 AnimatedPersoDescription animatedPersoDescription = animPersoExportComponent.ExportAnimatedPerso();
-                string filePath = Path.Combine(UnitySettings.ExportPath, "PersoModelExport",
-                    FilesHelper.AvoidNotAllowedCharsInFilepath(animatedPersoDescription.name) + ".animperso");
+                string filePath = FilesHelper.AskForFilepath(caption: "Export animated Perso model path",
+                    extension: "animperso", extensionLabel: "Animated perso model"); 
                 JsonModelFileWriter.WriteTofile(filePath, animatedPersoDescription);               
             }
             GUILayout.EndVertical();
