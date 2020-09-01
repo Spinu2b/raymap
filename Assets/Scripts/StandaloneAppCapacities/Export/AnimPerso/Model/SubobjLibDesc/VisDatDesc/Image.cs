@@ -27,9 +27,9 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLi
             throw new NotImplementedException();
         }
 
-        public static Color FromResourcesModelColor(ResourcesModel.Visuals.Color x)
+        public static Color FromResourcesModelColor(ResourcesModel.Visuals.Color color)
         {
-            throw new NotImplementedException();
+            return new Color(color.r, color.g, color.b, color.a);
         }
     }
 
