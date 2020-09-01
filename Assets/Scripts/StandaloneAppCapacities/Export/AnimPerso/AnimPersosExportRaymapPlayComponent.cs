@@ -48,7 +48,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso
 
         public void RegisterForActions(RaymapActionsModuleComponent raymapActionsModuleComponent)
         {
-            animPersosExportRaymapActionsHandler = new AnimPersosExportRaymapActionsHandler();
+            animPersosExportRaymapActionsHandler = new AnimPersosExportRaymapActionsHandler(this);
             animPersosExportRaymapActionsHandler.RegisterForActions(raymapActionsModuleComponent);
         }
     }

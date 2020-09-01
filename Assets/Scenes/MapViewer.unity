@@ -1414,6 +1414,8 @@ GameObject:
   - component: {fileID: 1701416323}
   - component: {fileID: 1701416324}
   - component: {fileID: 1701416325}
+  - component: {fileID: 1701416326}
+  - component: {fileID: 1701416327}
   m_Layer: 0
   m_Name: Loader
   m_TagString: Untagged
@@ -1519,6 +1521,30 @@ MonoBehaviour:
   modifier: 0.75
   animationSpeed: 30
   materials: []
+--- !u!114 &1701416326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701416320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d088ef5235643e4eb05d58bad3b6d90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1701416327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701416320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7440b5b30c7174d458fbc9123e80eef6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1781294052
 GameObject:
   m_ObjectHideFlags: 0

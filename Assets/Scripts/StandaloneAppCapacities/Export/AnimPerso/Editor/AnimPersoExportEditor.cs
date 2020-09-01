@@ -25,10 +25,13 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Editor
             GUILayout.BeginVertical();
             if (GUILayout.Button("Export animated perso"))
             {
-                AnimatedPersoDescription animatedPersoDescription = animPersoExportComponent.ExportAnimatedPerso();
-                string filePath = FilesHelper.AskForFilepath(caption: "Export animated Perso model path",
-                    extension: "animperso", extensionLabel: "Animated perso model"); 
-                JsonModelFileWriter.WriteTofile(filePath, animatedPersoDescription);               
+                string filePath = FilesHelper.AskForSaveFilepath(caption: "Export animated Perso model path",
+                    extension: "animperso", defaultFileName: FilesHelper.RemoveInvalidCharactersFromPath(animPersoExportComponent.gameObject.name + ".animperso"));
+                if (!String.IsNullOrWhiteSpace(filePath))
+                {
+                    AnimatedPersoDescription animatedPersoDescription = animPersoExportComponent.ExportAnimatedPerso();
+                    JsonModelFileWriter.WriteTofile(filePath, animatedPersoDescription);
+                }                
             }
             GUILayout.EndVertical();
         }

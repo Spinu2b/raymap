@@ -26,7 +26,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.Wrappers.Visual
 
         public VisualData GetVisualData()
         {
-            throw new NotImplementedException();
+            return VisualData.FromResourcesModelTexture2D(textureInfo.TextureModel);
             //VisualDataHolder visualDataHolder = MapLoader.VisDataHolder;
            // return visualDataHolder.GetVisualDataForVisualTextureInfo(textureInfo);
         }
