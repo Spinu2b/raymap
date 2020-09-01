@@ -25,12 +25,18 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
         private static Tuple<Image, Texture2D>
             GetImageAndVisualDataTexture2DFor(ResourcesModel.Visuals.Texture2D textureModel)
         {
-            var resultImage = new Image();
-            var resultTexture = new Texture2D();
-
-            throw new NotImplementedException();
+            var resultImage = new ExportImageBuilder().SetPixels(textureModel.GetPixels().Select(x => Color.FromResourcesModelColor(x)).ToList()).Build();
+            var resultTexture = GetAppropriateTexture2DObjectForImage(resultImage);
 
             return new Tuple<Image, Texture2D>(resultImage, resultTexture);
+        }
+
+        private static Texture2D GetAppropriateTexture2DObjectForImage(Image image)
+        {
+            var result = new Texture2D();
+            result.imageIdentifier = image.imageDescriptionIdentifier;
+            throw new NotImplementedException();
+            return result;
         }
     }
 }

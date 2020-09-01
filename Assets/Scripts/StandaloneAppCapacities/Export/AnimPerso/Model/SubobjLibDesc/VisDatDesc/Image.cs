@@ -26,6 +26,11 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLi
         {
             throw new NotImplementedException();
         }
+
+        public static Color FromResourcesModelColor(ResourcesModel.Visuals.Color x)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class ImageDescription : IExportModel, ISerializableToBytes

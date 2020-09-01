@@ -10,7 +10,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLi
     public class Texture2D : IExportModel, IComparableModel<Texture2D>
     {
         public string textureDescriptionIdentifier;
-        public string image;
+        public string imageIdentifier;
 
         public bool EqualsToAnother(Texture2D other)
         {

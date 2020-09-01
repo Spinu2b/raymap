@@ -19,6 +19,11 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
             throw new NotImplementedException();
         }
 
+        public ExportImageBuilder SetPixels(List<Color> pixels)
+        {
+            throw new NotImplementedException();
+        }
+
         public Image Build()
         {
             throw new NotImplementedException();
