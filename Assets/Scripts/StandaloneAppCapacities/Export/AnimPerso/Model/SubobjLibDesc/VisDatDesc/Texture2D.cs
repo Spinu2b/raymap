@@ -9,10 +9,15 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLi
 {
     public class Texture2D : IExportModel, IComparableModel<Texture2D>
     {
-        public string textureDescriptionHash;
+        public string textureDescriptionIdentifier;
         public string image;
 
         public bool EqualsToAnother(Texture2D other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static Texture2D FromResourcesModelTexture2D(ResourcesModel.Visuals.Texture2D textureModel)
         {
             throw new NotImplementedException();
         }

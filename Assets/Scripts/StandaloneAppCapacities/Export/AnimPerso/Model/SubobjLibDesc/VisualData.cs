@@ -13,10 +13,5 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLi
         public Dictionary<string, Material> materials = new Dictionary<string, Material>();
         public Dictionary<string, VisDatDesc.Texture2D> textures = new Dictionary<string, VisDatDesc.Texture2D>();
         public Dictionary<string, Image> images = new Dictionary<string, Image>();
-
-        public static VisualData FromResourcesModelTexture2D(ResourcesModel.Visuals.Texture2D textureModel)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr.Build.Visuals.Trans;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc;
 using Assets.Scripts.StandaloneAppCapacities.Export.Resources;
 using OpenSpace;
 using OpenSpace.Visual;
@@ -26,9 +28,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.Wrappers.Visual
 
         public VisualData GetVisualData()
         {
-            return VisualData.FromResourcesModelTexture2D(textureInfo.TextureModel);
-            //VisualDataHolder visualDataHolder = MapLoader.VisDataHolder;
-           // return visualDataHolder.GetVisualDataForVisualTextureInfo(textureInfo);
+            return ResourcesModelTexture2DToVisualDataTransformer.Transform(textureInfo.TextureModel);
         }
     }
 }
