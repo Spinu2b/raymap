@@ -1,8 +1,7 @@
 {
-    "name": "StandaloneAppCapacities",
+    "name": "Modules",
     "references": [
-        "GUID:4f01c1e5f95f3dc458cbdea7c023e9ce",
-        "GUID:767ca9168f0b3b148a65a967aa0cd83d"
+        "GUID:4f01c1e5f95f3dc458cbdea7c023e9ce"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
