@@ -12,6 +12,7 @@ namespace OpenSpace.Visual {
     public class TextureInfo {
         public Pointer offset;
         private Texture2D texture;
+        private Assets.Scripts.ResourcesModel.Visuals.Texture2D textureModel;
 
         public uint field0;
         public ushort field4;
@@ -63,15 +64,24 @@ namespace OpenSpace.Visual {
             }
         }
 
+        public Assets.Scripts.ResourcesModel.Visuals.Texture2D TextureModel
+        {
+            get { return textureModel; }
+        }
+
         public Texture2D Texture {
             get { return texture; }
             set {
                 texture = value;
+                if (texture == null)
+                {
+                    textureModel = null;
+                }                
                 if (texture != null) {
 					if (!IsRepeatU) {
 						texture.wrapModeU = TextureWrapMode.Clamp;
-					}
-					if (!IsRepeatV) {
+                    }
+                    if (!IsRepeatV) {
 						texture.wrapModeV = TextureWrapMode.Clamp;
 					}
 					if (IsMirrorX && Settings.s.game != Settings.Game.R2Revolution) {
@@ -109,6 +119,11 @@ namespace OpenSpace.Visual {
                         MapLoader.Loader.print("Flags & 0x10: " + ((flags & 0x10) != 0));
                         MapLoader.Loader.print("Flags & 0x808: " + ((flags & 0x808) != 0));
                         MapLoader.Loader.print("Flags & 0x902: " + ((flags & 0x902) != 0));*/
+                    }
+                    bool loadUnityIndependentResourcesModel = MapLoader.Loader.loadUnityIndependentResourcesModel;
+                    if (loadUnityIndependentResourcesModel)
+                    {
+                        textureModel = Assets.Scripts.ResourcesModel.Visuals.Texture2D.FromUnityTexture2D(texture);
                     }
                 }
             }
