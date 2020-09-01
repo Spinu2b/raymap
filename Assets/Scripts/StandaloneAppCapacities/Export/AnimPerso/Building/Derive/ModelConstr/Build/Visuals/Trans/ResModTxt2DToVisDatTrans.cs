@@ -35,7 +35,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
         {
             var result = new Texture2D();
             result.imageIdentifier = image.imageDescriptionIdentifier;
-            throw new NotImplementedException();
+            result.textureDescriptionIdentifier = result.ComputeIdentifier();
             return result;
         }
     }

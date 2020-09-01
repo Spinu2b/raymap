@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc
 {
-    public class Texture2D : IExportModel, IComparableModel<Texture2D>
+    public class Texture2D : IExportModel, IComparableModel<Texture2D>, ISerializableToBytes, IIdentifiableComputationally
     {
         public string textureDescriptionIdentifier;
         public string imageIdentifier;
@@ -18,6 +18,16 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLi
         }
 
         public static Texture2D FromResourcesModelTexture2D(ResourcesModel.Visuals.Texture2D textureModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[] SerializeToBytes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ComputeIdentifier()
         {
             throw new NotImplementedException();
         }

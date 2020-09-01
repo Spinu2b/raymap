@@ -33,11 +33,16 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLi
         }
     }
 
-    public class ImageDescription : IExportModel, ISerializableToBytes
+    public class ImageDescription : IExportModel, ISerializableToBytes, IIdentifiableComputationally
     {
         public int width = 0;
         public int height = 0;
         public List<Color> pixels = new List<Color>();
+
+        public string ComputeIdentifier()
+        {
+            throw new NotImplementedException();
+        }
 
         public byte[] SerializeToBytes()
         {
