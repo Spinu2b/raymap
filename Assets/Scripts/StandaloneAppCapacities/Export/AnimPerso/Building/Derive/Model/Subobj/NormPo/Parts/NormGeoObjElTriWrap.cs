@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr.RaymapModelFetch;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr.RaymapModelFetch.NormGeoObjElTri;
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc;
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc.GeoObjDesc;
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc;
@@ -29,17 +30,17 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
 
         public List<Vector3d> GetVertices()
         {
-            throw new NotImplementedException();
+            return NormalGeometricObjectElementTrianglesVerticesFetcher.DeriveFor(geometricObjectElementTriangles);
         }
 
         public List<Vector3d> GetNormals()
         {
-            throw new NotImplementedException();
+            return NormalGeometricObjectElementTrianglesNormalsFetcher.DeriveFor(geometricObjectElementTriangles);
         }
 
         public string GetMaterialHash()
         {
-            throw new NotImplementedException();
+            return NormalGeometricObjectElementTrianglesMaterialHashFetcher.DeriveFor(geometricObjectElementTriangles);
         }
 
         public VisualData GetVisualData()
@@ -53,22 +54,22 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
 
         public Dictionary<int, Dictionary<int, float>> GetBoneWeights()
         {
-            throw new NotImplementedException();
+            return NormalGeometricObjectElementTrianglesBoneWeightsFetcher.DeriveFor(geometricObjectElementTriangles);
         }
 
         public Dictionary<int, BoneBindPose> GetBindBonePoses()
         {
-            throw new NotImplementedException();
+            return NormalGeometricObjectElementTrianglesBindBonePosesFetcher.DeriveFor(geometricObjectElementTriangles);
         }
 
         public List<int> GetTriangles()
         {
-            throw new NotImplementedException();
+            return NormalGeometricObjectElementTrianglesTrianglesFetcher.DeriveFor(geometricObjectElementTriangles);
         }
 
         public List<List<Vector2d>> GetUvMaps()
         {
-            throw new NotImplementedException();
+            return NormalGeometricObjectElementTrianglesUvMapsFetcher.DeriveFor(geometricObjectElementTriangles);
         }
     }
 }

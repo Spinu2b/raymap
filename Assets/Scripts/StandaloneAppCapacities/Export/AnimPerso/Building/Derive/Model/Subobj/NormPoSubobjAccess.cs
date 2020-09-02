@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Model.Subobj.NormPo.Parts;
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Model.Subobj.NormPo.Parts.IWrap;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr.Conv;
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc;
 using OpenSpace.Object;
 using System;
@@ -49,7 +50,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
 
         private Subobject GetSubobjectModelFromElementTriangles(NormalGeometricObjectElementTrianglesWrapper geometricObjectElementTriangles)
         {
-            throw new NotImplementedException();
+            return NormalGeometricObjectElementTrianglesToSubobjectModelConverter.Convert(objectNumber, geometricObjectElementTriangles);
         }
 
         public override VisualData GetVisualData()
