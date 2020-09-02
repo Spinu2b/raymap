@@ -9,6 +9,8 @@ namespace Assets.Scripts.ResourcesModel.Visuals
     public class Texture2D
     {
         private List<Color> pixels = new List<Color>();
+        public int width { get; private set; }
+        public int height { get; private set; }
 
         public List<Color> GetPixels()
         {
@@ -19,6 +21,8 @@ namespace Assets.Scripts.ResourcesModel.Visuals
         {
             var result = new Texture2D();
             result.pixels = texture.GetPixels().Select(x => Color.FromUnityColorStruct(x)).ToList();
+            result.width = texture.width;
+            result.height = texture.height;
             return result;
         }
     }

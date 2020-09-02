@@ -9,24 +9,34 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
 {
     public class ExportImageBuilder
     {
+        Image result = new Image();
+
         public ExportImageBuilder SetImageSize(int width, int height)
         {
-            throw new NotImplementedException();
+            result.imageDescription.width = width;
+            result.imageDescription.height = height;
+            result.imageDescription.pixels = new List<Color>(new Color[width * height]);
+            return this;
         }
 
         public ExportImageBuilder SetPixel(int positionX, int positionY, Color color)
         {
-            throw new NotImplementedException();
+            result.imageDescription.pixels[positionY * result.imageDescription.width + positionX] = color;
+            return this;
         }
 
-        public ExportImageBuilder SetPixels(List<Color> pixels)
+        public ExportImageBuilder SetPixels(int width, int height, List<Color> pixels)
         {
-            throw new NotImplementedException();
+            result.imageDescription.width = width;
+            result.imageDescription.height = height;
+            result.imageDescription.pixels = pixels;
+            return this;
         }
 
         public Image Build()
         {
-            throw new NotImplementedException();
+            result.imageDescriptionIdentifier = result.imageDescription.ComputeIdentifier();
+            return result;
         }
     }
 }

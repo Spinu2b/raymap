@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.StandaloneAppCapacities.Export.Model;
+using Assets.Scripts.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,10 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLi
 
         public byte[] SerializeToBytes()
         {
-            throw new NotImplementedException();
+            return BitConverter.GetBytes(red).
+                Concat(BitConverter.GetBytes(green)).
+                Concat(BitConverter.GetBytes(blue)).
+                Concat(BitConverter.GetBytes(alpha)).ToArray();
         }
 
         public static Color FromResourcesModelColor(ResourcesModel.Visuals.Color color)
@@ -41,12 +45,14 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLi
 
         public string ComputeIdentifier()
         {
-            throw new NotImplementedException();
+            var bytes = SerializeToBytes();
+            return BytesHashHelper.GetHashHexStringFor(bytes);
         }
 
         public byte[] SerializeToBytes()
         {
-            throw new NotImplementedException();
+            var pixelBytes = pixels.SelectMany(x => x.SerializeToBytes()).ToArray();
+            return BitConverter.GetBytes(width).Concat(BitConverter.GetBytes(height)).Concat(pixelBytes).ToArray();
         }
     }
 

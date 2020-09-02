@@ -28,7 +28,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.Wrappers.Visual
 
         public VisualData GetVisualData()
         {
-            return ResourcesModelTexture2DToVisualDataTransformer.Transform(textureInfo.TextureModel);
+            return MiscellaneousVisualModelToVisualDataTransformer.TransformResourcesModelTexture2DToVisualData(textureInfo.TextureModel);
         }
     }
 }

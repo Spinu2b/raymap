@@ -102,12 +102,12 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Exten
 
         public static Vector4d ForExportAmbientCoefficients(this VisualMaterial visualMaterial)
         {
-            throw new NotImplementedException();
+            return Vector4d.FromUnityVector4(visualMaterial.ambientCoef);
         }
 
         public static Vector4d ForExportDiffuseCoefficients(this VisualMaterial visualMaterial)
         {
-            throw new NotImplementedException();
+            return Vector4d.FromUnityVector4(visualMaterial.diffuseCoef);
         }
     }
 }

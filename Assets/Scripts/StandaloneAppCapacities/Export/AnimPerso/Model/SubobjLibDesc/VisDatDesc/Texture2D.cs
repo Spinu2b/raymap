@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.StandaloneAppCapacities.Export.Model;
+using Assets.Scripts.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +25,12 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLi
 
         public byte[] SerializeToBytes()
         {
-            throw new NotImplementedException();
+            return BytesHelper.GetBytesForString(imageIdentifier);
         }
 
         public string ComputeIdentifier()
         {
-            throw new NotImplementedException();
+            return BytesHashHelper.GetHashHexStringFor(SerializeToBytes());
         }
     }
 }

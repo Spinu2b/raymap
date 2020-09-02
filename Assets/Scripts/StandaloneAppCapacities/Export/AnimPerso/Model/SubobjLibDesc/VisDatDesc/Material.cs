@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.StandaloneAppCapacities.Export.Model;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.Math;
+using Assets.Scripts.StandaloneAppCapacities.Export.Model;
+using Assets.Scripts.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,11 +40,41 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLi
         }
     }
 
-    public class MaterialDescription
+    public class MaterialDescription : IExportModel, IIdentifiableComputationally, ISerializableToBytes
     {
         public Dictionary<string, string> textures = new Dictionary<string, string>();
         public Dictionary<string, float> floats = new Dictionary<string, float>();
+        public Dictionary<string, Vector> vectors = new Dictionary<string, Vector>(); 
         public MaterialBaseClass materialBaseClass;
+
+        public string ComputeIdentifier()
+        {
+            return BytesHashHelper.GetHashHexStringFor(SerializeToBytes());
+           
+        }
+
+        public byte[] SerializeToBytes()
+        {
+            var texturesBytes = ComparableKeyDictionaryToBytesSerializer.WithCSharpComparableKeySerializeToBytes(
+                dict: textures,
+                keySerializer: BytesHelper.SerializeFunctions.StringSerializerFunction,
+                valueSerializer: BytesHelper.SerializeFunctions.StringSerializerFunction
+                );
+
+            var floatsBytes = ComparableKeyDictionaryToBytesSerializer.WithCSharpComparableKeySerializeToBytes(
+                dict: floats,
+                keySerializer: BytesHelper.SerializeFunctions.StringSerializerFunction,
+                valueSerializer: BytesHelper.SerializeFunctions.FloatSerializerFunction);
+
+            var vectorsBytes = ComparableKeyDictionaryToBytesSerializer.WithCSharpComparableKeySerializeToBytes(
+                dict: vectors,
+                keySerializer: BytesHelper.SerializeFunctions.StringSerializerFunction,
+                valueSerializer: x => x.SerializeToBytes());
+
+            var materialBaseClassBytes = BitConverter.GetBytes((int)materialBaseClass);
+
+            return texturesBytes.Concat(floatsBytes).Concat(vectorsBytes).Concat(materialBaseClassBytes).ToArray();
+        }
     }
 
     public class Material : IExportModel, IComparableModel<Material>
@@ -70,7 +102,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLi
 
         public void AddTexture(string textureName, Texture2D textureData)
         {
-            throw new NotImplementedException();
+            description.textures.Add(textureName, textureData.textureDescriptionIdentifier);
         }
     }
 }

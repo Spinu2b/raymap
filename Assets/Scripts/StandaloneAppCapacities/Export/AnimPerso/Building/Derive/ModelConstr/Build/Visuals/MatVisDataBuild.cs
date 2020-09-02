@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc;
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc;
 using Assets.Scripts.StandaloneAppCapacities.Export.Math;
+using Assets.Scripts.StandaloneAppCapacities.Export.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,8 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
     {
         public static void AddTexture(VisualData texture2DData, Dictionary<string, Texture2D> textures, Dictionary<string, Image> images)
         {
-            throw new NotImplementedException();
+            ComparableModelDictionariesMerger.MergeDictionariesToFirstDict(textures, texture2DData.textures);
+            ComparableModelDictionariesMerger.MergeDictionariesToFirstDict(images, texture2DData.images);
         }
     }
 
@@ -70,12 +72,13 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
 
         public VisualData Build()
         {
+            resultMaterial.identifier = resultMaterial.description.ComputeIdentifier();
             return new VisualDataBuilder().SetMaterial(resultMaterial).SetTextures(resultTextures).SetImages(resultImages).Build();
         }
 
         public void SetVector(string vectorName, Vector vector)
         {
-            throw new NotImplementedException();
+            resultMaterial.description.vectors[vectorName] = vector;
         }
     }
 }

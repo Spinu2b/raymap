@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.StandaloneAppCapacities.Export.Math
 {
-    public struct Vector2d : IExportModel, ISerializableToBytes, Vector
+    public struct Vector2d : IExportModel, Vector
     {
         public byte[] SerializeToBytes()
         {

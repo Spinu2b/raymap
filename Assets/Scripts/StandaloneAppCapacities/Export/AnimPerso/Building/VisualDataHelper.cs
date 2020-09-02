@@ -12,12 +12,12 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building
     {
         public static Material GetOnlyPredictedObjectMaterial(VisualData visualData)
         {
-            throw new NotImplementedException();
+            return visualData.materials.First().Value;
         }
 
         public static Texture2D GetOnlyPredictedObjectTexture(VisualData texture2DData)
         {
-            throw new NotImplementedException();
+            return texture2DData.textures.First().Value;
         }
     }
 }
