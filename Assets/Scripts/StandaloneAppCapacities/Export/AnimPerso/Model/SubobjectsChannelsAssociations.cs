@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model
 {
-    public class SubobjectsChannelsAssociationDescription
+    public class SubobjectsChannelsAssociationDescription : IIdentifiableComputationally
     {
         public Dictionary<int, List<int>> channelsForSubobjectsParenting = new Dictionary<int, List<int>>();
         public Dictionary<int, Dictionary<int, List<int>>> channelsForSubobjectsBonesParenting = new Dictionary<int, Dictionary<int, List<int>>>();
 
-        public string ComputeHash()
+        public string ComputeIdentifier()
         {
             throw new NotImplementedException();
         }

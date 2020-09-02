@@ -19,7 +19,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
             var result = new SubobjectsChannelsAssociation();
             result.subobjectsChannelsAssociationsDescription.channelsForSubobjectsParenting = DeriveChannelsForSubobjectsParenting(normalPersoAccessor);
             result.subobjectsChannelsAssociationsDescription.channelsForSubobjectsBonesParenting = DeriveChannelsForSubobjectsBonesParenting(normalPersoAccessor);
-            result.subobjectsChannelsAssociationIdentifier = result.subobjectsChannelsAssociationsDescription.ComputeHash();
+            result.subobjectsChannelsAssociationIdentifier = result.subobjectsChannelsAssociationsDescription.ComputeIdentifier();
             return result;
         }
 
