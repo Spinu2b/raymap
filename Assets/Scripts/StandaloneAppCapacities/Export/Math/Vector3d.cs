@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Scripts.StandaloneAppCapacities.Export.Math
 {
@@ -21,6 +22,11 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.Math
         }
 
         public byte[] SerializeToBytes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public static Vector3d FromUnityVector3(Vector3 vector3)
         {
             throw new NotImplementedException();
         }

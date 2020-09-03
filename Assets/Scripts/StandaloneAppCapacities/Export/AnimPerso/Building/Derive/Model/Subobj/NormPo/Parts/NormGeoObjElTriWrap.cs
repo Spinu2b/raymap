@@ -13,6 +13,13 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Model.Subobj.NormPo.Parts
 {
+    public class NormalGeometricObjectElementTrianglesGeometricData
+    {
+        public List<Vector3d> vertices = new List<Vector3d>();
+        public List<Vector3d> normals = new List<Vector3d>();
+        public List<int> triangles = new List<int>();
+    }
+
     public class NormalGeometricObjectElementTrianglesWrapper
     {
         private GeometricObjectElementTriangles geometricObjectElementTriangles;

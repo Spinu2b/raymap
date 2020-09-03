@@ -91,7 +91,7 @@ namespace OpenSpace.Visual {
         }
 
 		// Reimplemented from R3 code
-		private Vector3 ComputeNormalWeightedBySurf(Vector3 v0, Vector3 v1, Vector3 v2) {
+		public Vector3 ComputeNormalWeightedBySurf(Vector3 v0, Vector3 v1, Vector3 v2) {
 			Vector3 v10 = v1 - v0;
 			Vector3 v20 = v2 - v0;
 			return new Vector3(
