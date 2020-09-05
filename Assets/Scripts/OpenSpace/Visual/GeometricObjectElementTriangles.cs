@@ -69,8 +69,8 @@ namespace OpenSpace.Visual {
         private Mesh OPT_unityMesh = null;
         private Mesh unityMesh = null;
 
-		public Assets.Scripts.ResourcesModel.Mesh OPT_unityMeshModel { get; private set; }
-		public Assets.Scripts.ResourcesModel.Mesh unityMeshModel { get; private set; }
+		public Assets.Scripts.ResourcesModel.Mesh OPT_unityMeshModel = null;
+		public Assets.Scripts.ResourcesModel.Mesh unityMeshModel = null;
 
 		private Texture2D lightmap = null;
 		private Vector2[] lightmapUVs = null;
@@ -696,7 +696,10 @@ namespace OpenSpace.Visual {
 			if (MapLoader.Loader.loadUnityIndependentResourcesModel)
             {
 				unityMeshModel = Assets.Scripts.ResourcesModel.Mesh.FromUnityMesh(unityMesh);
-				OPT_unityMeshModel = Assets.Scripts.ResourcesModel.Mesh.FromUnityMesh(OPT_unityMesh);
+				if (OPT_unityMesh != null)
+                {
+					OPT_unityMeshModel = Assets.Scripts.ResourcesModel.Mesh.FromUnityMesh(OPT_unityMesh);
+				}					
 			}			
         }
 		public void MorphVertices(GeometricObjectElementTriangles el, float lerp) {

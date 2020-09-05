@@ -17,9 +17,14 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
 {
     public static class NormalGeometricObjectElementTrianglesRightMeshFetcher
     {
+        public static bool HasRightMesh(GeometricObjectElementTriangles geometricObjectElementTriangles)
+        {
+            return geometricObjectElementTriangles.unityMeshModel != null;
+        }
+
         public static Mesh GetRightMesh(GeometricObjectElementTriangles geometricObjectElementTriangles)
         {
-            throw new NotImplementedException();
+            return geometricObjectElementTriangles.unityMeshModel;
         }
     }
 
@@ -42,6 +47,11 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
         {
             return NormalGeometricObjectElementTrianglesRightMeshFetcher.GetRightMesh(geometricObjectElementTriangles)
                 .vertices.Select(x => Vector3d.FromResourcesModelVector3(x)).ToList();
+        }
+
+        public bool HasValidGeometricDataContained()
+        {
+            return NormalGeometricObjectElementTrianglesRightMeshFetcher.HasRightMesh(geometricObjectElementTriangles);
         }
 
         public List<Vector3d> GetNormals()

@@ -18,7 +18,19 @@ namespace Assets.Scripts.ResourcesModel
 
         public static Mesh FromUnityMesh(UnityEngine.Mesh unityMesh)
         {
-            throw new NotImplementedException();
+            if (unityMesh != null)
+            {
+                var result = new Mesh();
+                result.vertices = unityMesh.vertices.Select(x => Vector3.FromUnityVector3(x)).ToArray();
+                result.normals = unityMesh.normals.Select(x => Vector3.FromUnityVector3(x)).ToArray();
+                result.boneWeights = unityMesh.boneWeights.Select(x => BoneWeight.FromUnityBoneWeight(x)).ToArray();
+                result.bindposes = unityMesh.bindposes.Select(x => Matrix4x4.FromUnityMatrix4x4(x)).ToArray();
+                result.triangles = unityMesh.triangles.ToArray();
+                return result;
+            } else
+            {
+                throw new ArgumentException("Unity Mesh object provided is null in here!");
+            }            
         }
     }
 }

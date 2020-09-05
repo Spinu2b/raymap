@@ -13,7 +13,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
 {
     public class NormalPhysicalObjectSubobjectAccessor : SubobjectAccessor
     {
-        private NormalPhysicalObjectWrapper physicalObject;
+        public NormalPhysicalObjectWrapper physicalObject { get; private set; }
         private int objectNumber;
 
         public NormalPhysicalObjectSubobjectAccessor(int objectNumber, PhysicalObject physicalObject)
