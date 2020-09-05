@@ -68,6 +68,10 @@ namespace OpenSpace.Visual {
         private Renderer mr = null;
         private Mesh OPT_unityMesh = null;
         private Mesh unityMesh = null;
+
+		public Assets.Scripts.ResourcesModel.Mesh OPT_unityMeshModel { get; private set; }
+		public Assets.Scripts.ResourcesModel.Mesh unityMeshModel { get; private set; }
+
 		private Texture2D lightmap = null;
 		private Vector2[] lightmapUVs = null;
 
@@ -688,6 +692,12 @@ namespace OpenSpace.Visual {
                     }*/
                 }
             }
+
+			if (MapLoader.Loader.loadUnityIndependentResourcesModel)
+            {
+				unityMeshModel = Assets.Scripts.ResourcesModel.Mesh.FromUnityMesh(unityMesh);
+				OPT_unityMeshModel = Assets.Scripts.ResourcesModel.Mesh.FromUnityMesh(OPT_unityMesh);
+			}			
         }
 		public void MorphVertices(GeometricObjectElementTriangles el, float lerp) {
 			// Use UpdateMeshVertices if possible! Only use this for special cases

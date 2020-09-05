@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr.RaymapModelFetch;
+﻿using Assets.Scripts.ResourcesModel;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr.Build.Geometric.Trans;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr.RaymapModelFetch;
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr.RaymapModelFetch.NormGeoObjElTri;
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc;
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc.GeoObjDesc;
@@ -13,11 +15,12 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Model.Subobj.NormPo.Parts
 {
-    public class NormalGeometricObjectElementTrianglesGeometricData
+    public static class NormalGeometricObjectElementTrianglesRightMeshFetcher
     {
-        public List<Vector3d> vertices = new List<Vector3d>();
-        public List<Vector3d> normals = new List<Vector3d>();
-        public List<int> triangles = new List<int>();
+        public static Mesh GetRightMesh(GeometricObjectElementTriangles geometricObjectElementTriangles)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class NormalGeometricObjectElementTrianglesWrapper
@@ -37,12 +40,14 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
 
         public List<Vector3d> GetVertices()
         {
-            return NormalGeometricObjectElementTrianglesVerticesFetcher.DeriveFor(geometricObjectElementTriangles);
+            return NormalGeometricObjectElementTrianglesRightMeshFetcher.GetRightMesh(geometricObjectElementTriangles)
+                .vertices.Select(x => Vector3d.FromResourcesModelVector3(x)).ToList();
         }
 
         public List<Vector3d> GetNormals()
         {
-            return NormalGeometricObjectElementTrianglesNormalsFetcher.DeriveFor(geometricObjectElementTriangles);
+            return NormalGeometricObjectElementTrianglesRightMeshFetcher.GetRightMesh(geometricObjectElementTriangles)
+                .normals.Select(x => Vector3d.FromResourcesModelVector3(x)).ToList();
         }
 
         public string GetMaterialHash()
@@ -61,22 +66,28 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
 
         public Dictionary<int, Dictionary<int, float>> GetBoneWeights()
         {
-            return NormalGeometricObjectElementTrianglesBoneWeightsFetcher.DeriveFor(geometricObjectElementTriangles);
+            return MiscellaneousGeometricDataToPersoDescriptionModelTransformer.TransformResourcesModelBonesWeightsToAnimatedPersoBoneWeightsExportModel(
+                NormalGeometricObjectElementTrianglesRightMeshFetcher.GetRightMesh(geometricObjectElementTriangles).boneWeights);
         }
 
         public Dictionary<int, BoneBindPose> GetBindBonePoses()
         {
-            return NormalGeometricObjectElementTrianglesBindBonePosesFetcher.DeriveFor(geometricObjectElementTriangles);
+            return MiscellaneousGeometricDataToPersoDescriptionModelTransformer.TransformResourcesModelBindPosesToAnimatedPersoBindBonePosesExportModel(
+                NormalGeometricObjectElementTrianglesRightMeshFetcher.GetRightMesh(geometricObjectElementTriangles).bindposes);
         }
 
         public List<int> GetTriangles()
         {
-            return NormalGeometricObjectElementTrianglesTrianglesFetcher.DeriveFor(geometricObjectElementTriangles);
+            return NormalGeometricObjectElementTrianglesRightMeshFetcher.GetRightMesh(geometricObjectElementTriangles).triangles.ToList();
         }
 
         public List<List<Vector2d>> GetUvMaps()
         {
-            return NormalGeometricObjectElementTrianglesUvMapsFetcher.DeriveFor(geometricObjectElementTriangles);
+            //in Unity model uv maps are stored as separate fields and we should compactify that into list of lists to be compliant with our model
+            // so yeah, this one is to be implemented..
+
+            throw new NotImplementedException();
+            //return NormalGeometricObjectElementTrianglesRightMeshFetcher.GetRightMesh(geometricObjectElementTriangles).GetUvMaps();
         }
     }
 }
