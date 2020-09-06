@@ -18,11 +18,16 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
             {
                 VisualMaterial.Hint materialHints = geometricObjectElementTriangles.geo.lookAtMode != 0 ?
                     VisualMaterial.Hint.Billboard : VisualMaterial.Hint.None;
-                return geometricObjectElementTriangles.visualMaterial.ForExportGetMaterial();
+                return geometricObjectElementTriangles.visualMaterial.ForExportGetMaterialBasingOnTextures2D();
             } else
             {
                 throw new InvalidOperationException("This geometric object element triangles has null visual material!");
             }
         }
+
+        public static bool HasAlphaTransparencyMaterial(GeometricObjectElementTriangles geometricObjectElementTriangles)
+        {
+            return (geometricObjectElementTriangles.visualMaterial.IsTransparent);
+        }
     }
-}
+} 

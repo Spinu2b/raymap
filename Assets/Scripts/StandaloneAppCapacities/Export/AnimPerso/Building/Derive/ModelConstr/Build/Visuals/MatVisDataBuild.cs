@@ -53,16 +53,6 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
         private Dictionary<string, Texture2D> resultTextures = new Dictionary<string, Texture2D>();
         private Dictionary<string, Image> resultImages = new Dictionary<string, Image>();
 
-        public void SetMaterialBaseClass(MaterialBaseClass materialClass)
-        {
-            resultMaterial.materialBaseClass = materialClass;
-        }
-
-        public void SetFloat(string floatName, float floatValue)
-        {
-            resultMaterial.SetFloat(floatName, floatValue);
-        }
-
         public void SetTexture(string textureName, VisualData texture2DData)
         {
             var onlyPredictedObjectTexture = VisualDataHelper.GetOnlyPredictedObjectTexture(texture2DData);
@@ -74,11 +64,6 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
         {
             resultMaterial.identifier = resultMaterial.description.ComputeIdentifier();
             return new VisualDataBuilder().SetMaterial(resultMaterial).SetTextures(resultTextures).SetImages(resultImages).Build();
-        }
-
-        public void SetVector(string vectorName, Vector vector)
-        {
-            resultMaterial.description.vectors[vectorName] = vector;
         }
     }
 }

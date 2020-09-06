@@ -43,9 +43,6 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLi
     public class MaterialDescription : IExportModel, IIdentifiableComputationally, ISerializableToBytes
     {
         public Dictionary<string, string> textures = new Dictionary<string, string>();
-        public Dictionary<string, float> floats = new Dictionary<string, float>();
-        public Dictionary<string, Vector> vectors = new Dictionary<string, Vector>(); 
-        public MaterialBaseClass materialBaseClass;
 
         public string ComputeIdentifier()
         {
@@ -61,19 +58,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLi
                 valueSerializer: BytesHelper.SerializeFunctions.StringSerializerFunction
                 );
 
-            var floatsBytes = ComparableKeyDictionaryToBytesSerializer.WithCSharpComparableKeySerializeToBytes(
-                dict: floats,
-                keySerializer: BytesHelper.SerializeFunctions.StringSerializerFunction,
-                valueSerializer: BytesHelper.SerializeFunctions.FloatSerializerFunction);
-
-            var vectorsBytes = ComparableKeyDictionaryToBytesSerializer.WithCSharpComparableKeySerializeToBytes(
-                dict: vectors,
-                keySerializer: BytesHelper.SerializeFunctions.StringSerializerFunction,
-                valueSerializer: x => x.SerializeToBytes());
-
-            var materialBaseClassBytes = BitConverter.GetBytes((int)materialBaseClass);
-
-            return texturesBytes.Concat(floatsBytes).Concat(vectorsBytes).Concat(materialBaseClassBytes).ToArray();
+            return texturesBytes.ToArray();
         }
     }
 
@@ -82,26 +67,9 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLi
         public string identifier;
         public MaterialDescription description = new MaterialDescription();
 
-        public MaterialBaseClass materialBaseClass
-        {
-            get
-            {
-                return description.materialBaseClass;
-            }
-            set
-            {
-                description.materialBaseClass = value;
-            }
-        }
-
         public bool EqualsToAnother(Material other)
         {
             return identifier.Equals(other.identifier);
-        }
-
-        public void SetFloat(string floatName, float floatValue)
-        {
-            description.floats[floatName] = floatValue;
         }
 
         public void AddTexture(string textureName, Texture2D textureData)

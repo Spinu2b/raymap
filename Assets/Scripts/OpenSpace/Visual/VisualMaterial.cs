@@ -28,7 +28,7 @@ namespace OpenSpace.Visual {
         public ushort num_animTextures;
 
         public byte properties;
-        private Material material;
+        public Material material;
         //private Material materialBillboard;
         
         // UV scrolling

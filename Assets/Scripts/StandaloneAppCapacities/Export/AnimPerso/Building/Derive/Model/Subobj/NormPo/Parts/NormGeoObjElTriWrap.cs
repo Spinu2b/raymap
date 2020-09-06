@@ -40,7 +40,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
 
         public bool IsAlphaTransparencyObject()
         {
-            return VisualDataHelper.GetOnlyPredictedObjectMaterial(GetVisualData()).materialBaseClass == MaterialBaseClass.TRANSPARENT_MATERIAL;
+            return NormalGeometricObjectElementTrianglesVisualDataFetcher.HasAlphaTransparencyMaterial(geometricObjectElementTriangles);
         }
 
         public List<Vector3d> GetVertices()

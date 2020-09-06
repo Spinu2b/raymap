@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr.Build.Visuals;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr.Build.Visuals;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr.Build.Visuals.Trans;
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc;
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLibDesc.VisDatDesc;
 using Assets.Scripts.StandaloneAppCapacities.Export.Math;
@@ -15,9 +17,24 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Exten
 {
     public static class VisualMaterialExtensions
     {
-        public static VisualData ForExportGetMaterial(
+        public static VisualData ForExportGetMaterialBasingOnTextures2D(
             this VisualMaterial visualMaterial, Hint hints = Hint.None)
         {
+            var materialVisualDataBuilder = new MaterialVisualDataBuilder();
+            int textureIndex = 0;
+            foreach (var visualMaterialTexture in visualMaterial.textures)
+            {
+                var associatedTexture2D = visualMaterialTexture.texture.TextureModel;
+                var visualDataTexture2DPart = MiscellaneousVisualModelToVisualDataTransformer.
+                    TransformResourcesModelTexture2DToVisualData(associatedTexture2D);
+
+                var textureName = BaseMaterialFields.GetMaterialTextureFieldName(0);
+                materialVisualDataBuilder.SetTexture(textureName, visualDataTexture2DPart);
+                textureIndex++;
+            }
+            return materialVisualDataBuilder.Build();
+
+            /* * /
             bool billboard = (hints & Hint.Billboard) == Hint.Billboard; // || (flags & flags_isBillboard) == flags_isBillboard;
             MapLoader l = MapLoader.Loader;
 
@@ -97,17 +114,8 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Exten
                     //material.SetVector("_Color", color);
                     //if (IsPixelShaded) material.SetFloat("_ShadingMode", 1f);
                 }*/
-            return materialVisualDataBuilder.Build();
-        }
-
-        public static Vector4d ForExportAmbientCoefficients(this VisualMaterial visualMaterial)
-        {
-            return Vector4d.FromUnityVector4(visualMaterial.ambientCoef);
-        }
-
-        public static Vector4d ForExportDiffuseCoefficients(this VisualMaterial visualMaterial)
-        {
-            return Vector4d.FromUnityVector4(visualMaterial.diffuseCoef);
+            //return materialVisualDataBuilder.Build();
+            /* */
         }
     }
 }
