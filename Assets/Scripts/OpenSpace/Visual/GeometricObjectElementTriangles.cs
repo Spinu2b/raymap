@@ -104,7 +104,7 @@ namespace OpenSpace.Visual {
 				v10.y * v20.x - v10.x * v20.y);
 		}
 
-		private void CreateUnityMeshFromSDC() {
+		private void CreateUnityMeshFromSDC(bool manifestInUnityScene) {
 			/*if (sdc.geo.Type == 6) {
 				// Just fill in things based on mapping
 				return;
@@ -347,41 +347,61 @@ namespace OpenSpace.Visual {
 					OPT_unityMesh.bindposes = geo.bones.bindPoses;
 				}
 			}
-			GameObject OPT_gao = (OPT_mr == null ? gao : new GameObject("[Optimized] " + name));
-			if (OPT_gao != gao) {
-				OPT_gao.transform.SetParent(gao.transform);
-			} else {
-				gao.name = "[Optimized] " + gao.name;
-				gao.name += " - " + sdc.offset;
-				gao.name += " - " + sdc.colors?.Length;
-			}
-			if (geo.bones != null) {
-				OPT_mr = OPT_gao.AddComponent<SkinnedMeshRenderer>();
-				OPT_gao.AddComponent<ExportableModel>();
-				OPT_s_mr = (SkinnedMeshRenderer)OPT_mr;
-				OPT_s_mr.bones = geo.bones.bones;
-				OPT_s_mr.rootBone = geo.bones.bones[0];
-				OPT_s_mr.sharedMesh = OPT_unityMesh; //CopyMesh(OPT_unityMesh);
+			if (manifestInUnityScene)
+            {
+				GameObject OPT_gao = (OPT_mr == null ? gao : new GameObject("[Optimized] " + name));
+				if (OPT_gao != gao)
+				{
+					OPT_gao.transform.SetParent(gao.transform);
+				}
+				else
+				{
+					gao.name = "[Optimized] " + gao.name;
+					gao.name += " - " + sdc.offset;
+					gao.name += " - " + sdc.colors?.Length;
+				}
+				if (geo.bones != null)
+				{
+					OPT_mr = OPT_gao.AddComponent<SkinnedMeshRenderer>();
+					OPT_gao.AddComponent<ExportableModel>();
+					OPT_s_mr = (SkinnedMeshRenderer)OPT_mr;
+					OPT_s_mr.bones = geo.bones.bones;
+					OPT_s_mr.rootBone = geo.bones.bones[0];
+					OPT_s_mr.sharedMesh = OPT_unityMesh; //CopyMesh(OPT_unityMesh);
 
-				BoxCollider bc = OPT_gao.AddComponent<BoxCollider>();
-				bc.center = OPT_s_mr.bounds.center;
-				bc.size = OPT_s_mr.bounds.size;
-			} else {
-				MeshFilter mf = OPT_gao.AddComponent<MeshFilter>();
-				OPT_gao.AddComponent<ExportableModel>();
-				mf.sharedMesh = OPT_unityMesh;
-				OPT_mr = OPT_gao.AddComponent<MeshRenderer>();
+					BoxCollider bc = OPT_gao.AddComponent<BoxCollider>();
+					bc.center = OPT_s_mr.bounds.center;
+					bc.size = OPT_s_mr.bounds.size;
+				}
+				else
+				{
+					MeshFilter mf = OPT_gao.AddComponent<MeshFilter>();
+					OPT_gao.AddComponent<ExportableModel>();
+					mf.sharedMesh = OPT_unityMesh;
+					OPT_mr = OPT_gao.AddComponent<MeshRenderer>();
 
-				try {
-					MeshCollider mc = OPT_gao.AddComponent<MeshCollider>();
-					mc.isTrigger = false;
-					//mc.cookingOptions = MeshColliderCookingOptions.None;
-					//mc.sharedMesh = OPT_unityMesh;
-				} catch (Exception) { }
-			}
+					try
+					{
+						MeshCollider mc = OPT_gao.AddComponent<MeshCollider>();
+						mc.isTrigger = false;
+						//mc.cookingOptions = MeshColliderCookingOptions.None;
+						//mc.sharedMesh = OPT_unityMesh;
+					}
+					catch (Exception) { }
+				}
+			}			
 		}
 
-        private void CreateUnityMesh() {
+        public void ReinitOnlyGeometricData()
+        {
+			ActualCreateUnityMesh(manifestInUnityScene: false);
+        }
+
+		public void CreateUnityMesh() {
+			ActualCreateUnityMesh(manifestInUnityScene: true);
+		}
+
+        private void ActualCreateUnityMesh(bool manifestInUnityScene) {
             /*if (mesh.bones != null) {
                 for (int j = 0; j < mesh.bones.num_bones; j++) {
                     Transform b = mesh.bones.bones[j];
@@ -398,7 +418,7 @@ namespace OpenSpace.Visual {
 			uint triangle_size = 3 * (uint)(backfaceCulling ? 1 : 2);
 
 			if (sdc != null) {
-				CreateUnityMeshFromSDC();
+				CreateUnityMeshFromSDC(manifestInUnityScene: manifestInUnityScene);
 			}
 			Color[] rli = null;
 
@@ -500,29 +520,37 @@ namespace OpenSpace.Visual {
 				}
 				//mesh.SetUVs(0, new_uvs_spe.ToList());
 				/*mesh.uv = new_uvs_spe;*/
-				if (new_boneWeights != null) {
-					mr = gao.AddComponent<SkinnedMeshRenderer>();
-					gao.AddComponent<ExportableModel>();
-					s_mr = (SkinnedMeshRenderer)mr;
-					s_mr.bones = geo.bones.bones;
-					s_mr.rootBone = geo.bones.bones[0];
-					s_mr.sharedMesh = unityMesh; //CopyMesh(unityMesh);
+				if (manifestInUnityScene)
+                {
+					if (new_boneWeights != null)
+					{
+						mr = gao.AddComponent<SkinnedMeshRenderer>();
+						gao.AddComponent<ExportableModel>();
+						s_mr = (SkinnedMeshRenderer)mr;
+						s_mr.bones = geo.bones.bones;
+						s_mr.rootBone = geo.bones.bones[0];
+						s_mr.sharedMesh = unityMesh; //CopyMesh(unityMesh);
 
-					BoxCollider bc = gao.AddComponent<BoxCollider>();
-					bc.center = s_mr.bounds.center;
-					bc.size = s_mr.bounds.size;
-				} else {
-					MeshFilter mf = gao.AddComponent<MeshFilter>();
-					gao.AddComponent<ExportableModel>();
-					mr = gao.AddComponent<MeshRenderer>();
-					mf.sharedMesh = unityMesh;
-					try {
-						MeshCollider mc = gao.AddComponent<MeshCollider>();
-						mc.isTrigger = false;
-						//mc.cookingOptions = MeshColliderCookingOptions.None;
-						//mc.sharedMesh = unityMesh;
-					} catch (Exception) { }
-				}
+						BoxCollider bc = gao.AddComponent<BoxCollider>();
+						bc.center = s_mr.bounds.center;
+						bc.size = s_mr.bounds.size;
+					}
+					else
+					{
+						MeshFilter mf = gao.AddComponent<MeshFilter>();
+						gao.AddComponent<ExportableModel>();
+						mr = gao.AddComponent<MeshRenderer>();
+						mf.sharedMesh = unityMesh;
+						try
+						{
+							MeshCollider mc = gao.AddComponent<MeshCollider>();
+							mc.isTrigger = false;
+							//mc.cookingOptions = MeshColliderCookingOptions.None;
+							//mc.sharedMesh = unityMesh;
+						}
+						catch (Exception) { }
+					}
+				}				
 				//}
 			}
 
@@ -611,36 +639,47 @@ namespace OpenSpace.Visual {
 				} else {
 					OPT_unityMesh = CopyMesh(OPT_unityMesh);
 				}
-				GameObject OPT_gao = (OPT_mr == null ? gao : new GameObject("[Optimized] " + name));
-				if (OPT_gao != gao) {
-					OPT_gao.transform.SetParent(gao.transform);
-				} else {
-					gao.name = "[Optimized] " + gao.name;
-				}
-				if (new_boneWeights != null) {
-                    OPT_mr = OPT_gao.AddComponent<SkinnedMeshRenderer>();
-					OPT_gao.AddComponent<ExportableModel>();
-					OPT_s_mr = (SkinnedMeshRenderer)OPT_mr;
-                    OPT_s_mr.bones = geo.bones.bones;
-                    OPT_s_mr.rootBone = geo.bones.bones[0];
-					OPT_s_mr.sharedMesh = OPT_unityMesh; //CopyMesh(OPT_unityMesh);
-					
-					BoxCollider bc = OPT_gao.AddComponent<BoxCollider>();
-					bc.center = OPT_s_mr.bounds.center;
-					bc.size = OPT_s_mr.bounds.size;
-				} else {
-                    MeshFilter mf = OPT_gao.AddComponent<MeshFilter>();
-					OPT_gao.AddComponent<ExportableModel>();
-					mf.sharedMesh = OPT_unityMesh;
-                    OPT_mr = OPT_gao.AddComponent<MeshRenderer>();
+				if (manifestInUnityScene)
+                {
+					GameObject OPT_gao = (OPT_mr == null ? gao : new GameObject("[Optimized] " + name));
+					if (OPT_gao != gao)
+					{
+						OPT_gao.transform.SetParent(gao.transform);
+					}
+					else
+					{
+						gao.name = "[Optimized] " + gao.name;
+					}
+					if (new_boneWeights != null)
+					{
+						OPT_mr = OPT_gao.AddComponent<SkinnedMeshRenderer>();
+						OPT_gao.AddComponent<ExportableModel>();
+						OPT_s_mr = (SkinnedMeshRenderer)OPT_mr;
+						OPT_s_mr.bones = geo.bones.bones;
+						OPT_s_mr.rootBone = geo.bones.bones[0];
+						OPT_s_mr.sharedMesh = OPT_unityMesh; //CopyMesh(OPT_unityMesh);
 
-					try {
-						MeshCollider mc = OPT_gao.AddComponent<MeshCollider>();
-						mc.isTrigger = false;
-						//mc.cookingOptions = MeshColliderCookingOptions.None;
-						//mc.sharedMesh = OPT_unityMesh;
-					} catch (Exception) { }
-				}
+						BoxCollider bc = OPT_gao.AddComponent<BoxCollider>();
+						bc.center = OPT_s_mr.bounds.center;
+						bc.size = OPT_s_mr.bounds.size;
+					}
+					else
+					{
+						MeshFilter mf = OPT_gao.AddComponent<MeshFilter>();
+						OPT_gao.AddComponent<ExportableModel>();
+						mf.sharedMesh = OPT_unityMesh;
+						OPT_mr = OPT_gao.AddComponent<MeshRenderer>();
+
+						try
+						{
+							MeshCollider mc = OPT_gao.AddComponent<MeshCollider>();
+							mc.isTrigger = false;
+							//mc.cookingOptions = MeshColliderCookingOptions.None;
+							//mc.sharedMesh = OPT_unityMesh;
+						}
+						catch (Exception) { }
+					}
+				}				
             }
             if (visualMaterial != null) {
                 //gao.name += " " + visualMaterial.offset + " - " + (visualMaterial.textures.Count > 0 ? visualMaterial.textures[0].offset.ToString() : "NULL" );
@@ -661,36 +700,44 @@ namespace OpenSpace.Visual {
                     }
                 }*/
                 //if (r3mat.Material.GetColor("_EmissionColor") != Color.black) print("Mesh with emission: " + name);
-                if (OPT_mr != null) {
-                    OPT_mr.sharedMaterial = unityMat;
-                    //mr_main.UpdateGIMaterials();
-                    if (!receiveShadows) OPT_mr.receiveShadows = false;
-                    if (visualMaterial.animTextures.Count > 0) {
-                        MultiTextureMaterial mtmat = OPT_mr.gameObject.AddComponent<MultiTextureMaterial>();
-                        mtmat.visMat = visualMaterial;
-                        mtmat.mat = OPT_mr.material;
-                    }
-                    /*if (scroll) {
-                        ScrollingTexture scrollComponent = mr_main.gameObject.AddComponent<ScrollingTexture>();
-                        scrollComponent.visMat = visualMaterial;
-                        scrollComponent.mat = mr_main.material;
-                    }*/
-                }
-                if (mr != null) {
-                    mr.sharedMaterial = unityMat;
-                    //mr_spe.UpdateGIMaterials();
-                    if (!receiveShadows) mr.receiveShadows = false;
-                    if (visualMaterial.animTextures.Count > 0) {
-                        MultiTextureMaterial mtmat = mr.gameObject.AddComponent<MultiTextureMaterial>();
-                        mtmat.visMat = visualMaterial;
-                        mtmat.mat = mr.material;
+
+				if (manifestInUnityScene)
+                {
+					if (OPT_mr != null)
+					{
+						OPT_mr.sharedMaterial = unityMat;
+						//mr_main.UpdateGIMaterials();
+						if (!receiveShadows) OPT_mr.receiveShadows = false;
+						if (visualMaterial.animTextures.Count > 0)
+						{
+							MultiTextureMaterial mtmat = OPT_mr.gameObject.AddComponent<MultiTextureMaterial>();
+							mtmat.visMat = visualMaterial;
+							mtmat.mat = OPT_mr.material;
+						}
+						/*if (scroll) {
+							ScrollingTexture scrollComponent = mr_main.gameObject.AddComponent<ScrollingTexture>();
+							scrollComponent.visMat = visualMaterial;
+							scrollComponent.mat = mr_main.material;
+						}*/
 					}
-                    /*if (scroll) {
-                        ScrollingTexture scrollComponent = mr_spe.gameObject.AddComponent<ScrollingTexture>();
-                        scrollComponent.visMat = visualMaterial;
-                        scrollComponent.mat = mr_spe.material;
-                    }*/
-                }
+					if (mr != null)
+					{
+						mr.sharedMaterial = unityMat;
+						//mr_spe.UpdateGIMaterials();
+						if (!receiveShadows) mr.receiveShadows = false;
+						if (visualMaterial.animTextures.Count > 0)
+						{
+							MultiTextureMaterial mtmat = mr.gameObject.AddComponent<MultiTextureMaterial>();
+							mtmat.visMat = visualMaterial;
+							mtmat.mat = mr.material;
+						}
+						/*if (scroll) {
+							ScrollingTexture scrollComponent = mr_spe.gameObject.AddComponent<ScrollingTexture>();
+							scrollComponent.visMat = visualMaterial;
+							scrollComponent.mat = mr_spe.material;
+						}*/
+					}
+				}                
             }
 
 			if (MapLoader.Loader.loadUnityIndependentResourcesModel)

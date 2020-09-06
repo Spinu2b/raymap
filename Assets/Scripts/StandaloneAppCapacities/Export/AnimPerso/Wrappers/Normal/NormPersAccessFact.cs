@@ -1,4 +1,7 @@
-﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Model.Unity;
+﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Model.Subobj;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Model.Subobj.NormPo.Parts;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Model.Subobj.NormPo.Parts.IWrap;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Model.Unity;
 using Assets.Scripts.StandaloneAppCapacities.Export.Wrappers;
 using OpenSpace.Object;
 using System;
@@ -37,7 +40,15 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Norma
                 "hasBones", System.Reflection.BindingFlags.NonPublic | BindingFlags.Instance).GetValue(persoBehaviour);
 
             result.channelIDDictionary = CloneChannelIDDictionary(persoBehaviour);
+
+            InitPhysicalObjectsGeometricDataInPersoFamilyAppropriateObjectList(result);
             return result;
+        }
+
+        private static void InitPhysicalObjectsGeometricDataInPersoFamilyAppropriateObjectList(
+            NormalPersoAccessor normalPersoAccessor)
+        {
+            normalPersoAccessor.InitPhysicalObjectsGeometricDataInPersoFamilyAppropriateObjectList();
         }
 
         private static ActualManifestableUnityGameObject[] GetChannelObjects(PersoBehaviour persoBehaviour)

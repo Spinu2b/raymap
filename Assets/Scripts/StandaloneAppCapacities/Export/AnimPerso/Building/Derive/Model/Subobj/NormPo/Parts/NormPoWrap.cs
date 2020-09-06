@@ -29,5 +29,27 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
                 }
             }
         }
+
+        public IEnumerable<Tuple<int, NormalGeometricObjectElementTrianglesWrapper>> IterateNormalGeometricObjectElementTriangles()
+        {
+            foreach (Tuple<int, IGeometricObjectWrapper> interfaceGeometricObject in IterateIGeometricObjects())
+            {
+                if (interfaceGeometricObject.Item2.IsNormalGeometricObject())
+                {
+                    NormalGeometricObjectWrapper geometricObject = interfaceGeometricObject.Item2.GetNormalGeometricObject();
+                    foreach (Tuple<int, IGeometricObjectElementWrapper> interfaceGeometricObjectElement in
+                        geometricObject.IterateIGeometricObjectElements())
+                    {
+                        if (interfaceGeometricObjectElement.Item2.IsNormalGeometricObjectElementTriangles())
+                        {
+                            NormalGeometricObjectElementTrianglesWrapper geometricObjectElementTriangles =
+                                interfaceGeometricObjectElement.Item2.GetNormalGeometricObjectElementTriangles();
+                            yield return new Tuple<int, NormalGeometricObjectElementTrianglesWrapper>(interfaceGeometricObjectElement.Item1, 
+                                geometricObjectElementTriangles);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

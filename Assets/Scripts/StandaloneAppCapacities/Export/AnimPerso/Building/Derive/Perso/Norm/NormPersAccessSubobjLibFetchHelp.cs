@@ -16,25 +16,28 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
 {
     public static class NormalPhysicalObjectLegitimacyVerifier
     {
+        public static bool IsValidPhysicalObjectWithProperGeometricDataContained(int objectIndex, PhysicalObject physicalObject)
+        {
+            //return physicalObject != null;
+            if (physicalObject == null)
+            {
+                return false;
+            }
+            return NormalPhysicalObjectLegitimacyVerifier.HasProperGeometricDataContained(objectIndex, physicalObject);
+        }
+
+        public static bool IsValidPhysicalObjectAtAll(int objectIndex, PhysicalObject physicalObject)
+        {
+            return physicalObject != null;
+        }
+
         public static bool HasProperGeometricDataContained(int objectIndex, PhysicalObject physicalObject)
         {
             var physicalSubobjectAccessor = new NormalPhysicalObjectSubobjectAccessor(objectIndex, physicalObject);
-            foreach (Tuple<int, IGeometricObjectWrapper> interfaceGeometricObject in physicalSubobjectAccessor.physicalObject.IterateIGeometricObjects())
+            foreach (Tuple<int, NormalGeometricObjectElementTrianglesWrapper> interfaceGeometricObjectElement in
+                physicalSubobjectAccessor.physicalObject.IterateNormalGeometricObjectElementTriangles())
             {
-                if (interfaceGeometricObject.Item2.IsNormalGeometricObject())
-                {
-                    NormalGeometricObjectWrapper geometricObject = interfaceGeometricObject.Item2.GetNormalGeometricObject();
-                    foreach (Tuple<int, IGeometricObjectElementWrapper> interfaceGeometricObjectElement in
-                        geometricObject.IterateIGeometricObjectElements())
-                    {
-                        if (interfaceGeometricObjectElement.Item2.IsNormalGeometricObjectElementTriangles())
-                        {
-                            NormalGeometricObjectElementTrianglesWrapper geometricObjectElementTriangles =
-                                interfaceGeometricObjectElement.Item2.GetNormalGeometricObjectElementTriangles();
-                            return geometricObjectElementTriangles.HasValidGeometricDataContained();
-                        }
-                    }
-                }
+                return interfaceGeometricObjectElement.Item2.HasValidGeometricDataContained();
             }
             return false;
         }
@@ -95,21 +98,12 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
             var result = new Dictionary<int, SubobjectAccessor>();
             for (int objectIndex = 0; objectIndex < objectList.Count; objectIndex++) {
                 // we're trying to add only legitimately valid objects
-                if (IsValidPhysicalObjectWithProperGeometricDataContained(objectIndex, objectList[objectIndex].po))
+                if (NormalPhysicalObjectLegitimacyVerifier.IsValidPhysicalObjectWithProperGeometricDataContained(objectIndex, objectList[objectIndex].po))
                 {
                     result.Add(objectIndex, new NormalPhysicalObjectSubobjectAccessor(objectIndex, objectList[objectIndex].po));
                 }
             }
             return result;
-        }
-
-        private bool IsValidPhysicalObjectWithProperGeometricDataContained(int objectIndex, PhysicalObject physicalObject)
-        {
-            if (physicalObject == null)
-            {
-                return false;
-            }
-            return NormalPhysicalObjectLegitimacyVerifier.HasProperGeometricDataContained(objectIndex, physicalObject);
         }
     }
 }

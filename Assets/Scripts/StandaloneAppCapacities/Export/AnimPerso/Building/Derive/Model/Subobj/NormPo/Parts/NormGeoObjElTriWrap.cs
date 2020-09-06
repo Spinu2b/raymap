@@ -65,6 +65,11 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
             return NormalGeometricObjectElementTrianglesMaterialHashFetcher.DeriveFor(geometricObjectElementTriangles);
         }
 
+        public void ReinitGeometricData()
+        {
+            geometricObjectElementTriangles.ReinitOnlyGeometricData();
+        }
+
         public VisualData GetVisualData()
         {
             if (visualData == null)
