@@ -12,12 +12,25 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building
     {
         public static Material GetOnlyPredictedObjectMaterial(VisualData visualData)
         {
-            return visualData.materials.First().Value;
+            if (visualData.materials.Count == 1)
+            {
+                return visualData.materials.First().Value;
+            } else
+            {
+                throw new InvalidOperationException("There is other than 1 amount of expected materials for this VisualData!");
+            }                
         }
 
         public static Texture2D GetOnlyPredictedObjectTexture(VisualData texture2DData)
         {
-            return texture2DData.textures.First().Value;
+            if (texture2DData.textures.Count == 1)
+            {
+                return texture2DData.textures.First().Value;
+            }
+            else
+            {
+                throw new InvalidOperationException("There is other than 1 amount of expected textures for this VisualData!");
+            }            
         }
     }
 }

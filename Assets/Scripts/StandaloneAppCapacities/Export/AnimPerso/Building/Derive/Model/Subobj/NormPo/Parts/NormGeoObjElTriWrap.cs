@@ -62,7 +62,9 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
 
         public string GetMaterialHash()
         {
-            return NormalGeometricObjectElementTrianglesMaterialHashFetcher.DeriveFor(geometricObjectElementTriangles);
+            var visualData = GetVisualData();
+            Material material = VisualDataHelper.GetOnlyPredictedObjectMaterial(visualData);
+            return material.identifier;
         }
 
         public void ReinitGeometricData()
