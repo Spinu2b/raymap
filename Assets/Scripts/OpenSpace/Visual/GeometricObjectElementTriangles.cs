@@ -478,7 +478,8 @@ namespace OpenSpace.Visual {
 						new_normals[m1] = normals[j];
 						new_normals[m2] = normals[j];
 					}
-					if (new_boneWeights != null) {
+					if (new_boneWeights != null && geo.bones.weights != null) {
+
 						new_boneWeights[m0] = geo.bones.weights[i0];
 						new_boneWeights[m1] = geo.bones.weights[i1];
 						new_boneWeights[m2] = geo.bones.weights[i2];

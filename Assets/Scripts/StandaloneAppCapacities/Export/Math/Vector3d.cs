@@ -28,7 +28,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.Math
 
         public static Vector3d FromResourcesModelVector3(ResourcesModel.Math.Vector3 vector3)
         {
-            throw new NotImplementedException();
+            return new Vector3d(vector3.x, vector3.y, vector3.z);
         }
     }
 }
