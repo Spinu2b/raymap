@@ -43,12 +43,16 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Norma
 
         public override bool IsValidAnimationState(int animationStateIndex)
         {
-            throw new NotImplementedException();
+            return normalPersoAccessorStateHelper.IsValidAnimationState(animationStateIndex);
         }
 
         public override void SetState(int stateIndex)
         {
-            throw new NotImplementedException();
+            if (stateIndex < 0 || stateIndex >= perso.p3dData.family.states.Count) return;
+            this.stateIndex = stateIndex;
+            this.currentState = stateIndex;
+            state = perso.p3dData.family.states[stateIndex];
+            SetState(state);
         }
 
         public NormalPersoAccessor() : base()

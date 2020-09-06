@@ -25,6 +25,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Norma
 
             result.isLoaded = persoBehaviour.IsLoaded;
             result.perso = persoBehaviour.perso;
+            result.controller = persoBehaviour.controller;
 
             result.animLargo = persoBehaviour.animLargo;
             result.animMontreal = persoBehaviour.animMontreal;

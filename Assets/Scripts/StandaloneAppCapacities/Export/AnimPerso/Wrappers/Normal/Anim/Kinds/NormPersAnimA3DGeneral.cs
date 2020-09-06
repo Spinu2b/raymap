@@ -1,12 +1,17 @@
-﻿using System;
+﻿using OpenSpace.Animation.Component;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Normal.Anim.Kinds
+namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Normal
 {
-    class NormPersAnimA3DGeneral
+    public partial class NormalPersoAccessor
     {
+        private void InitAnimation(AnimA3DGeneral animA3DGeneral)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
