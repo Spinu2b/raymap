@@ -88,11 +88,15 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLi
             {
                 return description.materialBaseClass;
             }
+            set
+            {
+                description.materialBaseClass = value;
+            }
         }
 
         public bool EqualsToAnother(Material other)
         {
-            throw new NotImplementedException();
+            return identifier.Equals(other.identifier);
         }
 
         public void SetFloat(string floatName, float floatValue)

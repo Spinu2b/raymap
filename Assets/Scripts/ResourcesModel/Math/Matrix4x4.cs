@@ -36,6 +36,26 @@ namespace Assets.Scripts.ResourcesModel.Math
             return result;
         }
 
+        public Vector4 GetColumn(int index)
+        {
+            var result = new Vector4();
+            result.x = elements[0, index];
+            result.y = elements[1, index];
+            result.z = elements[2, index];
+            result.w = elements[3, index];
+            return result;
+        }
+
+        public UnityEngine.Vector4 GetUnityColumn(int index)
+        {
+            var result = new UnityEngine.Vector4();
+            result.x = elements[0, index];
+            result.y = elements[1, index];
+            result.z = elements[2, index];
+            result.w = elements[3, index];
+            return result;
+        }
+
         private void InitElements()
         {
             elements = new float[4, 4];

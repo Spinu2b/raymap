@@ -63,7 +63,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLi
 
         public bool EqualsToAnother(Image other)
         {
-            throw new NotImplementedException();
+            return imageDescriptionIdentifier.Equals(other.imageDescriptionIdentifier);
         }
     }
 }

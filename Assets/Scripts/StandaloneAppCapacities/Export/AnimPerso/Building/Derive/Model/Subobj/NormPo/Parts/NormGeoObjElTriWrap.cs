@@ -100,11 +100,18 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
 
         public List<List<Vector2d>> GetUvMaps()
         {
-            //in Unity model uv maps are stored as separate fields and we should compactify that into list of lists to be compliant with our model
-            // so yeah, this one is to be implemented..
+            var result = new List<List<Vector2d>>();
+            var appropriateMesh = NormalGeometricObjectElementTrianglesRightMeshFetcher.GetRightMesh(geometricObjectElementTriangles);
 
-            throw new NotImplementedException();
-            //return NormalGeometricObjectElementTrianglesRightMeshFetcher.GetRightMesh(geometricObjectElementTriangles).GetUvMaps();
+            result.Add(appropriateMesh.uv.Select(x => Vector2d.FromResourcesModelVector2(x)).ToList());
+            result.Add(appropriateMesh.uv2.Select(x => Vector2d.FromResourcesModelVector2(x)).ToList());
+            result.Add(appropriateMesh.uv3.Select(x => Vector2d.FromResourcesModelVector2(x)).ToList());
+            result.Add(appropriateMesh.uv4.Select(x => Vector2d.FromResourcesModelVector2(x)).ToList());
+            result.Add(appropriateMesh.uv5.Select(x => Vector2d.FromResourcesModelVector2(x)).ToList());
+            result.Add(appropriateMesh.uv6.Select(x => Vector2d.FromResourcesModelVector2(x)).ToList());
+            result.Add(appropriateMesh.uv7.Select(x => Vector2d.FromResourcesModelVector2(x)).ToList());
+            result.Add(appropriateMesh.uv8.Select(x => Vector2d.FromResourcesModelVector2(x)).ToList());
+            return result;
         }
     }
 }

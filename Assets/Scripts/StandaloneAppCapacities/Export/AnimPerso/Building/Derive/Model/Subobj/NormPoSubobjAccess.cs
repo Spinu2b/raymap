@@ -11,6 +11,14 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Model.Subobj
 {
+    public static class NormalPhysicalObjectTransparencyVisibilityNatureVerifier
+    {
+        public static bool IsCompletelyTransparentElementsAssociated(NormalPhysicalObjectWrapper physicalObject)
+        {
+            return physicalObject.IterateNormalGeometricObjectElementTriangles().All(x => x.Item2.IsAlphaTransparencyObject());
+        }
+    }
+
     public class NormalPhysicalObjectSubobjectAccessor : SubobjectAccessor
     {
         public NormalPhysicalObjectWrapper physicalObject { get; private set; }
@@ -24,25 +32,19 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
 
         public override Subobject GetSubobjectModel()
         {
-            foreach (Tuple<int, IGeometricObjectWrapper> interfaceGeometricObject in physicalObject.IterateIGeometricObjects())
+            return GetSubobjectModelFromElementTriangles(GetOneExpectedRepresentativeElementTrianglesAsActualGeometricDataSource());
+        }
+
+        private NormalGeometricObjectElementTrianglesWrapper GetOneExpectedRepresentativeElementTrianglesAsActualGeometricDataSource()
+        {
+            if (!NormalPhysicalObjectTransparencyVisibilityNatureVerifier.IsCompletelyTransparentElementsAssociated(physicalObject))
             {
-                if (interfaceGeometricObject.Item2.IsNormalGeometricObject())
-                {
-                    NormalGeometricObjectWrapper geometricObject = interfaceGeometricObject.Item2.GetNormalGeometricObject();
-                    foreach (Tuple<int, IGeometricObjectElementWrapper> interfaceGeometricObjectElement in 
-                        geometricObject.IterateIGeometricObjectElements())
-                    {
-                        if (interfaceGeometricObjectElement.Item2.IsNormalGeometricObjectElementTriangles())
-                        {
-                            NormalGeometricObjectElementTrianglesWrapper geometricObjectElementTriangles =
-                                interfaceGeometricObjectElement.Item2.GetNormalGeometricObjectElementTriangles();
-                            if (!geometricObjectElementTriangles.IsAlphaTransparencyObject())
-                            {
-                                return GetSubobjectModelFromElementTriangles(geometricObjectElementTriangles);
-                            }
-                        }
-                    }
-                }
+                return (
+                    physicalObject.IterateNormalGeometricObjectElementTriangles().First(x => !x.Item2.IsAlphaTransparencyObject()).Item2);
+            }
+            else
+            {
+                return (physicalObject.IterateNormalGeometricObjectElementTriangles().First().Item2);
             }
             throw new InvalidOperationException("This physical object does not contain any " +
                 "legitimate data that can be turned into subobject model for export!");
@@ -55,7 +57,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
 
         public override VisualData GetVisualData()
         {
-            throw new NotImplementedException();
+            return GetOneExpectedRepresentativeElementTrianglesAsActualGeometricDataSource().GetVisualData();
         }
     }
 }

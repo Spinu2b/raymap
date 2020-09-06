@@ -15,7 +15,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.SubobjLi
 
         public bool EqualsToAnother(Texture2D other)
         {
-            throw new NotImplementedException();
+            return textureDescriptionIdentifier.Equals(other.textureDescriptionIdentifier);
         }
 
         public static Texture2D FromResourcesModelTexture2D(ResourcesModel.Visuals.Texture2D textureModel)

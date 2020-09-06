@@ -55,7 +55,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
 
         public void SetMaterialBaseClass(MaterialBaseClass materialClass)
         {
-            throw new NotImplementedException();
+            resultMaterial.materialBaseClass = materialClass;
         }
 
         public void SetFloat(string floatName, float floatValue)
