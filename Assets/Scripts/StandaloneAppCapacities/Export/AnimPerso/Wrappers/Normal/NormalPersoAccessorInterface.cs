@@ -12,28 +12,28 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Norma
 {
     public partial class NormalPersoAccessor : PersoAccessor
     {
-        public override int statesCount => throw new NotImplementedException();
+        public override int statesCount => perso.p3dData.family.states.Count;
 
-        public override int currentAnimationStateFramesCount => throw new NotImplementedException();
+        public override int currentAnimationStateFramesCount => GetCurrentAnimationStateFramesCount();
 
         public override Dictionary<int, int> GetChannelParentingInfosForAnimationFrame(int frameNumber)
         {
-            throw new NotImplementedException();
+            return normalPersoAccessorChannelsParentingFetchingHelper.GetPersoBehaviourChannelsParentingForFrame(frameNumber);
         }
 
         public override Dictionary<int, ChannelTransform> GetChannelsKeyframeDataForAnimationFrame(int frameNumber)
         {
-            throw new NotImplementedException();
+            return normalPersoAccessorAnimationKeyframesFetchingHelper.GetPersoBehaviourChannelsKeyframeDataForFrame(frameNumber);
         }
 
         public override List<Tuple<int, int, int>> GetMorphDataForAnimationFrame(int frameNumber)
         {
-            throw new NotImplementedException();
+            return normalPersoAccessorMorphFetchingHelper.GetPersoBehaviourMorphDataForFrame(frameNumber);
         }
 
         public override SubobjectsChannelsAssociation GetSubobjectsChannelsAssociationsForAnimationFrame(int frameNumber)
         {
-            throw new NotImplementedException();
+            return normalPersoAccessorAnimationSubobjectsChannelsAssociationFetchingHelper.GetPersoBehaviourSubobjectsChannelsAssociationForFrame(frameNumber);
         }
 
         public override SubobjectsLibrary GetSubobjectsLibrary()

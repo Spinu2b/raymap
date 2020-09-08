@@ -10,7 +10,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Norma
     {
         private void UpdateViewCollision(bool viewCollision)
         {
-            throw new NotImplementedException();
+            // not needed for purposes of exporting, so do nothing here
         }
     }
 }

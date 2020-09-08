@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model;
+using Assets.Scripts.StandaloneAppCapacities.Export.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,17 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building
 {
     public class SubobjectsChannelsAssociationsInfoBuilder
     {
+        SubobjectsChannelsAssociations result = new SubobjectsChannelsAssociations();
+
         public SubobjectsChannelsAssociations Build()
         {
-            throw new NotImplementedException();
+            return result;
         }
 
         public void Consolidate(SubobjectsChannelsAssociations subobjectsChannelsAssociations)
         {
-            throw new NotImplementedException();
+            ComparableModelDictionariesMerger.MergeDictionariesToFirstDict(
+                result.subobjectsChannelsAssociations, subobjectsChannelsAssociations.subobjectsChannelsAssociations);
         }
     }
 }

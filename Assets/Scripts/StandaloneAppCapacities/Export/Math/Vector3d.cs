@@ -35,5 +35,10 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.Math
         {
             return new Vector3d(vector4.x, vector4.y, vector4.z);
         }
+
+        public static Vector3d FromUnityVector3(Vector3 vector3)
+        {
+            return new Vector3d(vector3.x, vector3.y, vector3.z);
+        }
     }
 }

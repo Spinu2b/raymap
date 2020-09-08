@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Util
+namespace Assets.Scripts.Util.Bytes
 {
     public static class BytesHashHelper
     {

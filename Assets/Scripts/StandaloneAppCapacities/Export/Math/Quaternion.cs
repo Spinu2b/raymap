@@ -10,6 +10,19 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.Math
 {
     public struct Quaternion : IExportModel, ISerializableToBytes
     {
+        public float w;
+        public float x;
+        public float y;
+        public float z;
+
+        public Quaternion(float w, float x, float y, float z)
+        {
+            this.w = w;
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+
         public byte[] SerializeToBytes()
         {
             throw new NotImplementedException();
@@ -22,7 +35,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.Math
 
         public static Quaternion FromUnityQuaternion(UnityEngine.Quaternion quaternion)
         {
-            throw new NotImplementedException();
+            return new Quaternion(quaternion.w, quaternion.x, quaternion.y, quaternion.z);
         }
     }
 }

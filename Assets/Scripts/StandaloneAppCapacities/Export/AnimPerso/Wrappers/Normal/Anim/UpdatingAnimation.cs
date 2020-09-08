@@ -10,7 +10,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Norma
     {
         public void UpdateAnimation()
         {
-            throw new NotImplementedException();
+           
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Util
+namespace Assets.Scripts.Util.Bytes
 {
     public static class BytesHelper
     {
@@ -16,6 +16,16 @@ namespace Assets.Scripts.Util
             }
 
             public static byte[] FloatSerializerFunction(float arg)
+            {
+                return BitConverter.GetBytes(arg);
+            }
+
+            public static byte[] ListSerializerFunction<T>(List<T> list, Func<T,byte[]> elementSerializer)
+            {
+                return list.SelectMany(x => elementSerializer(x)).ToArray();
+            }
+
+            public static byte[] IntSerializerFunction(int arg)
             {
                 return BitConverter.GetBytes(arg);
             }

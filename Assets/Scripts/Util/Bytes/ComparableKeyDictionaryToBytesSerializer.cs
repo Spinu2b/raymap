@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Util
+namespace Assets.Scripts.Util.Bytes
 {
     public static class ComparableKeyDictionaryToBytesSerializer
     {

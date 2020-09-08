@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.StandaloneAppCapacities.Export.Model;
 using Assets.Scripts.Util;
+using Assets.Scripts.Util.Bytes;
 using System;
 using System.Collections.Generic;
 using System.Linq;

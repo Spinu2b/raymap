@@ -12,7 +12,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Norma
     {
         private int GetCurrentAnimationStateFramesCount()
         {
-            throw new NotImplementedException();
+            return a3d.num_onlyFrames;
         }
 
         private void SetState(State s)
