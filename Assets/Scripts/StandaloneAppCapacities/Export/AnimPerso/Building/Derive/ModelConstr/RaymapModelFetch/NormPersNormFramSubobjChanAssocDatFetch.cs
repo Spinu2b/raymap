@@ -113,15 +113,20 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
                                 DeformBone bone = bones.r3bones[d.bone + 1];
                                 if (bone != null)
                                 {
-                                    if (!result.ContainsKey(ch_link.id))
+                                    // only consider channels to subobjects' bones associations for subobjects that are actually visible
+                                    if (!ntto_link.IsInvisibleNTTO)
                                     {
-                                        result[ch_link.id] = new Dictionary<int, List<int>>();
-                                    }
-                                    if (!result[ch_link.id].ContainsKey(ntto_link.object_index))
-                                    {
-                                        result[ch_link.id][ntto_link.object_index] = new List<int>();
-                                    }
-                                    result[ch_link.id][ntto_link.object_index].AddWithUniqueCheck(d.bone + 1);
+                                        if (!result.ContainsKey(ch_link.id))
+                                        {
+                                            result[ch_link.id] = new Dictionary<int, List<int>>();
+                                        }
+                                        if (!result[ch_link.id].ContainsKey(ntto_link.object_index))
+                                        {
+                                            result[ch_link.id][ntto_link.object_index] = new List<int>();
+                                        }
+
+                                        result[ch_link.id][ntto_link.object_index].AddWithUniqueCheck(d.bone + 1);
+                                    }                  
                                 }
                             }
                         }
