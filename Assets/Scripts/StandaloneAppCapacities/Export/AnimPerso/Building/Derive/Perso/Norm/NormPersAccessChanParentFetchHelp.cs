@@ -72,7 +72,13 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
 
                     List<int> ch_child_list = normalPersoAccessor.GetChannelByID(h.childChannelID);
                     List<int> ch_parent_list = normalPersoAccessor.GetChannelByID(h.parentChannelID);
-                    result.Add(h.childChannelID, h.parentChannelID);
+                    foreach (int ch_child in ch_child_list)
+                    {
+                        foreach (int ch_parent in ch_parent_list)
+                        {
+                            result.Add(h.childChannelID, h.parentChannelID);
+                        }
+                    }
                 }
             }
             return result;

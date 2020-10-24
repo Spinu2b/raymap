@@ -108,25 +108,27 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
                                 AnimNumOfNTTO numOfNTTO_link = normalPersoAccessor.a3d.numOfNTTO[ch_link.numOfNTTO + of.numOfNTTO];
                                 PhysicalObject physicalObject_link = normalPersoAccessor.subObjects[ind_linkChannel][numOfNTTO_link.numOfNTTO - normalPersoAccessor.a3d.start_NTTO];
                                 AnimNTTO ntto_link = normalPersoAccessor.a3d.ntto[numOfNTTO_link.numOfNTTO];
+
+
+                                AnimNTTO actual_visible_ntto_link = normalPersoAccessor.a3d.ntto[numOfNTTO.numOfNTTO];
+
+
+
                                 if (physicalObject_link == null) continue;
                                 if (bones == null || bones.bones.Length <= d.bone + 1) continue;
                                 DeformBone bone = bones.r3bones[d.bone + 1];
                                 if (bone != null)
                                 {
-                                    // only consider channels to subobjects' bones associations for subobjects that are actually visible
-                                    if (!ntto_link.IsInvisibleNTTO)
+                                    if (!result.ContainsKey(ch_link.id))
                                     {
-                                        if (!result.ContainsKey(ch_link.id))
-                                        {
-                                            result[ch_link.id] = new Dictionary<int, List<int>>();
-                                        }
-                                        if (!result[ch_link.id].ContainsKey(ntto_link.object_index))
-                                        {
-                                            result[ch_link.id][ntto_link.object_index] = new List<int>();
-                                        }
+                                        result[ch_link.id] = new Dictionary<int, List<int>>();
+                                    }
+                                    if (!result[ch_link.id].ContainsKey(actual_visible_ntto_link.object_index))
+                                    {
+                                        result[ch_link.id][actual_visible_ntto_link.object_index] = new List<int>();
+                                    }
 
-                                        result[ch_link.id][ntto_link.object_index].AddWithUniqueCheck(d.bone + 1);
-                                    }                  
+                                    result[ch_link.id][actual_visible_ntto_link.object_index].AddWithUniqueCheck(d.bone + 1);                 
                                 }
                             }
                         }

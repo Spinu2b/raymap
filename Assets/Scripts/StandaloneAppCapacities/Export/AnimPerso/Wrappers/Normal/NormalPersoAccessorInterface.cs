@@ -57,11 +57,19 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Norma
 
         public NormalPersoAccessor() : base()
         {
+            // OK
             this.normalPersoAccessorAnimationKeyframesFetchingHelper = new NormalPersoAccessorAnimationKeyframesFetchingHelper(this);
+            // NOT OK?
             this.normalPersoAccessorAnimationSubobjectsChannelsAssociationFetchingHelper = new NormalPersoAccessorAnimationSubobjectsChannelsAssociationFetchingHelper(this);
+            // OK, but resign from channels set in ChannelHierarchy definition, this can be derived from channel keyframes for particular animation states
+            // channels set seems to remain constant across one animation state, only parenting changes across frames
+            // yep, each channel has one keyframe located at frame number 0, so they all dictate initial transform for given animation state 
             this.normalPersoAccessorChannelsParentingFetchingHelper = new NormalPersoAccessorChannelsParentingFetchingHelper(this);
+            // Don't know yet
             this.normalPersoAccessorMorphFetchingHelper = new NormalPersoAccessorMorphFetchingHelper(this);
+            // This has nothing to do with strict direct model representation
             this.normalPersoAccessorStateHelper = new NormalPersoAccessorStateHelper(this);
+            // OK
             this.normalPersoAccessorSubobjectsLibraryFetchingHelper = new NormalPersoAccessorSubobjectsLibraryFetchingHelper(this);
         }
     }
