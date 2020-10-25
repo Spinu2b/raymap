@@ -10,5 +10,7 @@ namespace OpenSpace.Visual {
         GameObject Gao {
             get;
         }
+
+        void RunWholeProperInitializationProcessForAnimationExportPurposesWithMockedUnityApiInvocations();
     }
 }

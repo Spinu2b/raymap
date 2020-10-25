@@ -33,6 +33,11 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
         private GeometricObjectElementTriangles geometricObjectElementTriangles;
         private VisualData visualData;
 
+        public GeometricObjectElementTriangles getGeometricObjectElementTriangles()
+        {
+            return geometricObjectElementTriangles;
+        }
+
         public NormalGeometricObjectElementTrianglesWrapper(GeometricObjectElementTriangles geometricObjectElementTriangles)
         {
             this.geometricObjectElementTriangles = geometricObjectElementTriangles;
@@ -69,6 +74,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
 
         public void ReinitGeometricData()
         {
+            throw new NotImplementedException();
             geometricObjectElementTriangles.ReinitOnlyGeometricData();
         }
 

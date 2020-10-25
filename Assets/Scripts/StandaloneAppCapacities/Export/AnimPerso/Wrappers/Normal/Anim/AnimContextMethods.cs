@@ -49,10 +49,12 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Norma
                 if (NormalPhysicalObjectLegitimacyVerifier.IsValidPhysicalObjectAtAll(objectIndex, objectList[objectIndex].po))
                 {
                     var normalPhysicalObjectSubobjectAccessor = new NormalPhysicalObjectSubobjectAccessor(objectIndex, objectList[objectIndex].po);
-                    foreach (var entry in normalPhysicalObjectSubobjectAccessor.physicalObject.IterateNormalGeometricObjectElementTriangles())
-                    {
-                        entry.Item2.ReinitGeometricData();
-                    }
+                    normalPhysicalObjectSubobjectAccessor.RunWholeProperInitializationProcessWithMockedUnityApiInvocations();
+                    throw new NotImplementedException();
+                    //foreach (var entry in normalPhysicalObjectSubobjectAccessor.physicalObject.IterateNormalGeometricObjectElementTriangles())
+                    //{
+                    //    entry.Item2.ReinitGeometricData();
+                    //}
                 }
             }
         }

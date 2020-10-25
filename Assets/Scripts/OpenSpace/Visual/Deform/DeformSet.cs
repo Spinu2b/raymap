@@ -19,9 +19,12 @@ namespace OpenSpace.Visual.Deform {
         public DeformBone[] r3bones;
 
         public BoneWeight[] weights;
+        public Assets.Scripts.ResourcesModel.Geometric.BoneWeight[] weightsModel;
         public Transform[] bones;
+        public Assets.Scripts.ResourcesModel.Geometric.Transform[] bonesModel;
         public Matrix4x4[] bindPoses;
-		
+        public Assets.Scripts.ResourcesModel.Math.Matrix4x4[] bindPosesModel;
+
         private GameObject gao = null;
         public GameObject Gao {
             get {
@@ -33,39 +36,133 @@ namespace OpenSpace.Visual.Deform {
             }
         }
 
+        private bool initUnityBonesCompliantLogicRunIndicatorFlag = false;
+
+        public void RunWholeProperInitializationProcessForAnimationExportPurposesWithMockedUnityApiInvocations()
+        {
+            if (!initUnityBonesCompliantLogicRunIndicatorFlag)
+            {
+                InitUnityBonesCompliantLogicWithoutUnityApiUsageForAnimationExportPurposes();
+            }
+        }
+
         public DeformSet(Pointer offset, GeometricObject mesh) {
             this.mesh = mesh;
             this.offset = offset;
         }
 
-        public void InitUnityBones() {
-            weights = new BoneWeight[mesh.num_vertices];
+        public void InitUnityBones()
+        {
+            ActualInitUnityBones(mockUnityApi: false);
+        }
+
+        private void InitUnityBonesCompliantLogicWithoutUnityApiUsageForAnimationExportPurposes()
+        {
+            ActualInitUnityBones(mockUnityApi: true);
+            initUnityBonesCompliantLogicRunIndicatorFlag = true;
+        }
+
+        private void ActualInitUnityBones(bool mockUnityApi) {
+            if (!mockUnityApi)
+            {
+                weights = new BoneWeight[mesh.num_vertices];
+            } else
+            {
+                weightsModel = new Assets.Scripts.ResourcesModel.Geometric.BoneWeight[mesh.num_vertices];
+            }            
             for (int i = 0; i < mesh.num_vertices; i++) {
-                weights[i] = new BoneWeight();
-                weights[i].boneIndex0 = 0;
-                weights[i].boneIndex1 = 0;
-                weights[i].boneIndex2 = 0;
-                weights[i].boneIndex3 = 0;
-                weights[i].weight0 = 1f;
-                weights[i].weight1 = 0;
-                weights[i].weight2 = 0;
-                weights[i].weight3 = 0;
+                if (!mockUnityApi)
+                {
+                    weights[i] = new BoneWeight();
+                    weights[i].boneIndex0 = 0;
+                    weights[i].boneIndex1 = 0;
+                    weights[i].boneIndex2 = 0;
+                    weights[i].boneIndex3 = 0;
+                    weights[i].weight0 = 1f;
+                    weights[i].weight1 = 0;
+                    weights[i].weight2 = 0;
+                    weights[i].weight3 = 0;
+                } else
+                {
+                    weightsModel[i] = new Assets.Scripts.ResourcesModel.Geometric.BoneWeight();
+                    weightsModel[i].boneIndex0 = 0;
+                    weightsModel[i].boneIndex1 = 0;
+                    weightsModel[i].boneIndex2 = 0;
+                    weightsModel[i].boneIndex3 = 0;
+                    weightsModel[i].weight0 = 1f;
+                    weightsModel[i].weight1 = 0;
+                    weightsModel[i].weight2 = 0;
+                    weightsModel[i].weight3 = 0;
+                }                
             }
             for (int i = 0; i < num_weights; i++) {
-                weights[r3weights[i].vertexIndex] = r3weights[i].UnityWeight;
+                if (!mockUnityApi)
+                {
+                    weights[r3weights[i].vertexIndex] = r3weights[i].UnityWeight;
+                } else
+                {
+                    weightsModel[r3weights[i].vertexIndex] = r3weights[i].UnityWeightModel;
+                }                
             }
-            bones = new Transform[num_bones];
+            if (!mockUnityApi)
+            {
+                bones = new Transform[num_bones];
+            } else
+            {
+                bonesModel = new Assets.Scripts.ResourcesModel.Geometric.Transform[num_bones];
+            }
+            
             for (int i = 0; i < num_bones; i++) {
-                bones[i] = r3bones[i].UnityBone;
+                if (!mockUnityApi)
+                {
+                    bones[i] = r3bones[i].UnityBone;
+                } else
+                {
+                    bonesModel[i] = r3bones[i].UnityBoneModel;
+                }                
             }
-            bindPoses = new Matrix4x4[num_bones];
+            if (!mockUnityApi)
+            {
+                bindPoses = new Matrix4x4[num_bones];
+            } else
+            {
+                bindPosesModel = new Assets.Scripts.ResourcesModel.Math.Matrix4x4[num_bones];
+            }            
             for (int i = 0; i < num_bones; i++) {
-                bindPoses[i] = bones[i].worldToLocalMatrix * Gao.transform.localToWorldMatrix;
+                // somewhat dirty - since we run initilization for animation export purposes in yet same thread as main Unity processing
+                // loop, we can still utilize Unity's API methods here for translating transforms between spaces models - world and local
+                // and then translate from Unity's API Transform object to our resources model Transform object
+                if (!mockUnityApi)
+                {
+                    bindPoses[i] = bones[i].worldToLocalMatrix * Gao.transform.localToWorldMatrix;
+                } else
+                {
+                    // actually we need to translate from bones' transforms located in global world space,
+                    // that is they might be moved arbitralily far away from scene origin
+                    // we need somehow to bring them to local space of proper subobject that will be associated to
+                    // without using the GameObject because
+                    // we didn't actually initialize one in this flow control path
+
+                    // since manipulation logic for Gao (GameObject) property and gao (GameObject) field
+                    // in this class appears to not do much with them before initialization
+                    // we can assume that by invoking GameObject(String name) constructor in Gao property implementation
+                    // we set this gao GameObject to have its home default transform, that is 
+                    // position being Vector3(x=0.0f, y=0.0f, z=0.0f) in world space,
+                    // rotation being Quaternion(w=1.0f, x=0.0f, y=0.0f, z=0.0f) in world space,
+                    // and finally scale being Vector3(x=1.0f, y=1.0f, z=1.0f) with no parent associated etc
+                    bindPosesModel[i] = bonesModel[i].worldToLocalMatrix * 
+                        Assets.Scripts.ResourcesModel.Geometric.Transform
+                        .GetUnityHomeTransformedGameObjectTransformMock().localToWorldMatrix;
+                }                
             }
-            for (int j = 0; j < num_bones; j++) {
-                Transform b = bones[j];
-                b.transform.SetParent(gao.transform);
-            }
+            if (!mockUnityApi)
+            {
+                for (int j = 0; j < num_bones; j++)
+                {
+                    Transform b = bones[j];
+                    b.transform.SetParent(gao.transform);
+                }
+            }            
         }
 
         public void RecalculateBindPoses() {

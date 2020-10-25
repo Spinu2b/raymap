@@ -51,5 +51,10 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
                 }
             }
         }
+
+        public void RunWholeProperInitializationProcessWithMockedUnityApiInvocations()
+        {
+            physicalObject.RunWholeProperInitializationProcessForAnimationExportPurposesWithMockedUnityApiInvocations();
+        }
     }
 }

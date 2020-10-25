@@ -27,6 +27,17 @@ namespace OpenSpace.Object {
                 return gao;
             }
         }
+
+        private bool initGameObjectCompliantLogicRunIndicatorFlag = false;
+
+        public void RunWholeProperInitializationProcessForAnimationExportPurposesWithMockedUnityApiInvocations()
+        {
+            if (!initGameObjectCompliantLogicRunIndicatorFlag)
+            {
+                InitGameObjectCompliantLogicWithoutUnityApiUsageForAnimationExportPurposes();
+            }            
+        }
+
         public DeformSet Bones {
             get {
                 for (int i = 0; i < visualSet.Length; i++) {
@@ -38,40 +49,78 @@ namespace OpenSpace.Object {
             }
 		}
 
-        private void InitGameObject() {
-            gao = new GameObject("[PO]");
+        private void InitGameObject()
+        {
+            ActualInitGameObject(mockUnityApi: false);
+        }
+
+        private void InitGameObjectCompliantLogicWithoutUnityApiUsageForAnimationExportPurposes()
+        {
+            ActualInitGameObject(mockUnityApi: true);
+            initGameObjectCompliantLogicRunIndicatorFlag = true;
+        }
+
+        private void ActualInitGameObject(bool mockUnityApi) {
+            if (!mockUnityApi)
+            {
+                gao = new GameObject("[PO]");
+            }            
             for (int i = 0; i < visualSet.Length; i++) {
                 if (visualSet[i].obj == null) continue;
 
                 switch (visualSet[i].obj) {
                     case GeometricObject m:
-                        if (m.name != "Mesh") Gao.name = "[PO] " + m.name;
+                        if (m.name != "Mesh")
+                        {
+                            if (!mockUnityApi)
+                            {
+                                Gao.name = "[PO] " + m.name;
+                            }                            
+                        }
                         break;
                     case PatchGeometricObject mod:
                         if (mod.mesh != null && mod.mesh.name != "Mesh") {
-                            Gao.name = "[PO] " + mod.mesh.name;
+                            if (!mockUnityApi)
+                            {
+                                Gao.name = "[PO] " + mod.mesh.name;
+                            }                            
                         }
-                        Gao.name += " - Patch";
+                        if (!mockUnityApi)
+                        {
+                            Gao.name += " - Patch";
+                        }                        
                         break;
                 }
                 // Initialize children
-                if (visualSet[i].obj.Gao != null) {
-                    visualSet[i].obj.Gao.transform.parent = Gao.transform;
-                }
+                if (!mockUnityApi)
+                {
+                    if (visualSet[i].obj.Gao != null)
+                    {
+                        visualSet[i].obj.Gao.transform.parent = Gao.transform;
+                    }
+                } else
+                {
+                    visualSet[i].obj.RunWholeProperInitializationProcessForAnimationExportPurposesWithMockedUnityApiInvocations();
+                }                
             }
 
-            if (visualSet.Length > 1) { // = number of LOD
-                LODComponent lod = Gao.AddComponent<LODComponent>();
-                lod.visualSet = visualSet;
-                lod.gameObjects = visualSet.Select(v => v.obj.Gao).ToArray();
-                /*float bestLOD = po.visualSet.Min(v => v.LODdistance);
-                foreach (VisualSetLOD lod in po.visualSet) {
-                    if (lod.obj.Gao != null && lod.LODdistance != bestLOD) lod.obj.Gao.SetActive(false);
-                }*/
-            }
-            if (collideMesh != null && collideMesh.Gao != null) {
-                collideMesh.Gao.transform.parent = Gao.transform;
-            }
+            if (!mockUnityApi)
+            {
+                if (visualSet.Length > 1)
+                { // = number of LOD
+                    LODComponent lod = Gao.AddComponent<LODComponent>();
+                    lod.visualSet = visualSet;
+                    lod.gameObjects = visualSet.Select(v => v.obj.Gao).ToArray();
+                    /*float bestLOD = po.visualSet.Min(v => v.LODdistance);
+                    foreach (VisualSetLOD lod in po.visualSet) {
+                        if (lod.obj.Gao != null && lod.LODdistance != bestLOD) lod.obj.Gao.SetActive(false);
+                    }*/
+                }
+                if (collideMesh != null && collideMesh.Gao != null)
+                {
+                    collideMesh.Gao.transform.parent = Gao.transform;
+                }
+            }            
         }
 
         private SuperObject superObject;

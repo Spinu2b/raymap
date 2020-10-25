@@ -2,6 +2,7 @@
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Model.Subobj.NormPo.Parts;
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Model.Subobj.NormPo.Parts.IWrap;
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Model.Unity;
+using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Perso.Norm;
 using Assets.Scripts.StandaloneAppCapacities.Export.Wrappers;
 using OpenSpace.Object;
 using System;
@@ -14,6 +15,20 @@ using UnityEngine;
 
 namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Normal
 {
+    public static class SubobjectsValidityVerifier
+    {
+        public static bool GivenSubobjectsContainAnyBindBonePosesData(PhysicalObject[][] subObjects)
+        {
+            return subObjects != null && subObjects.Where(x => SubobjectsSubarrayContainsAnyBindBonePosesData(x)).Count() != 0;
+        }
+
+        private static bool SubobjectsSubarrayContainsAnyBindBonePosesData(PhysicalObject[] subObjectsSubarray)
+        {
+            return subObjectsSubarray != null && subObjectsSubarray.Where(
+                x => PhysicalObjectValidityVerifier.ContainsAnyBindBonePosesData(x)).Count() != 0;
+        }
+    }
+
     public class NormalPersoAccessorFactory
     {
         public static NormalPersoAccessor FromPersoGameObject(GameObject persoGameObject)
@@ -22,6 +37,20 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Norma
             result.name = persoGameObject.name;
 
             PersoBehaviour persoBehaviour = persoGameObject.GetComponent<PersoBehaviour>();
+
+            //if (!ObjectListValidityVerifier.ObjectListContainsObjectsWithAnyBindBonePosesData(
+            //    persoBehaviour.perso.p3dData.family.objectLists[persoBehaviour.poListIndex - 1])) {
+            //    throw new InvalidOperationException();
+            //}
+
+            if (!SubobjectsValidityVerifier.GivenSubobjectsContainAnyBindBonePosesData(persoBehaviour.subObjects))
+            {
+                throw new InvalidOperationException();
+            } else
+            {
+                // wow!
+                int bbb = 0;
+            }
 
             result.isLoaded = persoBehaviour.IsLoaded;
             result.perso = persoBehaviour.perso;

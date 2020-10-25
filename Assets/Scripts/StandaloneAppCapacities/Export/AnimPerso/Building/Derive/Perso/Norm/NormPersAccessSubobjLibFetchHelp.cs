@@ -6,6 +6,7 @@ using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Normal;
 using OpenSpace;
 using OpenSpace.Object;
 using OpenSpace.Object.Properties;
+using OpenSpace.Visual;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,37 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.Perso.Norm
 {
+    public static class PhysicalObjectValidityVerifier
+    {
+        public static bool ContainsAnyBindBonePosesData(PhysicalObject physicalObject)
+        {
+            return physicalObject != null && physicalObject.visualSet.Where(x => VisualSetLODContainsAnyBindBonePosesData(x)).Count() != 0;
+        }
+
+        private static bool VisualSetLODContainsAnyBindBonePosesData(VisualSetLOD visualSetLOD)
+        {
+            return visualSetLOD.obj != null && visualSetLOD.obj is GeometricObject &&
+                (visualSetLOD.obj as GeometricObject).elements != null &&
+                (visualSetLOD.obj as GeometricObject).elements.Where(x => GeometricObjectElementContainsAnyBindBonePosesData(x)).Count() != 0;
+        }
+
+        private static bool GeometricObjectElementContainsAnyBindBonePosesData(IGeometricObjectElement geometricObjectElement)
+        {
+            return geometricObjectElement != null && geometricObjectElement is GeometricObjectElementTriangles &&
+                (geometricObjectElement as GeometricObjectElementTriangles).unityMesh != null &&
+                (geometricObjectElement as GeometricObjectElementTriangles).unityMesh.bindposes != null &&
+                (geometricObjectElement as GeometricObjectElementTriangles).unityMesh.bindposes.Count() != 0;
+        }
+    }
+
+    public static class ObjectListValidityVerifier
+    {
+        public static bool ObjectListContainsObjectsWithAnyBindBonePosesData(ObjectList objectList)
+        {
+            return objectList.entries.Where(x => PhysicalObjectValidityVerifier.ContainsAnyBindBonePosesData(x.po)).Count() != 0;
+        }
+    }
+
     public static class NormalPhysicalObjectLegitimacyVerifier
     {
         public static bool IsValidPhysicalObjectWithProperGeometricDataContained(int objectIndex, PhysicalObject physicalObject)
@@ -96,6 +128,12 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
         private Dictionary<int, SubobjectAccessor> ConvertObjectListToSubobjectAccessorsDict(ObjectList objectList)
         {
             var result = new Dictionary<int, SubobjectAccessor>();
+
+            if (!ObjectListValidityVerifier.ObjectListContainsObjectsWithAnyBindBonePosesData(objectList))
+            {
+                throw new InvalidOperationException("ObjectList does not contain any objects that contain any bind bone poses!");
+            }
+
             for (int objectIndex = 0; objectIndex < objectList.Count; objectIndex++) {
                 // we're trying to add only legitimately valid objects
                 if (NormalPhysicalObjectLegitimacyVerifier.IsValidPhysicalObjectWithProperGeometricDataContained(objectIndex, objectList[objectIndex].po))

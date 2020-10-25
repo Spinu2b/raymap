@@ -73,6 +73,16 @@ namespace OpenSpace.Visual {
             }
         }
 
+		private bool initGameObjectCompliantLogicRunIndicatorFlag = false;
+
+		public void RunWholeProperInitializationProcessForAnimationExportPurposesWithMockedUnityApiInvocations()
+		{
+			if (!initGameObjectCompliantLogicRunIndicatorFlag)
+            {
+				InitGameObjectCompliantLogicWithoutUnityApiUsageForAnimationExportPurposes();
+			}			
+		}
+
 		public SuperObject so;
 		public SuperObject SuperObject => so;
 
@@ -80,29 +90,62 @@ namespace OpenSpace.Visual {
             this.offset = offset;
         }
 
-        private void InitGameObject() {
-            gao = new GameObject(name);
+		private void InitGameObject()
+        {
+			ActualInitGameObject(mockUnityApi: false);
+        }
+
+		private void InitGameObjectCompliantLogicWithoutUnityApiUsageForAnimationExportPurposes()
+        {
+			ActualInitGameObject(mockUnityApi: true);
+			initGameObjectCompliantLogicRunIndicatorFlag = true;
+        }
+
+		private void ActualInitGameObject(bool mockUnityApi) {
+			if (!mockUnityApi)
+            {
+				gao = new GameObject(name);
+			}           
 			/*System.Diagnostics.Stopwatch w = new System.Diagnostics.Stopwatch();
 			w.Start();*/
 
-            gao.tag = "Visual";
-            gao.layer = LayerMask.NameToLayer("Visual");
+			if (!mockUnityApi)
+            {
+				gao.tag = "Visual";
+				gao.layer = LayerMask.NameToLayer("Visual");
+			}            
             if (bones != null) {
-                GameObject child = bones.Gao;
-                child.transform.SetParent(gao.transform);
-                child.transform.localPosition = Vector3.zero;
+				if (!mockUnityApi)
+                {
+					GameObject child = bones.Gao;
+					child.transform.SetParent(gao.transform);
+					child.transform.localPosition = Vector3.zero;
+				} else
+                {
+					bones.RunWholeProperInitializationProcessForAnimationExportPurposesWithMockedUnityApiInvocations();
+				}                
             }
             for (uint i = 0; i < num_elements; i++) {
                 if (elements[i] != null) {
-                    GameObject child = elements[i].Gao;
-                    child.transform.SetParent(gao.transform);
-                    child.transform.localPosition = Vector3.zero;
+					if (!mockUnityApi)
+                    {
+						GameObject child = elements[i].Gao;
+						child.transform.SetParent(gao.transform);
+						child.transform.localPosition = Vector3.zero;
+					} else
+                    {
+						elements[i].RunWholeProperInitializationProcessForAnimationExportPurposesWithMockedUnityApiInvocations();
+					}                    
                 }
             }
-            if (lookAtMode != 0) {
-                BillboardBehaviour billboard = gao.AddComponent<BillboardBehaviour>();
-                billboard.mode = (BillboardBehaviour.LookAtMode)lookAtMode;
-			}
+			if (!mockUnityApi)
+            {
+				if (lookAtMode != 0)
+				{
+					BillboardBehaviour billboard = gao.AddComponent<BillboardBehaviour>();
+					billboard.mode = (BillboardBehaviour.LookAtMode)lookAtMode;
+				}
+			}            
 			/*MapLoader.Loader.print("GEO: " + offset + " - " + w.ElapsedMilliseconds);
 			w.Stop();*/
 		}

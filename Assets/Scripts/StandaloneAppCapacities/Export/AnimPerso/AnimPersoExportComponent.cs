@@ -18,6 +18,10 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso
             PersoAccessor persoAccessor = GetPersoAccessor(gameObject);
 
             AnimatedPersoDescription result = exporter.Export(persoAccessor);
+            if (result.subobjectsLibrary.subobjects.Values.Where(x => x.geometricObject.bindBonePoses.Count != 0).Count() == 0)
+            {
+                throw new InvalidOperationException("None of the subobjects has bone bind poses model!");
+            }
             return result;
         }
 

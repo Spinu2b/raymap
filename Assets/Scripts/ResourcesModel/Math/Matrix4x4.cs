@@ -36,6 +36,8 @@ namespace Assets.Scripts.ResourcesModel.Math
             return result;
         }
 
+        public static Matrix4x4 operator *(Matrix4x4 matrixA, Matrix4x4 matrixB) => throw new NotImplementedException();
+
         public Vector4 GetColumn(int index)
         {
             var result = new Vector4();

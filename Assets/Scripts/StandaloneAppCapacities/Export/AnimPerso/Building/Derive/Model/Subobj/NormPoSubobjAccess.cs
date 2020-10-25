@@ -59,5 +59,10 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
         {
             return GetOneExpectedRepresentativeElementTrianglesAsActualGeometricDataSource().GetVisualData();
         }
+
+        public void RunWholeProperInitializationProcessWithMockedUnityApiInvocations()
+        {
+            physicalObject.RunWholeProperInitializationProcessWithMockedUnityApiInvocations();
+        }
     }
 }

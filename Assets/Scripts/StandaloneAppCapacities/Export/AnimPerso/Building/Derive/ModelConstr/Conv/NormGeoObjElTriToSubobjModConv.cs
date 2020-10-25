@@ -21,6 +21,9 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
         private static GeometricObject GetGeometricObject(NormalGeometricObjectElementTrianglesWrapper geometricObjectElementTriangles)
         {
             var result = new GeometricObject();
+
+            var geo = geometricObjectElementTriangles.getGeometricObjectElementTriangles();
+
             result.vertices = geometricObjectElementTriangles.GetVertices();
             result.normals = geometricObjectElementTriangles.GetNormals();
             result.material = geometricObjectElementTriangles.GetMaterialHash();

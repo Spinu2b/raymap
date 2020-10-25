@@ -67,7 +67,7 @@ namespace OpenSpace.Visual {
         private Renderer OPT_mr = null;
         private Renderer mr = null;
         private Mesh OPT_unityMesh = null;
-        private Mesh unityMesh = null;
+        public Mesh unityMesh = null;
 
 		public Assets.Scripts.ResourcesModel.Mesh OPT_unityMeshModel = null;
 		public Assets.Scripts.ResourcesModel.Mesh unityMeshModel = null;
