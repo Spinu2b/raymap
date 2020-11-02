@@ -73,5 +73,10 @@ namespace OpenSpace.Visual {
             PatchGeometricObject lodObj = (PatchGeometricObject)MemberwiseClone();
             return lodObj;
         }
+
+        public void RunWholeProperInitializationProcessForAnimationExportPurposesWithMockedUnityApiInvocations()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

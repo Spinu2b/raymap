@@ -16,6 +16,9 @@ namespace OpenSpace.Visual.Deform {
 
         private bool unityWeightCalculated = false;
         private BoneWeight unityWeight;
+
+        private bool unityWeightModelCalculated = false;
+        private Assets.Scripts.ResourcesModel.Geometric.BoneWeight unityWeightModel;
         public BoneWeight UnityWeight {
             get {
                 if (!unityWeightCalculated) {
@@ -56,6 +59,58 @@ namespace OpenSpace.Visual.Deform {
                     unityWeightCalculated = true;
                 }
                 return unityWeight;
+            }
+        }
+
+        public Assets.Scripts.ResourcesModel.Geometric.BoneWeight UnityWeightModel
+        {
+            get
+            {
+                if (!unityWeightModelCalculated)
+                {
+                    unityWeightModel = new Assets.Scripts.ResourcesModel.Geometric.BoneWeight();
+                    unityWeightModel.boneIndex0 = 0;
+                    unityWeightModel.boneIndex1 = 0;
+                    unityWeightModel.boneIndex2 = 0;
+                    unityWeightModel.boneIndex3 = 0;
+                    unityWeightModel.weight0 = 0;
+                    unityWeightModel.weight1 = 0;
+                    unityWeightModel.weight2 = 0;
+                    unityWeightModel.weight3 = 0;
+                    List<KeyValuePair<byte, ushort>> sortedWeights = boneWeights.OrderByDescending(w => w.Value).ToList();
+                    UInt16 sortedWeightsSum = (UInt16)sortedWeights.Select(w => (Int32)(w.Value)).Sum();
+                    if (sortedWeightsSum < UInt16.MaxValue)
+                    {
+                        sortedWeights.Add(new KeyValuePair<byte, ushort>(0, (ushort)(UInt16.MaxValue - sortedWeightsSum)));
+                    }
+                    sortedWeights = sortedWeights.OrderByDescending(w => w.Value).ToList();
+                    if (sortedWeights.Count > 0)
+                    {
+                        unityWeightModel.boneIndex0 = sortedWeights[0].Key;
+                        unityWeightModel.weight0 = (float)sortedWeights[0].Value / (float)UInt16.MaxValue;
+                    }
+                    if (sortedWeights.Count > 1)
+                    {
+                        unityWeightModel.boneIndex1 = sortedWeights[1].Key;
+                        unityWeightModel.weight1 = (float)sortedWeights[1].Value / (float)UInt16.MaxValue;
+                    }
+                    if (sortedWeights.Count > 2)
+                    {
+                        unityWeightModel.boneIndex2 = sortedWeights[2].Key;
+                        unityWeightModel.weight2 = (float)sortedWeights[2].Value / (float)UInt16.MaxValue;
+                    }
+                    if (sortedWeights.Count > 3)
+                    {
+                        unityWeightModel.boneIndex3 = sortedWeights[3].Key;
+                        unityWeightModel.weight3 = (float)sortedWeights[3].Value / (float)UInt16.MaxValue;
+                    }
+                    if (sortedWeights.Count > 4)
+                    {
+                        MapLoader.Loader.print("Unity does not support more than 4 bones affecting a vertex at once.");
+                    }
+                    unityWeightModelCalculated = true;
+                }
+                return unityWeightModel;
             }
         }
 

@@ -89,7 +89,12 @@ namespace OpenSpace.Visual {
             }
         }
 
-        public GeometricObjectElementTriangles(Pointer offset, GeometricObject geo) {
+		public void RunWholeProperInitializationProcessForAnimationExportPurposesWithMockedUnityApiInvocations()
+		{
+			throw new NotImplementedException();
+		}
+
+		public GeometricObjectElementTriangles(Pointer offset, GeometricObject geo) {
             this.geo = geo;
             this.offset = offset;
         }

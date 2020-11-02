@@ -23,7 +23,7 @@ namespace OpenSpace.Visual.Deform {
         public Transform[] bones;
         public Assets.Scripts.ResourcesModel.Geometric.Transform[] bonesModel;
         public Matrix4x4[] bindPoses;
-        public Assets.Scripts.ResourcesModel.Math.Matrix4x4[] bindPosesModel;
+        public Assets.Scripts.ResourcesModel.Geometric.Transform[] bindPosesModel;
 
         private GameObject gao = null;
         public GameObject Gao {
@@ -126,7 +126,7 @@ namespace OpenSpace.Visual.Deform {
                 bindPoses = new Matrix4x4[num_bones];
             } else
             {
-                bindPosesModel = new Assets.Scripts.ResourcesModel.Math.Matrix4x4[num_bones];
+                bindPosesModel = new Assets.Scripts.ResourcesModel.Geometric.Transform[num_bones];
             }            
             for (int i = 0; i < num_bones; i++) {
                 // somewhat dirty - since we run initilization for animation export purposes in yet same thread as main Unity processing
@@ -150,9 +150,21 @@ namespace OpenSpace.Visual.Deform {
                     // position being Vector3(x=0.0f, y=0.0f, z=0.0f) in world space,
                     // rotation being Quaternion(w=1.0f, x=0.0f, y=0.0f, z=0.0f) in world space,
                     // and finally scale being Vector3(x=1.0f, y=1.0f, z=1.0f) with no parent associated etc
-                    bindPosesModel[i] = bonesModel[i].worldToLocalMatrix * 
-                        Assets.Scripts.ResourcesModel.Geometric.Transform
-                        .GetUnityHomeTransformedGameObjectTransformMock().localToWorldMatrix;
+
+                    // screw it
+                    //bindPosesModel[i] = bonesModel[i].worldToLocalMatrix * 
+                    //    Assets.Scripts.ResourcesModel.Geometric.Transform
+                    //    .GetUnityHomeTransformedGameObjectTransformMock().localToWorldMatrix;
+
+                    // since these bones' models do not appear to have any associated parent in here
+                    // we can assume that their transforms are equivalent of global world space, so no 
+                    // matrices multiplications might be required here ;)
+
+                    // This appears to simply come down to getting transformation matrix from Transform
+                    // so we can simply use Transform mock model itself in here, so we do not need to bother
+                    // with matrices in here - regular transform with simple position, rotation and scale components will be sufficient
+
+                    bindPosesModel[i] = bonesModel[i].GetCopy();
                 }                
             }
             if (!mockUnityApi)

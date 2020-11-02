@@ -13,6 +13,7 @@ namespace OpenSpace.Visual.Deform {
         public byte index;
 
         private Transform unityBone = null;
+        private Assets.Scripts.ResourcesModel.Geometric.Transform unityBoneModel = null;
         public Transform UnityBone {
             get {
                 if (unityBone == null) {
@@ -30,6 +31,45 @@ namespace OpenSpace.Visual.Deform {
                     mr.material = MapLoader.Loader.baseMaterial;*/
                 }
                 return unityBone;
+            }
+        }
+
+        public Assets.Scripts.ResourcesModel.Geometric.Transform UnityBoneModel
+        {
+            get
+            {
+                if (unityBoneModel == null)
+                {
+                    //GameObject gao = new GameObject("Bone " + index + " - " + unknown1 + " - " + invert);
+                    //unityBone = gao.transform;
+
+                    //unityBoneModel.localPosition = Assets.Scripts.ResourcesModel.Math.Vector3.FromUnityVector3(DefaultPosition);
+                    //unityBoneModel.localRotation = Assets.Scripts.ResourcesModel.Math.Quaternion.FromUnityQuaternion(DefaultRotation);
+                    //unityBoneModel.localScale = Assets.Scripts.ResourcesModel.Math.Vector3.FromUnityVector3(DefaultScale);
+
+                    // Since this bone's transform appears to be in this case exact the same as the one in global world space,
+                    // we can safely assign regular transforms (position, rotation, lossyScale instead of localPosition, localRotation and 
+                    // localScale). That will save us implementing some additional math behind the scenes for translating between
+                    // global and local world spaces (we will need to do that anyway eventually down the line in the Blender, but if
+                    // we can avoid it here, we should ;)
+
+                    // The assumption that this bone's global transform and local transform are compliant 
+                    // relies on the fact that logic creating GameObject associated with that particular bone has no parent
+                    // attached initially to that, therefore it resides in pure global world space
+
+                    unityBoneModel = new Assets.Scripts.ResourcesModel.Geometric.Transform();
+                    unityBoneModel.position = Assets.Scripts.ResourcesModel.Math.Vector3.FromUnityVector3(DefaultPosition);
+                    unityBoneModel.rotation = Assets.Scripts.ResourcesModel.Math.Quaternion.FromUnityQuaternion(DefaultRotation);
+                    unityBoneModel.lossyScale = Assets.Scripts.ResourcesModel.Math.Vector3.FromUnityVector3(DefaultScale);
+
+                    // Visualization
+                    /*MeshRenderer mr = gao.AddComponent<MeshRenderer>();
+                    MeshFilter mf = gao.AddComponent<MeshFilter>();
+                    Mesh mesh = Util.CreateBox(0.1f);
+                    mf.mesh = mesh;
+                    mr.material = MapLoader.Loader.baseMaterial;*/
+                }
+                return unityBoneModel;
             }
         }
 

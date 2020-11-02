@@ -8,9 +8,27 @@ namespace Assets.Scripts.ResourcesModel.Math
 {
     public struct Quaternion
     {
+        float w;
+        float x;
+        float y;
+        float z;
+
+        public Quaternion(float w = 1f, float x = 0f, float y = 0f, float z = 0f)
+        {
+            this.w = w;
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+
         public static Quaternion LookRotation(Vector3 forward, Vector3 upwards)
         {
             throw new NotImplementedException();
+        }
+
+        public static Quaternion FromUnityQuaternion(UnityEngine.Quaternion unityQuaternion)
+        {
+            return new Quaternion(w: unityQuaternion.w, x: unityQuaternion.x, y: unityQuaternion.y, z: unityQuaternion.z);
         }
     }
 }

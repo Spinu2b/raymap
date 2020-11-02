@@ -12,6 +12,13 @@ namespace Assets.Scripts.ResourcesModel.Math
         public float y;
         public float z;
 
+        public Vector3(float x = 0f, float y = 0f, float z = 0f)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+
         public static Vector3 FromUnityVector3(UnityEngine.Vector3 unityVector3)
         {
             var result = new Vector3();

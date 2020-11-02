@@ -263,5 +263,10 @@ namespace OpenSpace.Visual {
             sm.Reset();
             return sm;
         }
+
+        public void RunWholeProperInitializationProcessForAnimationExportPurposesWithMockedUnityApiInvocations()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
