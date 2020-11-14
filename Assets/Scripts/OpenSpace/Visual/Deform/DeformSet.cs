@@ -19,7 +19,6 @@ namespace OpenSpace.Visual.Deform {
         public DeformBone[] r3bones;
 
         public BoneWeight[] weights;
-        public Assets.Scripts.ResourcesModel.Geometric.BoneWeight[] weightsModel;
         public Transform[] bones;
         public Assets.Scripts.ResourcesModel.Geometric.Transform[] bonesModel;
         public Matrix4x4[] bindPoses;
@@ -63,46 +62,20 @@ namespace OpenSpace.Visual.Deform {
         }
 
         private void ActualInitUnityBones(bool mockUnityApi) {
-            if (!mockUnityApi)
-            {
-                weights = new BoneWeight[mesh.num_vertices];
-            } else
-            {
-                weightsModel = new Assets.Scripts.ResourcesModel.Geometric.BoneWeight[mesh.num_vertices];
-            }            
+            weights = new BoneWeight[mesh.num_vertices];           
             for (int i = 0; i < mesh.num_vertices; i++) {
-                if (!mockUnityApi)
-                {
-                    weights[i] = new BoneWeight();
-                    weights[i].boneIndex0 = 0;
-                    weights[i].boneIndex1 = 0;
-                    weights[i].boneIndex2 = 0;
-                    weights[i].boneIndex3 = 0;
-                    weights[i].weight0 = 1f;
-                    weights[i].weight1 = 0;
-                    weights[i].weight2 = 0;
-                    weights[i].weight3 = 0;
-                } else
-                {
-                    weightsModel[i] = new Assets.Scripts.ResourcesModel.Geometric.BoneWeight();
-                    weightsModel[i].boneIndex0 = 0;
-                    weightsModel[i].boneIndex1 = 0;
-                    weightsModel[i].boneIndex2 = 0;
-                    weightsModel[i].boneIndex3 = 0;
-                    weightsModel[i].weight0 = 1f;
-                    weightsModel[i].weight1 = 0;
-                    weightsModel[i].weight2 = 0;
-                    weightsModel[i].weight3 = 0;
-                }                
+                weights[i] = new BoneWeight();
+                weights[i].boneIndex0 = 0;
+                weights[i].boneIndex1 = 0;
+                weights[i].boneIndex2 = 0;
+                weights[i].boneIndex3 = 0;
+                weights[i].weight0 = 1f;
+                weights[i].weight1 = 0;
+                weights[i].weight2 = 0;
+                weights[i].weight3 = 0;               
             }
             for (int i = 0; i < num_weights; i++) {
-                if (!mockUnityApi)
-                {
-                    weights[r3weights[i].vertexIndex] = r3weights[i].UnityWeight;
-                } else
-                {
-                    weightsModel[r3weights[i].vertexIndex] = r3weights[i].UnityWeightModel;
-                }                
+                weights[r3weights[i].vertexIndex] = r3weights[i].UnityWeight;              
             }
             if (!mockUnityApi)
             {

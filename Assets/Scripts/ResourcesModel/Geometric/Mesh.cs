@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 namespace Assets.Scripts.ResourcesModel
 {
     public class Mesh : MeshBase
-    { 
-        public Matrix4x4[] bindposes { get; set; }
+    {
+        public Matrix4x4[] bindposes { get; set; } = new Matrix4x4[] { };
 
         public static Mesh FromUnityMesh(UnityEngine.Mesh unityMesh)
         {

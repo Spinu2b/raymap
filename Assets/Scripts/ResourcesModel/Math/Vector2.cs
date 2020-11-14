@@ -11,6 +11,12 @@ namespace Assets.Scripts.ResourcesModel.Math
         public float x;
         public float y;
 
+        public Vector2(float x = 0, float y = 0)
+        {
+            this.x = x;
+            this.y = y;
+        }
+
         public static Vector2 FromUnityVector2(UnityEngine.Vector2 unityVector2)
         {
             var result = new Vector2();

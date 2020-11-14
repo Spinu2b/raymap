@@ -9,6 +9,6 @@ namespace Assets.Scripts.ResourcesModel.Geometric
 {
     public class SimplifiedModelMesh : MeshBase
     {
-        public Transform[] bindposes { get; set; }
+        public Transform[] bindposes { get; set; } = new Transform[] { };
     }
 }

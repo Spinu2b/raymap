@@ -30,7 +30,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.Math
 
         public static Quaternion FromResourcesModelQuaternion(ResourcesModel.Math.Quaternion quaternion)
         {
-            throw new NotImplementedException();
+            return new Quaternion(quaternion.w, quaternion.x, quaternion.y, quaternion.z);
         }
 
         public static Quaternion FromUnityQuaternion(UnityEngine.Quaternion quaternion)

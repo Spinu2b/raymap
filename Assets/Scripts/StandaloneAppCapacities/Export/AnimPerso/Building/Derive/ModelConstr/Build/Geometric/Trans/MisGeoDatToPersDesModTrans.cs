@@ -22,6 +22,15 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
             result.scale = new Math.Vector3d(bindposeMatrix.GetColumn(0).magnitude, bindposeMatrix.GetColumn(1).magnitude, bindposeMatrix.GetColumn(2).magnitude);
             return result;
         }
+
+        public static BoneBindPose BoneBindPoseFromResourcesModelTransform(Transform bindpose)
+        {
+            var result = new BoneBindPose();
+            result.position = Vector3d.FromResourcesModelVector3(bindpose.position);
+            result.rotation = Math.Quaternion.FromResourcesModelQuaternion(bindpose.rotation);
+            result.scale = Vector3d.FromResourcesModelVector3(bindpose.lossyScale);
+            return result;
+        }
     }
 
     public static class MiscellaneousGeometricDataToPersoDescriptionModelTransformer
@@ -64,6 +73,19 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
             foreach (var bindpose in bindposes)
             {
                 BoneBindPose boneBindPose = UnityBindPoseHelper.DecomposeBindPoseMatrix4x4ToBoneBindPose(bindpose);
+                result[boneIndex] = boneBindPose;
+                boneIndex++;
+            }
+            return result;
+        }
+
+        public static Dictionary<int, BoneBindPose> TransformResourcesModelBindPosesToAnimatedPersoBindBonePosesExportModel(Transform[] bindposes)
+        {
+            int boneIndex = 0;
+            var result = new Dictionary<int, BoneBindPose>();
+            foreach (var bindpose in bindposes)
+            {
+                BoneBindPose boneBindPose = UnityBindPoseHelper.BoneBindPoseFromResourcesModelTransform(bindpose);
                 result[boneIndex] = boneBindPose;
                 boneIndex++;
             }

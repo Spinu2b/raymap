@@ -8,10 +8,10 @@ namespace Assets.Scripts.ResourcesModel.Math
 {
     public struct Quaternion
     {
-        float w;
-        float x;
-        float y;
-        float z;
+        public float w;
+        public float x;
+        public float y;
+        public float z;
 
         public Quaternion(float w = 1f, float x = 0f, float y = 0f, float z = 0f)
         {

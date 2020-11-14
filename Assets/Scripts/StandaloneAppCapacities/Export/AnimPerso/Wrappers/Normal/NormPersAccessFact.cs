@@ -43,6 +43,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Norma
             //    throw new InvalidOperationException();
             //}
 
+            /* * /
             if (!SubobjectsValidityVerifier.GivenSubobjectsContainAnyBindBonePosesData(persoBehaviour.subObjects))
             {
                 throw new InvalidOperationException();
@@ -51,6 +52,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Norma
                 // wow!
                 int bbb = 0;
             }
+            /* */
 
             result.isLoaded = persoBehaviour.IsLoaded;
             result.perso = persoBehaviour.perso;

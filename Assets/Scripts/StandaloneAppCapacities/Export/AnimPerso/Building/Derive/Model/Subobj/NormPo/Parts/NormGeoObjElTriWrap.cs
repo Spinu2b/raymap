@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.ResourcesModel;
+using Assets.Scripts.ResourcesModel.Geometric;
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr.Build.Geometric.Trans;
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr.RaymapModelFetch;
 using Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Derive.ModelConstr.RaymapModelFetch.NormGeoObjElTri;
@@ -22,7 +23,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
             return geometricObjectElementTriangles.unityMeshModel != null;
         }
 
-        public static Mesh GetRightMesh(GeometricObjectElementTriangles geometricObjectElementTriangles)
+        public static SimplifiedModelMesh GetRightMesh(GeometricObjectElementTriangles geometricObjectElementTriangles)
         {
             return geometricObjectElementTriangles.unityMeshModel;
         }
