@@ -69,8 +69,8 @@ namespace OpenSpace.Visual {
         private Mesh OPT_unityMesh = null;
         public Mesh unityMesh = null;
 
-		public Assets.Scripts.ResourcesModel.Mesh OPT_unityMeshModel = null;
-		public Assets.Scripts.ResourcesModel.Mesh unityMeshModel = null;
+		public Assets.Scripts.ResourcesModel.Geometric.SimplifiedModelMesh OPT_unityMeshModel = null;
+		public Assets.Scripts.ResourcesModel.Geometric.SimplifiedModelMesh unityMeshModel = null;
 
 		private Texture2D lightmap = null;
 		private Vector2[] lightmapUVs = null;
@@ -89,12 +89,17 @@ namespace OpenSpace.Visual {
             }
         }
 
+		private bool createUnityMeshCompliantLogicRunIndicatorFlag = false;
+
 		public void RunWholeProperInitializationProcessForAnimationExportPurposesWithMockedUnityApiInvocations()
 		{
-			throw new NotImplementedException();
+			if (!createUnityMeshCompliantLogicRunIndicatorFlag)
+			{
+				CreateUnityMeshCompliantLogicWithoutUnityApiUsageForAnimationExportPurposes();
+			}
 		}
 
-		public GeometricObjectElementTriangles(Pointer offset, GeometricObject geo) {
+        public GeometricObjectElementTriangles(Pointer offset, GeometricObject geo) {
             this.geo = geo;
             this.offset = offset;
         }
@@ -109,26 +114,47 @@ namespace OpenSpace.Visual {
 				v10.y * v20.x - v10.x * v20.y);
 		}
 
-		private void CreateUnityMeshFromSDC(bool manifestInUnityScene) {
+		private void CreateUnityMeshFromSDC(bool mockUnityApi) {
 			/*if (sdc.geo.Type == 6) {
 				// Just fill in things based on mapping
 				return;
 			}*/
 			BoneWeight[] new_boneWeights = null;
-			if (OPT_unityMesh != null) {
+			if (OPT_unityMesh != null && !mockUnityApi) {
 				OPT_unityMesh = CopyMesh(OPT_unityMesh);
-			} else {
+			} 
+			else if (OPT_unityMeshModel != null && mockUnityApi)
+            {
+				OPT_unityMeshModel = CopyMeshModel(OPT_unityMeshModel);
+            }
+			else {
 				bool backfaceCulling = false;
 				int triangle_size = 3 * (int)(backfaceCulling ? 1 : 2);
 				if (sdc.geo.Type == 4 || sdc.geo.Type == 5 || sdc.geo.Type == 6) {
 					int[] triangles = new int[triangle_size * sdc.geo.num_triangles[sdc.index]];
-					OPT_unityMesh = new Mesh();
+					
+					if (!mockUnityApi)
+                    {
+						OPT_unityMesh = new Mesh();
+					} else
+                    {
+						OPT_unityMeshModel = new Assets.Scripts.ResourcesModel.Geometric.SimplifiedModelMesh();
+                    }
+					
 					Vector3[] vertices = new Vector3[sdc.num_vertices_actual];
 					for (int i = 0; i < vertices.Length && i < sdc.vertices.Length; i++) {
 						vertices[i] = new Vector3(sdc.vertices[i].x, sdc.vertices[i].z, sdc.vertices[i].y);
 					}
 					Array.Resize(ref vertices, (int)sdc.num_vertices_actual);
-					OPT_unityMesh.vertices = vertices;
+
+					if (!mockUnityApi)
+                    {
+						OPT_unityMesh.vertices = vertices;
+					} else
+                    {
+						OPT_unityMeshModel.verticesUnity = vertices;
+                    }
+					
 					new_boneWeights = (geo.bones == null || sdc_mapping == null) ? null : new BoneWeight[vertices.Length];
 					normals = null;
 					int currentTriInStrip = 0;
@@ -177,7 +203,14 @@ namespace OpenSpace.Visual {
 						for (int u = 0; u < uv.Length; u++) {
 							uv[u] = sdc.GetUV(u, t, applyBlendWeight: sdc.geo.Type != 6);
 						}
-						OPT_unityMesh.SetUVs(t, uv);
+
+						if (!mockUnityApi)
+                        {
+							OPT_unityMesh.SetUVs(t, uv);
+						} else
+                        {
+							OPT_unityMeshModel.SetUVsUnity(t, uv);
+                        }						
 					}
 					/*Vector3[] normals = Enumerable.Range(0, vertices.Length).Select(i => sdc.GetNormal(i)).ToArray();
 					OPT_unityMesh.normals = normals;*/
@@ -191,7 +224,14 @@ namespace OpenSpace.Visual {
 						for (int u = 0; u < colors.Length; u++) {
 							colors[u] = sdc.GetColor(u);
 						}
-						OPT_unityMesh.SetColors(colors);
+						if (!mockUnityApi)
+                        {
+							OPT_unityMesh.SetColors(colors);
+						} else
+                        {
+							//OPT_unityMeshModel.SetColors(colors);
+                        }
+						
 					} else {
 						Vector3[] calculatedNormals = null;
 						if (sdc.normals == null && geo.normals == null) {
@@ -245,7 +285,14 @@ namespace OpenSpace.Visual {
 					/*m.triangles = Enumerable.Range(0, sdcEl.vertices.Length).ToArray();
 					Debug.LogWarning(sdcEl.offset + " - " + sdc.Type + " - " + (m.triangles.Length / 3) + " - " + (m.triangles.Length % 3) + " - " + sdc.num_triangles[sdcIndex]);
 					*/
-					OPT_unityMesh.triangles = triangles;
+					if (!mockUnityApi)
+                    {
+						OPT_unityMesh.triangles = triangles;
+					} else
+                    {
+						OPT_unityMeshModel.triangles = triangles;
+                    }
+					
 
 					if (sdc.normals != null) {
 						normals = new Vector3[vertices.Length];
@@ -253,17 +300,43 @@ namespace OpenSpace.Visual {
 							normals[i] = sdc.GetNormal(i);
 						}
 					} else if (sdc.geo.Type == 6) {
-						OPT_unityMesh.normals = normals;
+						if (!mockUnityApi)
+                        {
+							OPT_unityMesh.normals = normals;
+						} else
+                        {
+							OPT_unityMeshModel.normalsUnity = normals;
+                        }						
 					} else {
-						OPT_unityMesh.RecalculateNormals();
+						if (!mockUnityApi)
+                        {
+							OPT_unityMesh.RecalculateNormals();
+						} else
+                        {
+							//OPT_unityMeshModel.RecalculateNormals();
+                        }						
 					}
 					//m.uv = sdcEl.uvUnoptimized.Select(uv => new Vector2(uv.u, uv.v)).ToArray();
 					//m.uv = 
 					//OPT_unityMesh.RecalculateNormals();
 				} else {
-					OPT_unityMesh = new Mesh();
+					if (!mockUnityApi)
+                    {
+						OPT_unityMesh = new Mesh();
+					} else
+                    {
+						OPT_unityMeshModel = new Assets.Scripts.ResourcesModel.Geometric.SimplifiedModelMesh();
+                    }
+					
 					Vector3[] vertices = sdc.vertices.Select(v => new Vector3(v.x, v.z, v.y)).ToArray();
-					OPT_unityMesh.vertices = vertices;
+					if (!mockUnityApi)
+                    {
+						OPT_unityMesh.vertices = vertices;
+					} else
+                    {
+						OPT_unityMeshModel.verticesUnity = vertices;
+                    }
+					
 					new_boneWeights = (geo.bones == null) ? null : new BoneWeight[vertices.Length];
 					/*if (Settings.s.game == Settings.Game.R3) {
 						OPT_unityMesh.triangles = Enumerable.Range(0, vertices.Length).ToArray();
@@ -277,7 +350,14 @@ namespace OpenSpace.Visual {
 						tris[i * triangle_size + 4] = i * 3 + 2;
 						tris[i * triangle_size + 5] = i * 3 + 1;
 					}
-					OPT_unityMesh.triangles = tris;
+					if (!mockUnityApi)
+                    {
+						OPT_unityMesh.triangles = tris;
+					} else
+                    {
+						OPT_unityMeshModel.triangles = triangles;
+                    }
+					
 					//}
 					uint num_textures = Math.Max(1, visualMaterial.num_textures_in_material);
 					for (int t = 0; t < num_textures; t++) {
@@ -285,14 +365,26 @@ namespace OpenSpace.Visual {
 						for (int u = 0; u < uv.Length; u++) {
 							uv[u] = sdc.GetUV(u, t, applyBlendWeight: sdc.geo.Type != 3);
 						}
-						OPT_unityMesh.SetUVs(t, uv);
+						if (!mockUnityApi)
+                        {
+							OPT_unityMesh.SetUVs(t, uv);
+						} else
+                        {
+							OPT_unityMeshModel.SetUVsUnity(t, uv);
+                        }						
 					}
 					if (sdc.geo.Type != 3 && Settings.s.game != Settings.Game.R3) {
 						Color[] colors = new Color[vertices.Length];
 						for (int u = 0; u < colors.Length; u++) {
 							colors[u] = sdc.GetColor(u);
 						}
-						OPT_unityMesh.SetColors(colors);
+						if (!mockUnityApi)
+                        {
+							OPT_unityMesh.SetColors(colors);
+						} else
+                        {
+							//OPT_unityMeshModel.SetColors(colors);
+                        }						
 						//OPT_unityMesh.SetUVs((int)num_textures, colors);
 					} else {
 						Vector3[] calculatedNormals = null;
@@ -339,21 +431,48 @@ namespace OpenSpace.Visual {
 						for (int i = 0; i < normals.Length; i++) {
 							normals[i] = sdc.GetNormal(i);
 						}
-						OPT_unityMesh.normals = normals;
+						if (!mockUnityApi)
+                        {
+							OPT_unityMesh.normals = normals;
+						} else
+                        {
+							OPT_unityMeshModel.normalsUnity = normals;
+                        }						
 					} else if (sdc.geo.Type == 3 && Settings.s.game != Settings.Game.R3) {
-						OPT_unityMesh.normals = normals;
+						if (!mockUnityApi)
+                        {
+							OPT_unityMesh.normals = normals;
+						} else
+                        {
+							OPT_unityMeshModel.normalsUnity = normals;
+                        }						
 					} else {
-						OPT_unityMesh.RecalculateNormals();
+						if (!mockUnityApi)
+                        {
+							OPT_unityMesh.RecalculateNormals();
+						} else
+                        {
+							//OPT_unityMeshModel.RecalculateNormals();
+                        }						
 					}
 				}
 
 				if (new_boneWeights != null) {
-					OPT_unityMesh.boneWeights = new_boneWeights;
-					OPT_unityMesh.bindposes = geo.bones.bindPoses;
+					if (!mockUnityApi)
+                    {
+						OPT_unityMesh.boneWeights = new_boneWeights;
+						OPT_unityMesh.bindposes = geo.bones.bindPoses;
+					} else
+                    {
+						OPT_unityMeshModel.boneWeightsUnity = new_boneWeights;
+						OPT_unityMeshModel.bindposes = geo.bones.bindPosesModel;
+                    }					
 				}
 			}
-			if (manifestInUnityScene)
-            {
+			//if (manifestInUnityScene)
+			//{
+			if (!mockUnityApi)
+			{
 				GameObject OPT_gao = (OPT_mr == null ? gao : new GameObject("[Optimized] " + name));
 				if (OPT_gao != gao)
 				{
@@ -394,19 +513,35 @@ namespace OpenSpace.Visual {
 					}
 					catch (Exception) { }
 				}
-			}			
+			}
+			//}
 		}
 
-        public void ReinitOnlyGeometricData()
-        {
-			ActualCreateUnityMesh(manifestInUnityScene: false);
-        }
-
-		public void CreateUnityMesh() {
-			ActualCreateUnityMesh(manifestInUnityScene: true);
+        public void CreateUnityMesh() {
+			ActualCreateUnityMesh(mockUnityApi: false);
 		}
 
-        private void ActualCreateUnityMesh(bool manifestInUnityScene) {
+		private void CreateUnityMeshCompliantLogicWithoutUnityApiUsageForAnimationExportPurposes()
+		{
+			// Actually this class will behave a bit differently due to the complex legacy logic
+			// of creating Unity mesh representation from OpenSpace structure
+
+			// We happily assume that Unity's simple structs such as Vectors, Quaternions etc. 
+			// are easily usable from within another threads and that that should not be an issue
+
+			// We simply convert Unity's mesh model to our model to keep being somewhat consistent
+			// By the way, whole subobjects' initialization process according to our proper flow
+			// of Perso accessor preparation should happen yet in the main Unity thread, so
+			// that should not be an issue
+
+			// But this is dirty, hacky and it relies on assumptions made by programmer,
+			// its not elegant and consistent with other classes that might happen to have
+			// a bit simpler logic so that we actually properly utilize our own model classes :P
+			ActualCreateUnityMesh(mockUnityApi: true);
+			createUnityMeshCompliantLogicRunIndicatorFlag = true;
+		}
+
+		private void ActualCreateUnityMesh(bool mockUnityApi) {
             /*if (mesh.bones != null) {
                 for (int j = 0; j < mesh.bones.num_bones; j++) {
                     Transform b = mesh.bones.bones[j];
@@ -423,7 +558,7 @@ namespace OpenSpace.Visual {
 			uint triangle_size = 3 * (uint)(backfaceCulling ? 1 : 2);
 
 			if (sdc != null) {
-				CreateUnityMeshFromSDC(manifestInUnityScene: manifestInUnityScene);
+				CreateUnityMeshFromSDC(mockUnityApi: mockUnityApi);
 			}
 			Color[] rli = null;
 
@@ -484,7 +619,6 @@ namespace OpenSpace.Visual {
 						new_normals[m2] = normals[j];
 					}
 					if (new_boneWeights != null && geo.bones.weights != null) {
-
 						new_boneWeights[m0] = geo.bones.weights[i0];
 						new_boneWeights[m1] = geo.bones.weights[i1];
 						new_boneWeights[m2] = geo.bones.weights[i2];
@@ -508,25 +642,58 @@ namespace OpenSpace.Visual {
 						unityTriangles[triangles_index + 5] = unityTriangles[triangles_index + 1];
 					}
 				}
-				if (unityMesh == null) {
-					unityMesh = new Mesh();
-					unityMesh.vertices = new_vertices;
-					unityMesh.normals = new_normals;
-					unityMesh.triangles = unityTriangles;
-					if (rli != null) unityMesh.colors = rli;
-					if (new_boneWeights != null) {
-						unityMesh.boneWeights = new_boneWeights;
-						unityMesh.bindposes = geo.bones.bindPoses;
+				if (!mockUnityApi)
+                {
+					if (unityMesh == null)
+					{
+						unityMesh = new Mesh();
+						unityMesh.vertices = new_vertices;
+						unityMesh.normals = new_normals;
+						unityMesh.triangles = unityTriangles;
+						if (rli != null) unityMesh.colors = rli;
+						if (new_boneWeights != null)
+						{
+							unityMesh.boneWeights = new_boneWeights;
+							unityMesh.bindposes = geo.bones.bindPoses;
+						}
+						for (int i = 0; i < num_textures; i++)
+						{
+							unityMesh.SetUVs(i, new_uvs[i].ToList());
+						}
 					}
-					for (int i = 0; i < num_textures; i++) {
-						unityMesh.SetUVs(i, new_uvs[i].ToList());
+					else
+					{
+						unityMesh = CopyMesh(unityMesh);
 					}
-				} else {
-					unityMesh = CopyMesh(unityMesh);
-				}
+				} else
+                {
+					if (unityMeshModel == null)
+                    {
+						unityMeshModel = new Assets.Scripts.ResourcesModel.Geometric.SimplifiedModelMesh();
+						unityMeshModel.verticesUnity = new_vertices;
+						unityMeshModel.normalsUnity = new_normals;
+						unityMeshModel.triangles = unityTriangles;
+						if (rli != null) unityMesh.colors = rli;
+						if (new_boneWeights != null)
+						{
+							unityMeshModel.boneWeightsUnity = new_boneWeights;
+							unityMeshModel.bindposes = geo.bones.bindPosesModel;
+						}
+						for (int i = 0; i < num_textures; i++)
+						{
+							unityMeshModel.SetUVsUnity(i, new_uvs[i].ToList());
+						}
+					} else
+                    {
+						unityMeshModel = CopyMeshModel(unityMeshModel);
+                    }
+                }
+				
 				//mesh.SetUVs(0, new_uvs_spe.ToList());
 				/*mesh.uv = new_uvs_spe;*/
-				if (manifestInUnityScene)
+				//if (manifestInUnityScene)
+                //{
+				if (!mockUnityApi)
                 {
 					if (new_boneWeights != null)
 					{
@@ -556,7 +723,9 @@ namespace OpenSpace.Visual {
 						}
 						catch (Exception) { }
 					}
-				}				
+				}
+					
+				//}
 				//}
 			}
 
@@ -627,26 +796,63 @@ namespace OpenSpace.Visual {
                         }
                     }
                 }
-				if (OPT_unityMesh == null) {
-					OPT_unityMesh = new Mesh();
-					OPT_unityMesh.vertices = new_vertices;
-					if (geo.normals != null) OPT_unityMesh.normals = new_normals;
-					OPT_unityMesh.triangles = unityTriangles;
-					if (colors != null) {
-						OPT_unityMesh.colors = colors;
-					}
-					if (new_boneWeights != null) {
-						OPT_unityMesh.boneWeights = new_boneWeights;
-						OPT_unityMesh.bindposes = geo.bones.bindPoses;
-					}
-					for (int i = 0; i < new_uvs.Length; i++) {
-						OPT_unityMesh.SetUVs(i, new_uvs[i].ToList());
-					}
-				} else {
-					OPT_unityMesh = CopyMesh(OPT_unityMesh);
-				}
-				if (manifestInUnityScene)
+				if (!mockUnityApi)
                 {
+					if (OPT_unityMesh == null)
+					{
+						OPT_unityMesh = new Mesh();
+						OPT_unityMesh.vertices = new_vertices;
+						if (geo.normals != null) OPT_unityMesh.normals = new_normals;
+						OPT_unityMesh.triangles = unityTriangles;
+						if (colors != null)
+						{
+							OPT_unityMesh.colors = colors;
+						}
+						if (new_boneWeights != null)
+						{
+							OPT_unityMesh.boneWeights = new_boneWeights;
+							OPT_unityMesh.bindposes = geo.bones.bindPoses;
+						}
+						for (int i = 0; i < new_uvs.Length; i++)
+						{
+							OPT_unityMesh.SetUVs(i, new_uvs[i].ToList());
+						}
+					}
+					else
+					{
+						OPT_unityMesh = CopyMesh(OPT_unityMesh);
+					}
+				} else
+                {
+					if (OPT_unityMeshModel == null)
+                    {
+						OPT_unityMeshModel = new Assets.Scripts.ResourcesModel.Geometric.SimplifiedModelMesh();
+						OPT_unityMeshModel.verticesUnity = new_vertices;
+						if (geo.normals != null) OPT_unityMeshModel.normalsUnity = new_normals;
+						OPT_unityMeshModel.triangles = unityTriangles;
+						if (colors != null)
+						{
+							//OPT_unityMeshModel.colors = colors;
+						}
+						if (new_boneWeights != null)
+						{
+							OPT_unityMeshModel.boneWeightsUnity = new_boneWeights;
+							OPT_unityMeshModel.bindposes = geo.bones.bindPosesModel;
+						}
+						for (int i = 0; i < new_uvs.Length; i++)
+						{
+							OPT_unityMeshModel.SetUVsUnity(i, new_uvs[i].ToList());
+						}
+					} else
+                    {
+						OPT_unityMeshModel = CopyMeshModel(OPT_unityMeshModel);
+                    }
+                }
+
+				//if (manifestInUnityScene)
+				//{
+				if (!mockUnityApi)
+				{
 					GameObject OPT_gao = (OPT_mr == null ? gao : new GameObject("[Optimized] " + name));
 					if (OPT_gao != gao)
 					{
@@ -685,30 +891,35 @@ namespace OpenSpace.Visual {
 						}
 						catch (Exception) { }
 					}
-				}				
+				}
+				//}
             }
-            if (visualMaterial != null) {
-                //gao.name += " " + visualMaterial.offset + " - " + (visualMaterial.textures.Count > 0 ? visualMaterial.textures[0].offset.ToString() : "NULL" );
-                Material unityMat = visualMaterial.GetMaterial(materialHints);
-				if(rli != null && unityMat != null) unityMat.SetFloat("_Prelit", 2f);
-				if (((sdc != null && (sdc.geo.Type != 6 || (sdc.geo.Type != 3 && Settings.s.game != Settings.Game.R3)))
-					|| vertexColors != null) && unityMat != null) unityMat.SetFloat("_Prelit", 1f);
-                bool receiveShadows = (visualMaterial.properties & VisualMaterial.property_receiveShadows) != 0;
-                bool scroll = visualMaterial.ScrollingEnabled;
-                /*if (num_uvMaps > 1) {
-                    unityMat.SetFloat("_UVSec", 1f);
-                } else if (scroll) {
-                    for (int i = num_uvMaps; i < visualMaterial.textures.Count; i++) {
-                        if (visualMaterial.textures[i].ScrollingEnabled) {
-                            unityMat.SetFloat("_UVSec", 1f);
-                            break;
-                        }
-                    }
-                }*/
-                //if (r3mat.Material.GetColor("_EmissionColor") != Color.black) print("Mesh with emission: " + name);
 
-				if (manifestInUnityScene)
-                {
+			if (!mockUnityApi)
+            {
+				if (visualMaterial != null)
+				{
+					//gao.name += " " + visualMaterial.offset + " - " + (visualMaterial.textures.Count > 0 ? visualMaterial.textures[0].offset.ToString() : "NULL" );
+					Material unityMat = visualMaterial.GetMaterial(materialHints);
+					if (rli != null && unityMat != null) unityMat.SetFloat("_Prelit", 2f);
+					if (((sdc != null && (sdc.geo.Type != 6 || (sdc.geo.Type != 3 && Settings.s.game != Settings.Game.R3)))
+						|| vertexColors != null) && unityMat != null) unityMat.SetFloat("_Prelit", 1f);
+					bool receiveShadows = (visualMaterial.properties & VisualMaterial.property_receiveShadows) != 0;
+					bool scroll = visualMaterial.ScrollingEnabled;
+					/*if (num_uvMaps > 1) {
+						unityMat.SetFloat("_UVSec", 1f);
+					} else if (scroll) {
+						for (int i = num_uvMaps; i < visualMaterial.textures.Count; i++) {
+							if (visualMaterial.textures[i].ScrollingEnabled) {
+								unityMat.SetFloat("_UVSec", 1f);
+								break;
+							}
+						}
+					}*/
+					//if (r3mat.Material.GetColor("_EmissionColor") != Color.black) print("Mesh with emission: " + name);
+
+					//if (manifestInUnityScene)
+					//{
 					if (OPT_mr != null)
 					{
 						OPT_mr.sharedMaterial = unityMat;
@@ -743,17 +954,18 @@ namespace OpenSpace.Visual {
 							scrollComponent.mat = mr_spe.material;
 						}*/
 					}
-				}                
-            }
-
-			if (MapLoader.Loader.loadUnityIndependentResourcesModel)
-            {
-				unityMeshModel = Assets.Scripts.ResourcesModel.Mesh.FromUnityMesh(unityMesh);
-				if (OPT_unityMesh != null)
-                {
-					OPT_unityMeshModel = Assets.Scripts.ResourcesModel.Mesh.FromUnityMesh(OPT_unityMesh);
-				}					
-			}			
+					//}
+				}
+			}
+            
+			//if (MapLoader.Loader.loadUnityIndependentResourcesModel)
+            //{
+			//	unityMeshModel = Assets.Scripts.ResourcesModel.Mesh.FromUnityMesh(unityMesh);
+			//	if (OPT_unityMesh != null)
+            //    {
+			//		OPT_unityMeshModel = Assets.Scripts.ResourcesModel.Mesh.FromUnityMesh(OPT_unityMesh);
+			//	}					
+			//}
         }
 		public void MorphVertices(GeometricObjectElementTriangles el, float lerp) {
 			// Use UpdateMeshVertices if possible! Only use this for special cases
@@ -1185,5 +1397,25 @@ namespace OpenSpace.Visual {
             newmesh.bindposes = mesh.bindposes;
             return newmesh;
         }
-    }
+
+		private Assets.Scripts.ResourcesModel.Geometric.SimplifiedModelMesh CopyMeshModel(Assets.Scripts.ResourcesModel.Geometric.SimplifiedModelMesh mesh)
+		{
+			uint num_textures = visualMaterial != null ? visualMaterial.num_textures : 0;
+			Assets.Scripts.ResourcesModel.Geometric.SimplifiedModelMesh newmesh = new Assets.Scripts.ResourcesModel.Geometric.SimplifiedModelMesh();
+			newmesh.vertices = mesh.vertices;
+			newmesh.triangles = mesh.triangles;
+			for (int i = 0; i < num_textures; i++)
+			{
+				List<Vector3> uvsTemp = new List<Vector3>();
+				mesh.GetUVsUnity(i, uvsTemp);
+				newmesh.SetUVsUnity(i, uvsTemp);
+			}
+			newmesh.normals = mesh.normals;
+			//newmesh.colors = mesh.colors;
+			//newmesh.tangents = mesh.tangents;
+			newmesh.boneWeights = mesh.boneWeights;
+			newmesh.bindposes = mesh.bindposes;
+			return newmesh;
+		}
+	}
 }

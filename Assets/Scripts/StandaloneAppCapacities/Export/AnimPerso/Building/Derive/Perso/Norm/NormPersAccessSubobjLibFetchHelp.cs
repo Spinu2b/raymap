@@ -32,9 +32,9 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building.Deriv
         private static bool GeometricObjectElementContainsAnyBindBonePosesData(IGeometricObjectElement geometricObjectElement)
         {
             return geometricObjectElement != null && geometricObjectElement is GeometricObjectElementTriangles &&
-                (geometricObjectElement as GeometricObjectElementTriangles).unityMesh != null &&
-                (geometricObjectElement as GeometricObjectElementTriangles).unityMesh.bindposes != null &&
-                (geometricObjectElement as GeometricObjectElementTriangles).unityMesh.bindposes.Count() != 0;
+                (geometricObjectElement as GeometricObjectElementTriangles).unityMeshModel != null &&
+                (geometricObjectElement as GeometricObjectElementTriangles).unityMeshModel.bindposes != null &&
+                (geometricObjectElement as GeometricObjectElementTriangles).unityMeshModel.bindposes.Count() != 0;
         }
     }
 

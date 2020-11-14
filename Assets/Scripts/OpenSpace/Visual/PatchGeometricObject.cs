@@ -76,7 +76,9 @@ namespace OpenSpace.Visual {
 
         public void RunWholeProperInitializationProcessForAnimationExportPurposesWithMockedUnityApiInvocations()
         {
-            throw new NotImplementedException();
+            // for now ignore that, the Perso export process for the moment of writing this comment (02-11-2020)
+            // only focuses on GeometricObjectElementTriangles objects, so we do not need these ones right now
+            
         }
     }
 }

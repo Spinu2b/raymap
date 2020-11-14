@@ -50,7 +50,7 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Wrappers.Norma
                 {
                     var normalPhysicalObjectSubobjectAccessor = new NormalPhysicalObjectSubobjectAccessor(objectIndex, objectList[objectIndex].po);
                     normalPhysicalObjectSubobjectAccessor.RunWholeProperInitializationProcessWithMockedUnityApiInvocations();
-                    throw new NotImplementedException();
+                    //throw new NotImplementedException();
                     //foreach (var entry in normalPhysicalObjectSubobjectAccessor.physicalObject.IterateNormalGeometricObjectElementTriangles())
                     //{
                     //    entry.Item2.ReinitGeometricData();
