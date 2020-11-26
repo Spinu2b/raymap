@@ -22,6 +22,8 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building
             result.channelHierarchies = exportData.Item3;
             result.subobjectsChannelsAssociations = exportData.Item4;
 
+            AnimatedPersoDescriptionNormalizer.NormalizeData(result);
+
             return result;
         }
 
