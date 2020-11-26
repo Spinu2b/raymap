@@ -24,9 +24,19 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Building
                 in animatedPersoDescription.subobjectsChannelsAssociations.subobjectsChannelsAssociations.Values)
             {
                 var subobjectsChannelsAssociationDescription = subobjectsChannelsAssociation.subobjectsChannelsAssociationsDescription;
+
+                List<int> channelsIdAssociationsToRemove = new List<int>();
                 foreach (int channelId in subobjectsChannelsAssociationDescription.channelsForSubobjectsParenting.Keys)
                 {
                     subobjectsChannelsAssociationDescription.channelsForSubobjectsParenting[channelId].Remove(subobjectNumber);
+                    if (subobjectsChannelsAssociationDescription.channelsForSubobjectsParenting[channelId].Count == 0)
+                    {
+                        channelsIdAssociationsToRemove.Add(channelId);
+                    }
+                }
+                foreach (int channelId in channelsIdAssociationsToRemove)
+                {
+                    subobjectsChannelsAssociationDescription.channelsForSubobjectsParenting.Remove(channelId);
                 }
             }
         }
