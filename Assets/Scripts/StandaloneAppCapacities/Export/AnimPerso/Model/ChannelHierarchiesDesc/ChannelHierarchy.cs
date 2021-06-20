@@ -34,6 +34,11 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.ChannelH
             return BytesHashHelper.GetHashHexStringFor(bytes);
         }
 
+        public bool Equals(ChannelHierarchyDescription other)
+        {
+            return channels.SetEquals(other.channels) && parenting.ContentEquals(other.parenting);
+        }
+
         public byte[] SerializeToBytes()
         {
             var channelsBytes = ComparableElementHashsetToBytesSerializer.WithCSharpComparableElementSerializeToBytes(
@@ -67,7 +72,8 @@ namespace Assets.Scripts.StandaloneAppCapacities.Export.AnimPerso.Model.ChannelH
 
         public bool EqualsToAnother(ChannelHierarchy other)
         {
-            return channelHierarchyDescriptionIdentifier.Equals(other.channelHierarchyDescriptionIdentifier);
+            return channelHierarchy.Equals(other.channelHierarchy);
+            //return channelHierarchyDescriptionIdentifier.Equals(other.channelHierarchyDescriptionIdentifier);
         }
     }
 }
