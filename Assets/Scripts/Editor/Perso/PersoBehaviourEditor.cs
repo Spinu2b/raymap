@@ -10,6 +10,7 @@ using UnityEditor.IMGUI.Controls;
 using ModelExport.R3.PersoStatesArmatureAnimationsExporting;
 using ModelExport.R3.SkinnedAnimatedMeshesExporting;
 using Assets.Scripts.GenericExport;
+using Assets.Scripts.GenericExportBones;
 
 [CustomEditor(typeof(PersoBehaviour))]
 public class PersoBehaviourEditor : Editor {
@@ -114,6 +115,7 @@ public class PersoBehaviourEditor : Editor {
 		if (GUILayout.Button("Export Animations Data")) ExportAnimationsData();
 
         if (GUILayout.Button("Generic Export (3D Screenshots)")) ExportAsMuchNeededDataAsPossibleForGenericExport();
+		if (GUILayout.Button("Generic Export With Bones (3D Screenshots)")) ExportAsMuchNeededDataAsPossibleForBonesGenericExport();
     }
 
 	IList<StateTransitionsTreeElement> GetData() {
@@ -165,6 +167,13 @@ public class PersoBehaviourEditor : Editor {
         PersoBehaviour pb = (PersoBehaviour)target;
         Perso3DDataExporter perso3DDataExporter = new Perso3DDataExporter(pb);
 		perso3DDataExporter.ExportPersoAnimated3DData();
+	}
+
+	void ExportAsMuchNeededDataAsPossibleForBonesGenericExport()
+	{
+		PersoBehaviour pb = (PersoBehaviour)target;
+		Perso3DDataBonesExporter perso3DDataBonesExporter = new Perso3DDataBonesExporter(pb);
+		perso3DDataBonesExporter.ExportPersoAnimatedBones3DData();
 	}
 
 

@@ -74,17 +74,6 @@ namespace Assets.Scripts.GenericExport.Model.DataBlocks
         {
             var dataToBeConsideredNow = FrameDataBlock.GetConcreteWholeSubmeshesInPoseFrameDataBlock(persoBehaviour);
             return dataToBeConsideredNow;
-
-            //if (currentFrame == 0)
-            //{
-            //    return dataToBeConsideredNow;
-            //}
-            //else
-            //{
-            //    var previousFrameDataBlock = currentFrameDataBlocks[currentFrame - 1];
-            //    var differenceFrameDataBlock = FrameDataBlock.DifferenceFrameDataBlockBetween(previousFrameDataBlock, dataToBeConsideredNow);
-            //    return differenceFrameDataBlock;
-            //}
         }
     }
 }
