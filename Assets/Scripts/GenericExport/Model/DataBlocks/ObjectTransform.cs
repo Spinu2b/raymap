@@ -22,12 +22,23 @@ namespace Assets.Scripts.GenericExport.Model.DataBlocks
 
         public static ObjectTransform FromUnityMatrix4x4(Matrix4x4 matrix)
         {
-            throw new NotImplementedException();
+            Quaternion rotation = matrix.rotation;
+            Vector3 scale = matrix.lossyScale;
+            Vector3 position = matrix.GetColumn(3);
+            return new ObjectTransform(
+                position: ExportVector3.FromVector3(position),
+                rotation: ExportQuaternion.FromQuaternion(rotation),
+                scale: ExportVector3.FromVector3(scale)
+            );
         }
 
         public static ObjectTransform FromUnityTransform(Transform transform)
         {
-            throw new NotImplementedException();
+            return new ObjectTransform(
+                 position: ExportVector3.FromVector3(transform.position),
+                 rotation: ExportQuaternion.FromQuaternion(transform.rotation),
+                 scale: ExportVector3.FromVector3(transform.lossyScale)
+            );
         }
     }
 }

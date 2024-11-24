@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,14 @@ namespace Assets.Scripts.GenericExport
 
         public static bool HasFramesLeftInCurrentState(PersoBehaviour persoBehaviour)
         {
-            return persoBehaviour.currentFrame < persoBehaviour.GetCurrentStateFramesCount() - 1;
+            try
+            {
+                return persoBehaviour.currentFrame < persoBehaviour.GetCurrentStateFramesCount() - 1;
+            } catch (InvalidOperationException e)
+            {
+                UnityEngine.Debug.Log("Could not fetch animations frame count, skipping state");
+                return false;
+            }
         }
     }
 }
