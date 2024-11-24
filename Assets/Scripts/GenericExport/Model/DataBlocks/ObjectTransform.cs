@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Scripts.GenericExport.Model.DataBlocks
 {
@@ -17,6 +18,16 @@ namespace Assets.Scripts.GenericExport.Model.DataBlocks
             this.position = position;
             this.rotation = rotation;
             this.scale = scale;
+        }
+
+        public static ObjectTransform FromUnityMatrix4x4(Matrix4x4 matrix)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static ObjectTransform FromUnityTransform(Transform transform)
+        {
+            throw new NotImplementedException();
         }
     }
 }
