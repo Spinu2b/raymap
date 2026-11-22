@@ -15,7 +15,8 @@ namespace ModelExport.R3.PersoStatesArmatureAnimationsExporting.DataManipulation
 
         public PersoAnimationStatesDataManipulator(PersoBehaviour persoBehaviour)
         {
-            this.animationExportInterface = new PersoGeneralAnimationExportInterface(persoBehaviour.perso.p3dData.family);
+            this.animationExportInterface = new PersoGeneralAnimationExportInterface(
+                persoBehaviour.perso.p3dData.family, persoBehaviour.perso.p3dData.objectList);
         }
 
         public IEnumerable<RaymapAnimationClipModelFacadeAccessor> IterateAnimationClips()
@@ -33,6 +34,8 @@ namespace ModelExport.R3.PersoStatesArmatureAnimationsExporting.DataManipulation
                     RaymapAnimationKeyframeModelFacadeAccessor raymapAnimationKeyframeModelFacadeAccessor =
                         new RaymapAnimationKeyframeModelFacadeAccessor(animTreeWithChannelsDataHierarchy,
                         animationExportInterface.GetCurrentFrameNumberForExport());
+                    raymapAnimationKeyframeModelFacadeAccessor.MorphWeights =
+                        animationExportInterface.GetMorphWeightsForGivenFrame(animationExportInterface.GetCurrentFrameNumberForExport());
                     raymapAnimationClipModelFacadeAccessor.AddKeyframe(raymapAnimationKeyframeModelFacadeAccessor,
                         raymapAnimationKeyframeModelFacadeAccessor.FrameNumber);
                     animationExportInterface.NextKeyframe();

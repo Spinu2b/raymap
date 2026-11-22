@@ -21,9 +21,13 @@ namespace ModelExport.R3.PersoStatesArmatureAnimationsExporting.DataManipulation
 
         public int FrameNumber;
 
+        public Dictionary<string, Dictionary<string, float>> MorphWeights;
+
         public AnimationFrameModel GetAnimationFrameModel()
         {
-            return animTreeWithChannelsDataHierarchy.ToAnimationFrameModel();
+            AnimationFrameModel result = animTreeWithChannelsDataHierarchy.ToAnimationFrameModel();
+            result.morphWeights = MorphWeights;
+            return result;
         }
     }
 }

@@ -28,6 +28,10 @@ namespace ModelExport.R3.SkinnedAnimatedMeshesExporting.DataManipulation.ModelCo
                         x.Value.rotation,
                         x.Value.scale
                         ));
+            // before reading the geometry: also resets a mesh a morph left deformed to its base vertices
+            var morphs = new ModelExport.R3.Morphs.R3MorphTargetsExtractor().Extract(r3AnimatedMesh);
+            result.morphSourceObjectIndex = morphs.sourceObjectIndex;
+            result.morphTargets = morphs.targets.Count > 0 ? morphs.targets : null;
             MeshGeometry meshGeometry = DeriveMeshGeometryData(GetMesh(r3AnimatedMesh), GetBonesTransforms(r3AnimatedMesh));
             TransformModel transformModel = GetTransformModel(r3AnimatedMesh.transform);
             result.bindBonePoses = bonesBindPoses;

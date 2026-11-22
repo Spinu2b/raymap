@@ -15,11 +15,21 @@ namespace ModelExport.R3.PersoStatesArmatureAnimationsExporting.DataManipulation
     {
         private FamilyAnimationStatesHelper familyAnimationStatesHelper;
 
+        private ObjectList objectList;
+
         int currentFrameNumber = 0;
 
-        public PersoGeneralAnimationExportInterface(Family family)
+        public PersoGeneralAnimationExportInterface(Family family, ObjectList objectList)
         {
             this.familyAnimationStatesHelper = new FamilyAnimationStatesHelper(family);
+            this.objectList = objectList;
+        }
+
+        public Dictionary<string, Dictionary<string, float>> GetMorphWeightsForGivenFrame(int animationFrameNumber)
+        {
+            return new ModelExport.R3.Morphs.R3MorphWeightsCalculator(
+                familyAnimationStatesHelper.GetAnimA3DGeneralForCurrentPersoAnimationState(), objectList)
+                .WeightsForFrame(animationFrameNumber);
         }
 
         public bool AreAnimationClipsLeft()
